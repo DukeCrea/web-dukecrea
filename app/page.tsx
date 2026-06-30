@@ -21,7 +21,7 @@ export default function Home() {
       <header className="fixed top-0 w-full bg-white border-b border-gray-100 z-50">
         <div className="max-w-7xl mx-auto px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-blue-600 rounded" />
+            <div className="w-8 h-8 bg-emerald-500 rounded" />
             <span className="font-bold text-lg">DukeCrea</span>
           </div>
           <nav className="hidden md:flex gap-12">
@@ -29,7 +29,7 @@ export default function Home() {
             <a href="#precios" className="text-gray-700 hover:text-black transition text-sm">Precios</a>
             <a href="#faq" className="text-gray-700 hover:text-black transition text-sm">FAQ</a>
           </nav>
-          <a href="#contact" className="px-6 py-2.5 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition">
+          <a href="#contact" className="px-6 py-2.5 bg-emerald-500 text-white rounded-lg text-sm font-medium hover:bg-emerald-600 transition">
             Comenzar gratis
           </a>
         </div>
@@ -45,7 +45,7 @@ export default function Home() {
             Construyo soluciones digitales escalables. Especializado en Node.js, Python, React y automatización con IA.
           </p>
           <div className="flex gap-4 justify-center mb-12">
-            <a href="#contact" className="px-8 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition">
+            <a href="#contact" className="px-8 py-3 bg-emerald-500 text-white rounded-lg font-medium hover:bg-emerald-600 transition">
               Comenzar gratis
             </a>
             <a href="https://github.com/DukeCrea" target="_blank" className="px-8 py-3 border-2 border-gray-300 text-gray-900 rounded-lg font-medium hover:border-gray-400 transition">
@@ -60,19 +60,19 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-4 gap-8 text-center">
             <div>
-              <div className="text-4xl font-bold text-blue-600 mb-2">7</div>
+              <div className="text-4xl font-bold text-emerald-500 mb-2">7</div>
               <p className="text-gray-600">Proyectos activos</p>
             </div>
             <div>
-              <div className="text-4xl font-bold text-blue-600 mb-2">50+</div>
+              <div className="text-4xl font-bold text-emerald-500 mb-2">50+</div>
               <p className="text-gray-600">Clientes satisfechos</p>
             </div>
             <div>
-              <div className="text-4xl font-bold text-blue-600 mb-2">5+</div>
+              <div className="text-4xl font-bold text-emerald-500 mb-2">5+</div>
               <p className="text-gray-600">Años de experiencia</p>
             </div>
             <div>
-              <div className="text-4xl font-bold text-blue-600 mb-2">100%</div>
+              <div className="text-4xl font-bold text-emerald-500 mb-2">100%</div>
               <p className="text-gray-600">Proyectos entregados</p>
             </div>
           </div>
@@ -92,7 +92,7 @@ export default function Home() {
               { step: 5, title: 'Deploy', desc: 'Lanzamos al mercado' },
             ].map((item) => (
               <div key={item.step} className="text-center">
-                <div className="w-14 h-14 bg-blue-600 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-lg">
+                <div className="w-14 h-14 bg-emerald-500 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-lg">
                   {item.step}
                 </div>
                 <h3 className="font-bold text-gray-900 mb-2">{item.title}</h3>
@@ -114,10 +114,10 @@ export default function Home() {
                 href={`https://github.com/DukeCrea/${proj.title.toLowerCase().replace(/\s+/g, '-')}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white p-6 rounded-xl border border-gray-200 hover:border-blue-300 hover:shadow-lg transition"
+                className="bg-white p-6 rounded-xl border border-gray-200 hover:border-emerald-300 hover:shadow-lg transition"
               >
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center font-bold text-blue-600">
+                  <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center font-bold text-emerald-500">
                     {proj.id}
                   </div>
                   <h3 className="font-bold text-gray-900">{proj.title}</h3>
@@ -125,7 +125,7 @@ export default function Home() {
                 <p className="text-gray-600 text-sm mb-4">{proj.desc}</p>
                 <div className="flex gap-2 flex-wrap">
                   {proj.tech.split(', ').map((t) => (
-                    <span key={t} className="px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded-full">
+                    <span key={t} className="px-2 py-1 bg-emerald-50 text-emerald-600 text-xs rounded-full">
                       {t}
                     </span>
                   ))}
@@ -183,16 +183,16 @@ export default function Home() {
             </div>
 
             {/* Agencia */}
-            <div className="border-2 border-blue-600 rounded-xl p-8 bg-gradient-to-br from-blue-50 to-white">
-              <div className="inline-block px-3 py-1 bg-blue-600 text-white rounded-full text-xs font-bold mb-4">
+            <div className="border-2 border-emerald-500 rounded-xl p-8 bg-gradient-to-br from-blue-50 to-white">
+              <div className="inline-block px-3 py-1 bg-emerald-500 text-white rounded-full text-xs font-bold mb-4">
                 ⭐ Más popular
               </div>
               <h3 className="text-2xl font-bold text-gray-900 mb-2">Agencia</h3>
               <p className="text-gray-600 mb-6">Soluciones completas</p>
               <div className="mb-8">
-                <span className="text-5xl font-bold text-blue-600">Personalizado</span>
+                <span className="text-5xl font-bold text-emerald-500">Personalizado</span>
               </div>
-              <a href="#contact" className="block w-full px-6 py-3 bg-blue-600 text-white rounded-lg font-medium text-center hover:bg-blue-700 transition">
+              <a href="#contact" className="block w-full px-6 py-3 bg-emerald-500 text-white rounded-lg font-medium text-center hover:bg-emerald-600 transition">
                 Contratar ahora
               </a>
             </div>
@@ -212,7 +212,7 @@ export default function Home() {
               { q: '¿Puedo empezar con un proyecto pequeño?', a: 'Por supuesto, comenzamos con un presupuesto acorde a tu necesidad.' },
             ].map((faq, i) => (
               <details key={i} className="bg-white p-6 rounded-lg border border-gray-200 cursor-pointer">
-                <summary className="font-bold text-gray-900 hover:text-blue-600">
+                <summary className="font-bold text-gray-900 hover:text-emerald-500">
                   {faq.q}
                 </summary>
                 <p className="text-gray-600 mt-4">{faq.a}</p>
@@ -223,17 +223,17 @@ export default function Home() {
       </section>
 
       {/* CTA Final */}
-      <section id="contact" className="bg-gradient-to-r from-blue-600 to-blue-700 text-white py-20 px-8">
+      <section id="contact" className="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white py-20 px-8">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-4xl font-bold mb-6">¿Listo para transformar tu negocio?</h2>
-          <p className="text-xl mb-8 text-blue-100">
+          <p className="text-xl mb-8 text-emerald-100">
             Contáctame hoy y convirtamos tu idea en realidad
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
-            <a href="https://www.instagram.com/dukecrea" target="_blank" className="px-8 py-3 bg-white text-blue-600 rounded-lg font-medium hover:bg-gray-100 transition">
+            <a href="https://www.instagram.com/dukecrea" target="_blank" className="px-8 py-3 bg-white text-emerald-500 rounded-lg font-medium hover:bg-gray-100 transition">
               Instagram @dukecrea
             </a>
-            <a href="mailto:duque629@gmail.com" className="px-8 py-3 border-2 border-white text-white rounded-lg font-medium hover:bg-white hover:text-blue-600 transition">
+            <a href="mailto:duque629@gmail.com" className="px-8 py-3 border-2 border-white text-white rounded-lg font-medium hover:bg-white hover:text-emerald-500 transition">
               Enviar email
             </a>
           </div>
