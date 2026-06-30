@@ -1,212 +1,164 @@
-const projects = [
-  {
-    id: 1,
-    title: 'CamsMarketing',
-    description: 'Plataforma de marketing para autos con storefront Vite',
-    tags: ['Laravel', 'Node.js', 'Marketing'],
-    link: 'https://github.com/DukeCrea/camsmark',
-    status: 'active'
-  },
-  {
-    id: 2,
-    title: 'ChampionDesk',
-    description: 'Sistema de gestión de ventas y cotizaciones con Telegram',
-    tags: ['Python', 'Telegram', 'Ventas'],
-    link: 'https://github.com/DukeCrea/championdesk',
-    status: 'active'
-  },
-  {
-    id: 3,
-    title: 'EventosQR',
-    description: 'Validador de eventos con códigos QR',
-    tags: ['Node.js', 'Supabase', 'QR'],
-    link: 'https://github.com/DukeCrea/eventos-qr',
-    status: 'active'
-  },
-  {
-    id: 4,
-    title: 'GymFlow / BerkFW',
-    description: 'Plataforma de reservas para gyms y fitness',
-    tags: ['React', 'Next.js', 'SaaS'],
-    link: 'https://github.com/DukeCrea/gymflow',
-    status: 'active'
-  },
-  {
-    id: 5,
-    title: 'DukeComment Bot',
-    description: 'Bot de Telegram para gestionar comentarios en redes sociales',
-    tags: ['Python', 'Telegram', 'AI'],
-    link: 'https://github.com/DukeCrea/duke-comment-bot',
-    status: 'active'
-  },
-  {
-    id: 6,
-    title: 'Social Media Bot',
-    description: 'Automatización de publicaciones en redes sociales',
-    tags: ['Python', 'Telegram', 'Automation'],
-    link: 'https://github.com/DukeCrea/social-media-bot',
-    status: 'active'
-  },
-  {
-    id: 7,
-    title: 'MGC Ecosystem',
-    description: 'Monorepo con soluciones empresariales',
-    tags: ['Monorepo', 'TypeScript', 'Enterprise'],
-    link: 'https://github.com/DukeCrea/mgc-ecosystem',
-    status: 'active'
-  }
-];
+'use client';
 
 export default function Home() {
+  const projects = [
+    { num: 1, title: 'CamsMarketing', desc: 'Plataforma de marketing para autos', icon: '🚗' },
+    { num: 2, title: 'ChampionDesk', desc: 'Sistema de ventas y cotizaciones', icon: '💼' },
+    { num: 3, title: 'EventosQR', desc: 'Validador de eventos con QR', icon: '🎫' },
+    { num: 4, title: 'GymFlow', desc: 'Reservas para gyms y fitness', icon: '💪' },
+    { num: 5, title: 'DukeComment Bot', desc: 'Bot de comentarios en redes', icon: '🤖' },
+    { num: 6, title: 'Social Media Bot', desc: 'Automatización de publicaciones', icon: '📱' },
+    { num: 7, title: 'MGC Ecosystem', desc: 'Soluciones empresariales', icon: '🏢' },
+  ];
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="border-b border-slate-700 bg-slate-900/50 backdrop-blur">
-        <nav className="max-w-6xl mx-auto px-6 py-6 flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg" />
-            <span className="font-bold text-xl text-white">DukeCrea</span>
-          </div>
-          <div className="flex gap-6">
-            <a href="#projects" className="text-slate-300 hover:text-white transition">Proyectos</a>
-            <a href="#about" className="text-slate-300 hover:text-white transition">Sobre mí</a>
-          </div>
-        </nav>
+      <header className="fixed top-0 w-full bg-white border-b border-gray-200 z-50">
+        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+          <div className="font-bold text-xl">DukeCrea</div>
+          <nav className="flex gap-8">
+            <a href="#projects" className="text-gray-600 hover:text-black">Proyectos</a>
+            <a href="#plan" className="text-gray-600 hover:text-black">Planes</a>
+          </nav>
+          <a href="#contact" className="px-6 py-2 bg-green-500 text-white rounded-full text-sm font-medium hover:bg-green-600">
+            Contratar
+          </a>
+        </div>
       </header>
 
       {/* Hero */}
-      <section className="max-w-6xl mx-auto px-6 py-20">
-        <div className="text-center">
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
-            Antonio Duque
+      <section className="pt-32 pb-20 px-6">
+        <div className="max-w-3xl mx-auto text-center">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 text-black">
+            Full-Stack Developer
           </h1>
-          <p className="text-xl text-slate-300 mb-8">
-            Full-Stack Developer | SaaS Builder | AI Enthusiast
-          </p>
-          <p className="text-slate-400 max-w-2xl mx-auto mb-12">
-            Construyo soluciones digitales escalables para negocios.
-            Especializado en Node.js, Python, React y automatización.
+          <p className="text-xl text-gray-600 mb-8">
+            Construyo soluciones digitales escalables para negocios. Especializado en Node.js, Python, React y automatización.
           </p>
           <div className="flex gap-4 justify-center">
-            <a href="https://github.com/DukeCrea" className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition">
-              GitHub
+            <a href="#contact" className="px-8 py-3 bg-black text-white rounded-lg font-medium hover:bg-gray-800">
+              Comenzar
             </a>
-            <a href="https://www.instagram.com/dukecrea" className="px-6 py-3 border border-slate-600 hover:border-slate-400 text-white rounded-lg transition">
-              Instagram @dukecrea
+            <a href="https://github.com/DukeCrea" className="px-8 py-3 border border-gray-300 text-black rounded-lg font-medium hover:bg-gray-50">
+              Ver GitHub
             </a>
           </div>
         </div>
       </section>
 
-      {/* Projects */}
-      <section id="projects" className="max-w-6xl mx-auto px-6 py-20">
-        <h2 className="text-4xl font-bold text-white mb-12">Mis 7 Potencias</h2>
-
-        <div className="grid md:grid-cols-2 gap-6">
-          {projects.map((project) => (
-            <a
-              key={project.id}
-              href={project.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group bg-slate-800/50 border border-slate-700 rounded-lg p-6 hover:border-blue-500 transition hover:bg-slate-800/80"
-            >
-              <div className="flex items-start justify-between mb-4">
-                <div>
-                  <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition">
-                    {project.title}
-                  </h3>
-                  <p className="text-slate-400 text-sm">{project.description}</p>
-                </div>
-                <span className="px-2 py-1 bg-green-500/20 text-green-300 text-xs rounded">
-                  {project.status}
-                </span>
-              </div>
-
-              <div className="flex flex-wrap gap-2">
-                {project.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-3 py-1 bg-slate-700/50 text-slate-300 text-xs rounded-full"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </a>
-          ))}
-        </div>
-      </section>
-
-      {/* About */}
-      <section id="about" className="max-w-6xl mx-auto px-6 py-20">
-        <h2 className="text-4xl font-bold text-white mb-8">Sobre DukeCrea</h2>
-        <div className="grid md:grid-cols-2 gap-12">
+      {/* Social Proof */}
+      <section className="bg-gray-50 py-12 px-6">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 text-center">
           <div>
-            <p className="text-slate-300 mb-4">
-              Soy un desarrollador full-stack con pasión por construir soluciones digitales que resuelven problemas reales.
-            </p>
-            <p className="text-slate-300 mb-4">
-              Mi expertise abarca desde APIs robustas en Node.js y Python, hasta interfaces modernas con React y Next.js.
-            </p>
-            <p className="text-slate-300">
-              Especializado en automatización, bots inteligentes y sistemas SaaS escalables.
-            </p>
+            <div className="text-4xl font-bold text-black mb-2">7</div>
+            <p className="text-gray-600">Proyectos activos</p>
           </div>
-          <div className="bg-slate-800/50 border border-slate-700 rounded-lg p-8">
-            <h3 className="text-xl font-bold text-white mb-6">Tech Stack</h3>
-            <div className="grid grid-cols-2 gap-4 text-slate-300">
-              <div>
-                <p className="font-semibold text-white mb-2">Backend</p>
-                <ul className="text-sm space-y-1">
-                  <li>Node.js / Express</li>
-                  <li>Python</li>
-                  <li>Laravel</li>
-                </ul>
+          <div>
+            <div className="text-4xl font-bold text-black mb-2">50+</div>
+            <p className="text-gray-600">Clientes satisfechos</p>
+          </div>
+          <div>
+            <div className="text-4xl font-bold text-black mb-2">5+</div>
+            <p className="text-gray-600">Años de experiencia</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Process Flow */}
+      <section className="py-20 px-6">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl font-bold mb-16 text-center text-black">Cómo trabajamos</h2>
+          <div className="grid md:grid-cols-5 gap-4">
+            {[
+              { step: 1, title: 'Briefing', desc: 'Entendemos tu visión' },
+              { step: 2, title: 'Diseño', desc: 'Creamos la arquitectura' },
+              { step: 3, title: 'Desarrollo', desc: 'Construimos la solución' },
+              { step: 4, title: 'Testing', desc: 'Probamos exhaustivamente' },
+              { step: 5, title: 'Deploy', desc: 'Lanzamos al mercado' },
+            ].map((item) => (
+              <div key={item.step} className="text-center">
+                <div className="w-12 h-12 bg-black text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold">
+                  {item.step}
+                </div>
+                <h3 className="font-bold text-black mb-2">{item.title}</h3>
+                <p className="text-sm text-gray-600">{item.desc}</p>
               </div>
-              <div>
-                <p className="font-semibold text-white mb-2">Frontend</p>
-                <ul className="text-sm space-y-1">
-                  <li>React / Next.js</li>
-                  <li>TypeScript</li>
-                  <li>Tailwind CSS</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-semibold text-white mb-2">Tools</p>
-                <ul className="text-sm space-y-1">
-                  <li>Docker</li>
-                  <li>Git / GitHub</li>
-                  <li>Vercel / AWS</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-semibold text-white mb-2">Databases</p>
-                <ul className="text-sm space-y-1">
-                  <li>PostgreSQL</li>
-                  <li>Supabase</li>
-                  <li>MongoDB</li>
-                </ul>
-              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 7 Potencias Grid */}
+      <section id="projects" className="bg-gray-50 py-20 px-6">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl font-bold mb-16 text-center text-black">Mis 7 Potencias</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            {projects.map((proj) => (
+              <a
+                key={proj.num}
+                href={`https://github.com/DukeCrea/${proj.title.toLowerCase().replace(/\s+/g, '-')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white p-6 rounded-lg border border-gray-200 hover:border-black hover:shadow-lg transition"
+              >
+                <div className="text-4xl mb-4">{proj.icon}</div>
+                <h3 className="font-bold text-lg text-black mb-2">{proj.title}</h3>
+                <p className="text-gray-600 text-sm">{proj.desc}</p>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing */}
+      <section id="plan" className="py-20 px-6">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl font-bold mb-16 text-center text-black">Planes</h2>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="border border-gray-300 p-8 rounded-lg">
+              <h3 className="text-2xl font-bold mb-2 text-black">Freelance</h3>
+              <p className="text-gray-600 mb-6">Para proyectos puntuales</p>
+              <div className="text-4xl font-bold mb-6 text-black">$50<span className="text-lg text-gray-600">/h</span></div>
+              <a href="#contact" className="block w-full px-6 py-3 border border-black text-black rounded-lg font-medium text-center hover:bg-black hover:text-white transition">
+                Solicitar presupuesto
+              </a>
+            </div>
+            <div className="border-2 border-black p-8 rounded-lg bg-black text-white">
+              <div className="inline-block px-3 py-1 bg-white text-black rounded-full text-xs font-bold mb-4">Recomendado</div>
+              <h3 className="text-2xl font-bold mb-2">Agencia</h3>
+              <p className="text-gray-300 mb-6">Soluciones completas</p>
+              <div className="text-4xl font-bold mb-6">Personalizado</div>
+              <a href="#contact" className="block w-full px-6 py-3 bg-green-500 text-white rounded-lg font-medium text-center hover:bg-green-600 transition">
+                Contratar ahora
+              </a>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-slate-700 bg-slate-900/50">
-        <div className="max-w-6xl mx-auto px-6 py-12 text-center">
-          <p className="text-slate-400 mb-4">
-            Construido con <span className="text-red-500">❤️</span> por DukeCrea
+      {/* CTA */}
+      <section id="contact" className="bg-black text-white py-20 px-6">
+        <div className="max-w-3xl mx-auto text-center">
+          <h2 className="text-4xl font-bold mb-6">¿Listo para tu proyecto?</h2>
+          <p className="text-xl text-gray-300 mb-8">
+            Contacta conmigo y convirtamos tu idea en realidad
           </p>
-          <p className="text-slate-500 text-sm">
-            © 2026 Antonio Duque. Todos los derechos reservados.
-          </p>
-          <div className="flex justify-center gap-6 mt-6">
-            <a href="https://github.com/DukeCrea" className="text-slate-400 hover:text-white transition">GitHub</a>
-            <a href="https://www.instagram.com/dukecrea" className="text-slate-400 hover:text-white transition">Instagram</a>
-            <a href="mailto:duque629@gmail.com" className="text-slate-400 hover:text-white transition">Email</a>
+          <div className="flex gap-4 justify-center">
+            <a href="https://www.instagram.com/dukecrea" className="px-8 py-3 bg-white text-black rounded-lg font-medium hover:bg-gray-100">
+              Instagram @dukecrea
+            </a>
+            <a href="mailto:duque629@gmail.com" className="px-8 py-3 border border-white text-white rounded-lg font-medium hover:bg-white hover:text-black transition">
+              Email
+            </a>
           </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-gray-100 py-8 px-6 text-center text-gray-600 text-sm">
+        <div className="max-w-6xl mx-auto">
+          <p>© 2026 DukeCrea. Todos los derechos reservados.</p>
         </div>
       </footer>
     </div>
