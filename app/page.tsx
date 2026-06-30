@@ -1,24 +1,83 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 
-export default function Home() {
-  const [billingCycle, setBillingCycle] = useState('monthly');
+function HeroCanvas() {
+  const canvasRef = useRef(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const heroRef = useRef(null);
+  const animationRef = useRef(null);
+  const particlesRef = useRef([]);
 
   useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
     const handleMouseMove = (e) => {
-      if (!heroRef.current) return;
-      const rect = heroRef.current.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      setMousePos({ x, y });
+      setMousePos({ x: e.clientX, y: e.clientY });
+    };
+
+    const handleResize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     };
 
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+    window.addEventListener('resize', handleResize);
+
+    let time = 0;
+
+    const animate = () => {
+      ctx.fillStyle = 'rgba(13, 26, 31, 0.1)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      time += 0.005;
+
+      for (let x = 0; x < canvas.width; x += 60) {
+        for (let y = 0; y < canvas.height; y += 60) {
+          const dx = mousePos.x - x;
+          const dy = mousePos.y - y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          const wave = Math.sin(distance * 0.01 - time * 3) * 30;
+          const waveSize = Math.max(0, 60 - distance * 0.1) + wave;
+
+          const intensity = Math.max(0, 1 - distance / 400);
+          const hue = 160 + Math.sin(time + distance * 0.01) * 20;
+
+          ctx.fillStyle = `hsla(${hue}, 100%, 50%, ${intensity * 0.4})`;
+          ctx.beginPath();
+          ctx.arc(x, y, Math.max(2, waveSize * 0.5), 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.strokeStyle = `hsla(${hue}, 100%, 60%, ${intensity * 0.3})`;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.arc(x, y, waveSize, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+      }
+
+      animationRef.current = requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('resize', handleResize);
+      if (animationRef.current) cancelAnimationFrame(animationRef.current);
+    };
+  }, [mousePos]);
+
+  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />;
+}
+
+export default function Home() {
+  const [billingCycle, setBillingCycle] = useState('monthly');
+  const heroRef = useRef(null);
 
   const projects = [
     { id: 1, title: 'CamsMarketing', desc: 'Plataforma de marketing para autos con storefront Vite', tech: 'Laravel, Node.js' },
@@ -53,41 +112,24 @@ export default function Home() {
       {/* Hero Section */}
       <section
         ref={heroRef}
-        className="relative pt-32 pb-16 px-8 min-h-screen flex items-center justify-center overflow-hidden bg-gray-900"
+        className="relative pt-32 pb-16 px-8 min-h-screen flex items-center justify-center overflow-hidden bg-gray-950"
       >
-        {/* Video Background */}
-        <video
-          autoPlay
-          muted
-          loop
-          className="absolute inset-0 w-full h-full object-cover opacity-40"
-        >
-          <source src="/hero-video.webm" type="video/webm" />
-          <source src="/hero-video.mp4" type="video/mp4" />
-        </video>
+        <HeroCanvas />
 
-        {/* Interactive Light Follow Effect */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background: `radial-gradient(800px at ${mousePos.x}px ${mousePos.y}px, rgba(16, 185, 129, 0.15), transparent 80%)`,
-            transition: 'background 0.1s ease-out',
-          }}
-        />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-gray-950 pointer-events-none" />
 
-        {/* Content */}
         <div className="relative z-10 max-w-4xl mx-auto text-center">
-          <h1 className="text-6xl font-bold text-white mb-6">
+          <h1 className="text-6xl md:text-7xl font-bold text-white mb-6 drop-shadow-lg">
             Full-Stack Developer para tu negocio
           </h1>
-          <p className="text-xl text-gray-300 mb-8">
+          <p className="text-lg md:text-xl text-gray-100 mb-8 drop-shadow-md">
             Construyo soluciones digitales escalables. Especializado en Node.js, Python, React y automatización con IA.
           </p>
-          <div className="flex gap-4 justify-center mb-12">
-            <a href="#contact" className="px-8 py-3 bg-emerald-500 text-white rounded-lg font-medium hover:bg-emerald-600 transition">
+          <div className="flex gap-4 justify-center mb-12 flex-wrap">
+            <a href="#contact" className="px-8 py-3 bg-emerald-500 text-white rounded-lg font-bold hover:bg-emerald-600 transition shadow-lg">
               Comenzar gratis
             </a>
-            <a href="https://github.com/DukeCrea" target="_blank" className="px-8 py-3 border-2 border-gray-300 text-white rounded-lg font-medium hover:border-gray-400 transition">
+            <a href="https://github.com/DukeCrea" target="_blank" className="px-8 py-3 border-2 border-white text-white rounded-lg font-bold hover:bg-white hover:text-gray-950 transition shadow-lg">
               Ver GitHub
             </a>
           </div>
