@@ -99,9 +99,9 @@ export default function Home() {
             <span className="font-bold text-lg">DukeCrea</span>
           </div>
           <nav className="hidden md:flex gap-12">
-            <a href="#projects" className="text-gray-700 hover:text-black transition text-sm">Proyectos</a>
-            <a href="#precios" className="text-gray-700 hover:text-black transition text-sm">Precios</a>
-            <a href="#faq" className="text-gray-700 hover:text-black transition text-sm">FAQ</a>
+            <a href="#projects" className="text-gray-800 font-medium hover:text-emerald-600 transition text-sm">Proyectos</a>
+            <a href="#precios" className="text-gray-800 font-medium hover:text-emerald-600 transition text-sm">Precios</a>
+            <a href="#faq" className="text-gray-800 font-medium hover:text-emerald-600 transition text-sm">FAQ</a>
           </nav>
           <a href="#contact" className="px-6 py-2.5 bg-emerald-500 text-white rounded-lg text-sm font-medium hover:bg-emerald-600 transition">
             Comenzar gratis
@@ -142,19 +142,19 @@ export default function Home() {
           <div className="grid md:grid-cols-4 gap-8 text-center">
             <div>
               <div className="text-4xl font-bold text-emerald-500 mb-2">7</div>
-              <p className="text-gray-600">Proyectos activos</p>
+              <p className="text-gray-700 font-medium">Proyectos activos</p>
             </div>
             <div>
               <div className="text-4xl font-bold text-emerald-500 mb-2">50+</div>
-              <p className="text-gray-600">Clientes satisfechos</p>
+              <p className="text-gray-700 font-medium">Clientes satisfechos</p>
             </div>
             <div>
               <div className="text-4xl font-bold text-emerald-500 mb-2">5+</div>
-              <p className="text-gray-600">Años de experiencia</p>
+              <p className="text-gray-700 font-medium">Años de experiencia</p>
             </div>
             <div>
               <div className="text-4xl font-bold text-emerald-500 mb-2">100%</div>
-              <p className="text-gray-600">Proyectos entregados</p>
+              <p className="text-gray-700 font-medium">Proyectos entregados</p>
             </div>
           </div>
         </div>
@@ -203,10 +203,10 @@ export default function Home() {
                   </div>
                   <h3 className="font-bold text-gray-900">{proj.title}</h3>
                 </div>
-                <p className="text-gray-600 text-sm mb-4">{proj.desc}</p>
+                <p className="text-gray-700 text-sm mb-4">{proj.desc}</p>
                 <div className="flex gap-2 flex-wrap">
                   {proj.tech.split(', ').map((t) => (
-                    <span key={t} className="px-2 py-1 bg-emerald-50 text-emerald-600 text-xs rounded-full">
+                    <span key={t} className="px-2 py-1 bg-emerald-100 text-emerald-700 text-xs font-medium rounded-full">
                       {t}
                     </span>
                   ))}
