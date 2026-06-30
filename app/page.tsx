@@ -43,7 +43,7 @@ function HeroCanvas() {
           const dy = mousePos.y - y;
           const distance = Math.sqrt(dx * dx + dy * dy);
           const wave = Math.sin(distance * 0.015 - time * 4) * 35;
-          const waveSize = Math.max(0, 50 - distance * 0.08) + wave;
+          const waveSize = Math.max(0, (50 - distance * 0.08) + wave);
 
           const intensity = Math.max(0, 1 - distance / 350);
           const hue = 75 + Math.sin(time * 0.5 + distance * 0.02) * 20;
