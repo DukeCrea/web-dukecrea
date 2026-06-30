@@ -1,9 +1,24 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 export default function Home() {
   const [billingCycle, setBillingCycle] = useState('monthly');
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const heroRef = useRef(null);
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (!heroRef.current) return;
+      const rect = heroRef.current.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      setMousePos({ x, y });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
 
   const projects = [
     { id: 1, title: 'CamsMarketing', desc: 'Plataforma de marketing para autos con storefront Vite', tech: 'Laravel, Node.js' },
@@ -36,19 +51,43 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-16 px-8">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-6xl font-bold text-gray-900 mb-6">
+      <section
+        ref={heroRef}
+        className="relative pt-32 pb-16 px-8 min-h-screen flex items-center justify-center overflow-hidden bg-gray-900"
+      >
+        {/* Video Background */}
+        <video
+          autoPlay
+          muted
+          loop
+          className="absolute inset-0 w-full h-full object-cover opacity-40"
+        >
+          <source src="/hero-video.webm" type="video/webm" />
+          <source src="/hero-video.mp4" type="video/mp4" />
+        </video>
+
+        {/* Interactive Light Follow Effect */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: `radial-gradient(800px at ${mousePos.x}px ${mousePos.y}px, rgba(16, 185, 129, 0.15), transparent 80%)`,
+            transition: 'background 0.1s ease-out',
+          }}
+        />
+
+        {/* Content */}
+        <div className="relative z-10 max-w-4xl mx-auto text-center">
+          <h1 className="text-6xl font-bold text-white mb-6">
             Full-Stack Developer para tu negocio
           </h1>
-          <p className="text-xl text-gray-600 mb-8">
+          <p className="text-xl text-gray-300 mb-8">
             Construyo soluciones digitales escalables. Especializado en Node.js, Python, React y automatización con IA.
           </p>
           <div className="flex gap-4 justify-center mb-12">
             <a href="#contact" className="px-8 py-3 bg-emerald-500 text-white rounded-lg font-medium hover:bg-emerald-600 transition">
               Comenzar gratis
             </a>
-            <a href="https://github.com/DukeCrea" target="_blank" className="px-8 py-3 border-2 border-gray-300 text-gray-900 rounded-lg font-medium hover:border-gray-400 transition">
+            <a href="https://github.com/DukeCrea" target="_blank" className="px-8 py-3 border-2 border-gray-300 text-white rounded-lg font-medium hover:border-gray-400 transition">
               Ver GitHub
             </a>
           </div>
