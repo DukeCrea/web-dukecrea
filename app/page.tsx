@@ -3,9 +3,9 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 
 function HeroCanvas() {
-  const canvasRef = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const animationRef = useRef(null);
+  const animationRef = useRef<number | null>(null);
   const particlesRef = useRef([]);
 
   useEffect(() => {
@@ -13,10 +13,11 @@ function HeroCanvas() {
     if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
+    if (!ctx) return;
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
       setMousePos({ x: e.clientX, y: e.clientY });
     };
 
