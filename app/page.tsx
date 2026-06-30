@@ -120,7 +120,7 @@ export default function Home() {
 
         <div className="relative z-10 max-w-4xl mx-auto text-center">
           <h1 className="text-6xl md:text-7xl font-bold text-white mb-6 drop-shadow-lg">
-            Full-Stack Developer para tu negocio
+            Full-Stack Developer - Tema Oscuro
           </h1>
           <p className="text-lg md:text-xl text-gray-100 mb-8 drop-shadow-md">
             Construyo soluciones digitales escalables. Especializado en Node.js, Python, React y automatización con IA.
