@@ -1,46 +1,54 @@
 'use client';
 
+import { useState } from 'react';
+
 export default function Home() {
+  const [billingCycle, setBillingCycle] = useState('monthly');
+
   const projects = [
-    { num: 1, title: 'CamsMarketing', desc: 'Plataforma de marketing para autos', icon: '🚗' },
-    { num: 2, title: 'ChampionDesk', desc: 'Sistema de ventas y cotizaciones', icon: '💼' },
-    { num: 3, title: 'EventosQR', desc: 'Validador de eventos con QR', icon: '🎫' },
-    { num: 4, title: 'GymFlow', desc: 'Reservas para gyms y fitness', icon: '💪' },
-    { num: 5, title: 'DukeComment Bot', desc: 'Bot de comentarios en redes', icon: '🤖' },
-    { num: 6, title: 'Social Media Bot', desc: 'Automatización de publicaciones', icon: '📱' },
-    { num: 7, title: 'MGC Ecosystem', desc: 'Soluciones empresariales', icon: '🏢' },
+    { id: 1, title: 'CamsMarketing', desc: 'Plataforma de marketing para autos con storefront Vite', tech: 'Laravel, Node.js' },
+    { id: 2, title: 'ChampionDesk', desc: 'Sistema de gestión de ventas y cotizaciones con Telegram', tech: 'Python, Telegram' },
+    { id: 3, title: 'EventosQR', desc: 'Validador de eventos con códigos QR integrado', tech: 'Node.js, Supabase' },
+    { id: 4, title: 'GymFlow/BerkFW', desc: 'Plataforma de reservas para gyms y fitness', tech: 'React, Next.js' },
+    { id: 5, title: 'DukeComment Bot', desc: 'Bot de Telegram para gestionar comentarios en redes', tech: 'Python, AI' },
+    { id: 6, title: 'Social Media Bot', desc: 'Automatización inteligente de publicaciones', tech: 'Python, Automation' },
+    { id: 7, title: 'MGC Ecosystem', desc: 'Soluciones empresariales completas en monorepo', tech: 'TypeScript, Enterprise' },
   ];
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="fixed top-0 w-full bg-white border-b border-gray-200 z-50">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="font-bold text-xl">DukeCrea</div>
-          <nav className="flex gap-8">
-            <a href="#projects" className="text-gray-600 hover:text-black">Proyectos</a>
-            <a href="#plan" className="text-gray-600 hover:text-black">Planes</a>
+      {/* Header Fijo */}
+      <header className="fixed top-0 w-full bg-white border-b border-gray-100 z-50">
+        <div className="max-w-7xl mx-auto px-8 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-blue-600 rounded" />
+            <span className="font-bold text-lg">DukeCrea</span>
+          </div>
+          <nav className="hidden md:flex gap-12">
+            <a href="#projects" className="text-gray-700 hover:text-black transition text-sm">Proyectos</a>
+            <a href="#precios" className="text-gray-700 hover:text-black transition text-sm">Precios</a>
+            <a href="#faq" className="text-gray-700 hover:text-black transition text-sm">FAQ</a>
           </nav>
-          <a href="#contact" className="px-6 py-2 bg-green-500 text-white rounded-full text-sm font-medium hover:bg-green-600">
-            Contratar
+          <a href="#contact" className="px-6 py-2.5 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition">
+            Comenzar gratis
           </a>
         </div>
       </header>
 
-      {/* Hero */}
-      <section className="pt-32 pb-20 px-6">
-        <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 text-black">
-            Full-Stack Developer
+      {/* Hero Section */}
+      <section className="pt-32 pb-16 px-8">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-6xl font-bold text-gray-900 mb-6">
+            Full-Stack Developer para tu negocio
           </h1>
           <p className="text-xl text-gray-600 mb-8">
-            Construyo soluciones digitales escalables para negocios. Especializado en Node.js, Python, React y automatización.
+            Construyo soluciones digitales escalables. Especializado en Node.js, Python, React y automatización con IA.
           </p>
-          <div className="flex gap-4 justify-center">
-            <a href="#contact" className="px-8 py-3 bg-black text-white rounded-lg font-medium hover:bg-gray-800">
-              Comenzar
+          <div className="flex gap-4 justify-center mb-12">
+            <a href="#contact" className="px-8 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition">
+              Comenzar gratis
             </a>
-            <a href="https://github.com/DukeCrea" className="px-8 py-3 border border-gray-300 text-black rounded-lg font-medium hover:bg-gray-50">
+            <a href="https://github.com/DukeCrea" target="_blank" className="px-8 py-3 border-2 border-gray-300 text-gray-900 rounded-lg font-medium hover:border-gray-400 transition">
               Ver GitHub
             </a>
           </div>
@@ -48,40 +56,46 @@ export default function Home() {
       </section>
 
       {/* Social Proof */}
-      <section className="bg-gray-50 py-12 px-6">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 text-center">
-          <div>
-            <div className="text-4xl font-bold text-black mb-2">7</div>
-            <p className="text-gray-600">Proyectos activos</p>
-          </div>
-          <div>
-            <div className="text-4xl font-bold text-black mb-2">50+</div>
-            <p className="text-gray-600">Clientes satisfechos</p>
-          </div>
-          <div>
-            <div className="text-4xl font-bold text-black mb-2">5+</div>
-            <p className="text-gray-600">Años de experiencia</p>
+      <section className="bg-gray-50 py-12 px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-4 gap-8 text-center">
+            <div>
+              <div className="text-4xl font-bold text-blue-600 mb-2">7</div>
+              <p className="text-gray-600">Proyectos activos</p>
+            </div>
+            <div>
+              <div className="text-4xl font-bold text-blue-600 mb-2">50+</div>
+              <p className="text-gray-600">Clientes satisfechos</p>
+            </div>
+            <div>
+              <div className="text-4xl font-bold text-blue-600 mb-2">5+</div>
+              <p className="text-gray-600">Años de experiencia</p>
+            </div>
+            <div>
+              <div className="text-4xl font-bold text-blue-600 mb-2">100%</div>
+              <p className="text-gray-600">Proyectos entregados</p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Process Flow */}
-      <section className="py-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold mb-16 text-center text-black">Cómo trabajamos</h2>
-          <div className="grid md:grid-cols-5 gap-4">
+      {/* Proceso */}
+      <section className="py-20 px-8">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-4xl font-bold text-center mb-16">Cómo trabajamos</h2>
+          <div className="grid md:grid-cols-5 gap-8">
             {[
-              { step: 1, title: 'Briefing', desc: 'Entendemos tu visión' },
-              { step: 2, title: 'Diseño', desc: 'Creamos la arquitectura' },
-              { step: 3, title: 'Desarrollo', desc: 'Construimos la solución' },
-              { step: 4, title: 'Testing', desc: 'Probamos exhaustivamente' },
+              { step: 1, title: 'Briefing', desc: 'Entendemos tu visión y objetivos' },
+              { step: 2, title: 'Diseño', desc: 'Planificamos la arquitectura' },
+              { step: 3, title: 'Desarrollo', desc: 'Construimos con calidad' },
+              { step: 4, title: 'Testing', desc: 'Validamos todo funciona' },
               { step: 5, title: 'Deploy', desc: 'Lanzamos al mercado' },
             ].map((item) => (
               <div key={item.step} className="text-center">
-                <div className="w-12 h-12 bg-black text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold">
+                <div className="w-14 h-14 bg-blue-600 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-lg">
                   {item.step}
                 </div>
-                <h3 className="font-bold text-black mb-2">{item.title}</h3>
+                <h3 className="font-bold text-gray-900 mb-2">{item.title}</h3>
                 <p className="text-sm text-gray-600">{item.desc}</p>
               </div>
             ))}
@@ -89,47 +103,96 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 7 Potencias Grid */}
-      <section id="projects" className="bg-gray-50 py-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold mb-16 text-center text-black">Mis 7 Potencias</h2>
+      {/* 7 Potencias */}
+      <section id="projects" className="bg-gray-50 py-20 px-8">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-4xl font-bold text-center mb-16">Mis 7 Potencias</h2>
           <div className="grid md:grid-cols-3 gap-6">
             {projects.map((proj) => (
               <a
-                key={proj.num}
+                key={proj.id}
                 href={`https://github.com/DukeCrea/${proj.title.toLowerCase().replace(/\s+/g, '-')}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white p-6 rounded-lg border border-gray-200 hover:border-black hover:shadow-lg transition"
+                className="bg-white p-6 rounded-xl border border-gray-200 hover:border-blue-300 hover:shadow-lg transition"
               >
-                <div className="text-4xl mb-4">{proj.icon}</div>
-                <h3 className="font-bold text-lg text-black mb-2">{proj.title}</h3>
-                <p className="text-gray-600 text-sm">{proj.desc}</p>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center font-bold text-blue-600">
+                    {proj.id}
+                  </div>
+                  <h3 className="font-bold text-gray-900">{proj.title}</h3>
+                </div>
+                <p className="text-gray-600 text-sm mb-4">{proj.desc}</p>
+                <div className="flex gap-2 flex-wrap">
+                  {proj.tech.split(', ').map((t) => (
+                    <span key={t} className="px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded-full">
+                      {t}
+                    </span>
+                  ))}
+                </div>
               </a>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Pricing */}
-      <section id="plan" className="py-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold mb-16 text-center text-black">Planes</h2>
+      {/* Precios */}
+      <section id="precios" className="py-20 px-8">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-4xl font-bold text-center mb-12">Planes y precios</h2>
+
+          {/* Toggle */}
+          <div className="flex justify-center mb-12">
+            <div className="inline-flex bg-gray-100 rounded-lg p-1">
+              <button
+                onClick={() => setBillingCycle('monthly')}
+                className={`px-6 py-2 rounded-md font-medium transition ${
+                  billingCycle === 'monthly'
+                    ? 'bg-white text-gray-900 shadow'
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                Mensual
+              </button>
+              <button
+                onClick={() => setBillingCycle('annual')}
+                className={`px-6 py-2 rounded-md font-medium transition ${
+                  billingCycle === 'annual'
+                    ? 'bg-white text-gray-900 shadow'
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                Anual
+              </button>
+            </div>
+          </div>
+
+          {/* Tarjetas */}
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="border border-gray-300 p-8 rounded-lg">
-              <h3 className="text-2xl font-bold mb-2 text-black">Freelance</h3>
+            {/* Freelance */}
+            <div className="border border-gray-200 rounded-xl p-8">
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">Freelance</h3>
               <p className="text-gray-600 mb-6">Para proyectos puntuales</p>
-              <div className="text-4xl font-bold mb-6 text-black">$50<span className="text-lg text-gray-600">/h</span></div>
-              <a href="#contact" className="block w-full px-6 py-3 border border-black text-black rounded-lg font-medium text-center hover:bg-black hover:text-white transition">
+              <div className="mb-8">
+                <span className="text-5xl font-bold text-gray-900">$50</span>
+                <span className="text-gray-600">/hora</span>
+              </div>
+              <a href="#contact" className="block w-full px-6 py-3 border-2 border-gray-300 text-gray-900 rounded-lg font-medium text-center hover:border-gray-400 transition">
                 Solicitar presupuesto
               </a>
             </div>
-            <div className="border-2 border-black p-8 rounded-lg bg-black text-white">
-              <div className="inline-block px-3 py-1 bg-white text-black rounded-full text-xs font-bold mb-4">Recomendado</div>
-              <h3 className="text-2xl font-bold mb-2">Agencia</h3>
-              <p className="text-gray-300 mb-6">Soluciones completas</p>
-              <div className="text-4xl font-bold mb-6">Personalizado</div>
-              <a href="#contact" className="block w-full px-6 py-3 bg-green-500 text-white rounded-lg font-medium text-center hover:bg-green-600 transition">
+
+            {/* Agencia */}
+            <div className="border-2 border-blue-600 rounded-xl p-8 bg-gradient-to-br from-blue-50 to-white">
+              <div className="inline-block px-3 py-1 bg-blue-600 text-white rounded-full text-xs font-bold mb-4">
+                ⭐ Más popular
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">Agencia</h3>
+              <p className="text-gray-600 mb-6">Soluciones completas</p>
+              <div className="mb-8">
+                <span className="text-5xl font-bold text-blue-600">Personalizado</span>
+              </div>
+              <a href="#contact" className="block w-full px-6 py-3 bg-blue-600 text-white rounded-lg font-medium text-center hover:bg-blue-700 transition">
                 Contratar ahora
               </a>
             </div>
@@ -137,28 +200,79 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section id="contact" className="bg-black text-white py-20 px-6">
+      {/* FAQ */}
+      <section id="faq" className="bg-gray-50 py-20 px-8">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-4xl font-bold text-center mb-16">Preguntas frecuentes</h2>
+          <div className="space-y-4">
+            {[
+              { q: '¿Cuáles son tus tecnologías principales?', a: 'Node.js, Python, React, Next.js, TypeScript, PostgreSQL y tecnologías cloud como Vercel y AWS.' },
+              { q: '¿Cuál es el tiempo de implementación?', a: 'Depende de la complejidad, pero típicamente 4-12 semanas para un proyecto completo.' },
+              { q: '¿Ofrecen mantenimiento post-lanzamiento?', a: 'Sí, ofrecemos planes de mantenimiento y soporte continuo.' },
+              { q: '¿Puedo empezar con un proyecto pequeño?', a: 'Por supuesto, comenzamos con un presupuesto acorde a tu necesidad.' },
+            ].map((faq, i) => (
+              <details key={i} className="bg-white p-6 rounded-lg border border-gray-200 cursor-pointer">
+                <summary className="font-bold text-gray-900 hover:text-blue-600">
+                  {faq.q}
+                </summary>
+                <p className="text-gray-600 mt-4">{faq.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Final */}
+      <section id="contact" className="bg-gradient-to-r from-blue-600 to-blue-700 text-white py-20 px-8">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-6">¿Listo para tu proyecto?</h2>
-          <p className="text-xl text-gray-300 mb-8">
-            Contacta conmigo y convirtamos tu idea en realidad
+          <h2 className="text-4xl font-bold mb-6">¿Listo para transformar tu negocio?</h2>
+          <p className="text-xl mb-8 text-blue-100">
+            Contáctame hoy y convirtamos tu idea en realidad
           </p>
-          <div className="flex gap-4 justify-center">
-            <a href="https://www.instagram.com/dukecrea" className="px-8 py-3 bg-white text-black rounded-lg font-medium hover:bg-gray-100">
+          <div className="flex gap-4 justify-center flex-wrap">
+            <a href="https://www.instagram.com/dukecrea" target="_blank" className="px-8 py-3 bg-white text-blue-600 rounded-lg font-medium hover:bg-gray-100 transition">
               Instagram @dukecrea
             </a>
-            <a href="mailto:duque629@gmail.com" className="px-8 py-3 border border-white text-white rounded-lg font-medium hover:bg-white hover:text-black transition">
-              Email
+            <a href="mailto:duque629@gmail.com" className="px-8 py-3 border-2 border-white text-white rounded-lg font-medium hover:bg-white hover:text-blue-600 transition">
+              Enviar email
             </a>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-100 py-8 px-6 text-center text-gray-600 text-sm">
-        <div className="max-w-6xl mx-auto">
-          <p>© 2026 DukeCrea. Todos los derechos reservados.</p>
+      <footer className="bg-gray-900 text-gray-400 py-12 px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-4 gap-8 mb-8">
+            <div>
+              <h4 className="font-bold text-white mb-4">Producto</h4>
+              <ul className="space-y-2 text-sm">
+                <li><a href="#projects" className="hover:text-white transition">Proyectos</a></li>
+                <li><a href="#precios" className="hover:text-white transition">Precios</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-bold text-white mb-4">Empresa</h4>
+              <ul className="space-y-2 text-sm">
+                <li><a href="https://github.com/DukeCrea" target="_blank" className="hover:text-white transition">GitHub</a></li>
+                <li><a href="https://www.instagram.com/dukecrea" target="_blank" className="hover:text-white transition">Instagram</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-bold text-white mb-4">Legal</h4>
+              <ul className="space-y-2 text-sm">
+                <li><a href="#" className="hover:text-white transition">Privacidad</a></li>
+                <li><a href="#" className="hover:text-white transition">Términos</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-bold text-white mb-4">Contacto</h4>
+              <p className="text-sm">duque629@gmail.com</p>
+            </div>
+          </div>
+          <div className="border-t border-gray-800 pt-8 text-center text-sm">
+            <p>© 2026 DukeCrea. Construido con Vercel + Next.js</p>
+          </div>
         </div>
       </footer>
     </div>
