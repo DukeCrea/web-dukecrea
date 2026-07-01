@@ -1,6 +1,12 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+
+// ⚠️ REEMPLAZA con tu número real de WhatsApp (formato: 507 + 8 dígitos, sin espacios)
+const WHATSAPP_NUMBER = '50700000000';
+const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+  'Hola DukeCrea, quiero digitalizar mi negocio. ¿Podemos hablar?'
+)}`;
 
 function HeroCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -85,37 +91,133 @@ function HeroCanvas() {
   return <canvas ref={canvasRef} aria-hidden="true" className="absolute inset-0 w-full h-full" />;
 }
 
-const projects = [
-  { id: 1, title: 'CamsMarketing', desc: 'Plataforma de marketing para autos con storefront Vite', tech: ['Laravel', 'Node.js'] },
-  { id: 2, title: 'ChampionDesk', desc: 'Sistema de gestión de ventas y cotizaciones con Telegram', tech: ['Python', 'Telegram'] },
-  { id: 3, title: 'EventosQR', desc: 'Validador de eventos con códigos QR integrado', tech: ['Node.js', 'Supabase'] },
-  { id: 4, title: 'GymFlow/BerkFW', desc: 'Plataforma de reservas para gyms y fitness', tech: ['React', 'Next.js'] },
-  { id: 5, title: 'DukeComment Bot', desc: 'Bot de Telegram para gestionar comentarios en redes', tech: ['Python', 'AI'] },
-  { id: 6, title: 'Social Media Bot', desc: 'Automatización inteligente de publicaciones', tech: ['Python', 'Automation'] },
-  { id: 7, title: 'MGC Ecosystem', desc: 'Soluciones empresariales completas en monorepo', tech: ['TypeScript', 'Enterprise'] },
+const services = [
+  {
+    icon: '🛒',
+    title: 'Tiendas online y e-commerce',
+    desc: 'Vende por internet con catálogo, carrito, pagos e inventario. Multi-país y multi-moneda si operas en más de un mercado.',
+    tags: ['Laravel', 'Filament', 'Next.js'],
+  },
+  {
+    icon: '⚙️',
+    title: 'Automatización de operaciones',
+    desc: 'Contratos, cotizaciones y facturas que se generan solos. Bots que leen cédulas con OCR y se conectan a tu CRM y Google Drive.',
+    tags: ['Python', 'Telegram', 'Zoho CRM'],
+  },
+  {
+    icon: '📊',
+    title: 'Contabilidad y facturación fiscal',
+    desc: 'Sistema contable localizado para Panamá: DGI, ITBMS, ISR y CSS. Balance, estado de resultados y reportería lista para el fisco.',
+    tags: ['TypeScript', 'DGI', 'ITBMS'],
+  },
+  {
+    icon: '🤖',
+    title: 'Marketing y redes con IA',
+    desc: 'Publicación automática de contenido, auto-respuesta de comentarios en Instagram y análisis de Google My Business con IA.',
+    tags: ['IA / Claude', 'Instagram', 'Automation'],
+  },
+  {
+    icon: '📱',
+    title: 'Apps y plataformas a medida',
+    desc: 'Sistemas web y SaaS para tu rubro: reservas, membresías, validación de eventos con QR o cualquier flujo propio de tu negocio.',
+    tags: ['React', 'Next.js', 'Supabase'],
+  },
+  {
+    icon: '📦',
+    title: 'Inventario y gestión interna',
+    desc: 'Controla stock, clientes y ventas desde un solo lugar. Menos hojas de cálculo sueltas y menos errores manuales.',
+    tags: ['Python', 'MySQL', 'Dashboards'],
+  },
+];
+
+const cases = [
+  {
+    client: 'Champion Motors',
+    sector: 'Concesionario de autos',
+    desc: 'Web del concesionario + ChampionDesk: bot de Telegram que genera contratos de compra/venta y cotizaciones, lee cédulas con OCR, se integra con Zoho CRM y Google Drive, y envía recordatorios de saldos.',
+    tags: ['Laravel', 'Python', 'Telegram', 'Zoho CRM'],
+  },
+  {
+    client: 'Camsmark',
+    sector: 'E-commerce multi-país',
+    desc: 'Tienda online única con dos mercados (Panamá y Venezuela): precio, moneda, stock y checkout separados por país. Construida en Laravel 10 + Filament 3.',
+    tags: ['Laravel 10', 'Filament 3', 'MySQL'],
+  },
+  {
+    client: 'LIBRO',
+    sector: 'Contabilidad fiscal',
+    desc: 'Sistema contable multi-país con partida doble: Balance, Estado de Resultados y Flujo de Caja, más reportería fiscal para Panamá (DGI, ITBMS, ISR, CSS) y Venezuela.',
+    tags: ['TypeScript', 'Contabilidad', 'Fiscal'],
+  },
+  {
+    client: 'GymFlow',
+    sector: 'SaaS para entrenadores',
+    desc: 'Plataforma para entrenadores personales: planes de entrenamiento, seguimiento de RPE y check-ins diarios de sus clientes.',
+    tags: ['JavaScript', 'SaaS', 'React'],
+  },
+  {
+    client: 'EventosQR',
+    sector: 'Gestión de eventos',
+    desc: 'Registro y validación de asistentes a eventos mediante códigos QR con verificación visual en la entrada.',
+    tags: ['Next.js', 'TypeScript', 'QR'],
+  },
+  {
+    client: 'DukeGBP + marketing bots',
+    sector: 'Marketing con IA',
+    desc: 'Analizador de Google My Business con recomendaciones generadas por IA, auto-respuesta de comentarios de Instagram y publicador automático de contenido.',
+    tags: ['Python', 'IA / Claude', 'Instagram'],
+  },
 ];
 
 const processSteps = [
-  { step: 1, title: 'Briefing', desc: 'Entendemos tu visión y objetivos' },
-  { step: 2, title: 'Diseño', desc: 'Planificamos la arquitectura' },
-  { step: 3, title: 'Desarrollo', desc: 'Construimos con calidad' },
-  { step: 4, title: 'Testing', desc: 'Validamos que todo funciona' },
-  { step: 5, title: 'Deploy', desc: 'Lanzamos al mercado' },
+  { step: 1, title: 'Diagnóstico', desc: 'Entiendo tu negocio y detecto qué procesos te quitan más tiempo.' },
+  { step: 2, title: 'Propuesta', desc: 'Te presento la solución, el alcance y el presupuesto claro.' },
+  { step: 3, title: 'Desarrollo', desc: 'Construyo la solución con entregas parciales para que la veas crecer.' },
+  { step: 4, title: 'Puesta en marcha', desc: 'Instalo, migro tus datos y capacito a tu equipo.' },
+  { step: 5, title: 'Soporte', desc: 'Te acompaño con mantenimiento y mejoras continuas.' },
+];
+
+const plans = [
+  {
+    name: 'Presencia digital',
+    tagline: 'Para empezar a existir en internet',
+    price: 'Desde $600',
+    features: ['Sitio web o landing profesional', 'Optimizado para Google (SEO)', 'Formulario y WhatsApp', 'Diseño responsive'],
+    featured: false,
+  },
+  {
+    name: 'Automatización',
+    tagline: 'Para dejar de trabajar manual',
+    price: 'Desde $1,500',
+    features: ['Tienda online o app a medida', 'Bots y automatización de procesos', 'Integraciones (CRM, Drive, pagos)', 'Panel de administración'],
+    featured: true,
+  },
+  {
+    name: 'Solución completa',
+    tagline: 'Digitaliza todo el negocio',
+    price: 'Cotización',
+    features: ['Sistema a medida end-to-end', 'Contabilidad y facturación fiscal', 'Marketing e IA', 'Soporte y evolución continua'],
+    featured: false,
+  },
 ];
 
 const faqs = [
-  { q: '¿Cuáles son tus tecnologías principales?', a: 'Node.js, Python, React, Next.js, TypeScript, PostgreSQL y tecnologías cloud como Vercel y AWS.' },
-  { q: '¿Cuál es el tiempo de implementación?', a: 'Depende de la complejidad, pero típicamente 4-12 semanas para un proyecto completo.' },
-  { q: '¿Ofrecen mantenimiento post-lanzamiento?', a: 'Sí, ofrecemos planes de mantenimiento y soporte continuo.' },
-  { q: '¿Puedo empezar con un proyecto pequeño?', a: 'Por supuesto, comenzamos con un presupuesto acorde a tu necesidad.' },
+  { q: '¿Trabajas con negocios pequeños o solo grandes empresas?', a: 'Trabajo con PYMEs de todos los tamaños. Empezamos con lo que más impacto te dé y crecemos desde ahí, con un presupuesto acorde a tu realidad.' },
+  { q: '¿Cuánto cuesta digitalizar mi negocio?', a: 'Depende de lo que necesites. Una presencia digital arranca desde $600 y una automatización a medida desde $1,500. Te doy un presupuesto claro tras el diagnóstico inicial, que es gratis.' },
+  { q: '¿Cuánto tarda un proyecto?', a: 'Una web sencilla puede estar en 1-2 semanas. Una plataforma o automatización completa suele tomar entre 4 y 12 semanas, con entregas parciales para que veas el avance.' },
+  { q: '¿Puedo seguir usando mi WhatsApp e Instagram?', a: 'Claro. De hecho conecto tus herramientas actuales (WhatsApp, Instagram, Google) con los nuevos sistemas para que todo trabaje junto, no por separado.' },
+  { q: '¿Me ayudas con la parte fiscal de Panamá?', a: 'Sí. Tengo sistemas contables preparados para DGI, ITBMS, ISR y CSS, así tu facturación y reportería quedan al día con la ley panameña.' },
+  { q: '¿Ofreces soporte después del lanzamiento?', a: 'Sí, ofrezco planes de mantenimiento y mejoras continuas para que tu solución siga funcionando y evolucionando con tu negocio.' },
 ];
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const navLinks = [
-    { href: '#projects', label: 'Proyectos' },
-    { href: '#precios', label: 'Precios' },
+    { href: '#servicios', label: 'Servicios' },
+    { href: '#casos', label: 'Casos' },
+    { href: '#proceso', label: 'Proceso' },
+    { href: '#planes', label: 'Planes' },
     { href: '#faq', label: 'FAQ' },
   ];
 
@@ -128,7 +230,7 @@ export default function Home() {
             <div className="w-8 h-8 bg-lime-400 rounded-lg shadow-lg shadow-lime-400/50" />
             <span className="font-bold text-lg text-white">DukeCrea</span>
           </a>
-          <nav className="hidden md:flex gap-12" aria-label="Navegación principal">
+          <nav className="hidden md:flex gap-10" aria-label="Navegación principal">
             {navLinks.map((link) => (
               <a key={link.href} href={link.href} className="text-gray-300 font-medium hover:text-lime-400 transition text-sm">
                 {link.label}
@@ -136,8 +238,13 @@ export default function Home() {
             ))}
           </nav>
           <div className="flex items-center gap-3">
-            <a href="#contact" className="hidden sm:block px-6 py-2.5 bg-lime-400 text-gray-950 rounded-lg text-sm font-bold hover:bg-lime-300 transition">
-              Contáctame
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden sm:block px-6 py-2.5 bg-lime-400 text-gray-950 rounded-lg text-sm font-bold hover:bg-lime-300 transition"
+            >
+              Hablemos
             </a>
             <button
               onClick={() => setMenuOpen(!menuOpen)}
@@ -168,11 +275,13 @@ export default function Home() {
               </a>
             ))}
             <a
-              href="#contact"
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={() => setMenuOpen(false)}
               className="px-6 py-2.5 bg-lime-400 text-gray-950 rounded-lg text-sm font-bold text-center hover:bg-lime-300 transition"
             >
-              Contáctame
+              Hablemos por WhatsApp
             </a>
           </nav>
         )}
@@ -185,25 +294,30 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-gray-950 pointer-events-none" />
 
         <div className="relative z-10 max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 drop-shadow-lg">
-            Desarrollador <span className="text-lime-400">Full-Stack</span>
+          <div className="inline-block mb-6 px-4 py-1.5 rounded-full border border-lime-400/30 bg-lime-400/10 text-lime-300 text-sm font-medium">
+            Software y automatización para PYMEs · Panamá 🇵🇦
+          </div>
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-white mb-6 drop-shadow-lg">
+            Digitaliza tu negocio y <span className="text-lime-400">deja de trabajar manual</span>
           </h1>
-          <p className="text-lg md:text-xl text-gray-100 mb-8 drop-shadow-md">
-            Construyo soluciones digitales escalables. Especializado en Node.js, Python, React y automatización con IA.
+          <p className="text-lg md:text-xl text-gray-100 mb-8 drop-shadow-md max-w-2xl mx-auto">
+            Convierto tus procesos en papel y WhatsApp manual en sistemas que trabajan solos:
+            tiendas online, automatización de ventas, contabilidad y marketing con IA.
           </p>
-          <div className="flex gap-4 justify-center mb-12 flex-wrap">
-            <a href="#contact" className="px-8 py-3 bg-lime-400 text-gray-950 rounded-lg font-bold hover:bg-lime-300 transition shadow-lg shadow-lime-400/30">
-              Trabajemos juntos
-            </a>
+          <div className="flex gap-4 justify-center mb-8 flex-wrap">
             <a
-              href="https://github.com/DukeCrea"
+              href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-8 py-3 border-2 border-white text-white rounded-lg font-bold hover:bg-white hover:text-gray-950 transition shadow-lg"
+              className="px-8 py-3 bg-lime-400 text-gray-950 rounded-lg font-bold hover:bg-lime-300 transition shadow-lg shadow-lime-400/30"
             >
-              Ver GitHub
+              Habla conmigo por WhatsApp
+            </a>
+            <a href="#casos" className="px-8 py-3 border-2 border-white text-white rounded-lg font-bold hover:bg-white hover:text-gray-950 transition shadow-lg">
+              Ver casos reales
             </a>
           </div>
+          <p className="text-sm text-gray-400">Diagnóstico inicial gratis · Sin compromiso</p>
         </div>
       </section>
 
@@ -212,10 +326,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[
-              { value: '7', label: 'Proyectos activos' },
-              { value: '50+', label: 'Clientes satisfechos' },
+              { value: '15+', label: 'Proyectos entregados' },
+              { value: '2', label: 'Países (PA · VE)' },
               { value: '5+', label: 'Años de experiencia' },
-              { value: '100%', label: 'Proyectos entregados' },
+              { value: '100%', label: 'A medida de tu negocio' },
             ].map((stat) => (
               <div key={stat.label}>
                 <div className="text-4xl font-bold text-lime-400 mb-2">{stat.value}</div>
@@ -226,10 +340,74 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Proceso */}
-      <section className="py-20 px-6 md:px-8 border-t border-gray-900 scroll-mt-16">
+      {/* Servicios */}
+      <section id="servicios" className="py-20 px-6 md:px-8 border-t border-gray-900 scroll-mt-16">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-16 text-white">Cómo trabajamos</h2>
+          <h2 className="text-4xl font-bold text-center mb-4 text-white">¿Qué puedo digitalizar de tu negocio?</h2>
+          <p className="text-gray-400 text-center mb-16 max-w-2xl mx-auto">
+            Desde tu primera tienda online hasta automatizar toda tu operación. Elige por dónde empezar.
+          </p>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {services.map((s) => (
+              <div key={s.title} className="bg-gray-950 p-6 rounded-xl border border-gray-800 hover:border-lime-400/50 transition">
+                <div className="text-3xl mb-4" aria-hidden="true">{s.icon}</div>
+                <h3 className="font-bold text-white text-lg mb-2">{s.title}</h3>
+                <p className="text-gray-400 text-sm mb-4">{s.desc}</p>
+                <div className="flex gap-2 flex-wrap">
+                  {s.tags.map((t) => (
+                    <span key={t} className="px-2 py-1 bg-lime-400/10 text-lime-300 border border-lime-400/20 text-xs font-medium rounded-full">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Casos reales */}
+      <section id="casos" className="bg-black py-20 px-6 md:px-8 border-t border-gray-900 scroll-mt-16">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-4xl font-bold text-center mb-4 text-white">Negocios que ya digitalicé</h2>
+          <p className="text-gray-400 text-center mb-16 max-w-2xl mx-auto">
+            Proyectos reales, en producción, para clientes reales de Panamá y la región.
+          </p>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {cases.map((c) => (
+              <article key={c.client} className="bg-gray-950 p-6 rounded-xl border border-gray-800 hover:border-lime-400 hover:shadow-lg hover:shadow-lime-400/20 transition flex flex-col">
+                <div className="mb-4">
+                  <h3 className="font-bold text-white text-lg">{c.client}</h3>
+                  <p className="text-lime-400 text-sm font-medium">{c.sector}</p>
+                </div>
+                <p className="text-gray-400 text-sm mb-4 flex-1">{c.desc}</p>
+                <div className="flex gap-2 flex-wrap">
+                  {c.tags.map((t) => (
+                    <span key={t} className="px-2 py-1 bg-gray-900 text-gray-300 border border-gray-800 text-xs font-medium rounded-full">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
+          <div className="text-center mt-12">
+            <a
+              href="https://github.com/DukeCrea"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block px-8 py-3 border-2 border-gray-700 text-white rounded-lg font-medium hover:border-lime-400 hover:text-lime-400 transition"
+            >
+              Ver más en GitHub
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Proceso */}
+      <section id="proceso" className="py-20 px-6 md:px-8 border-t border-gray-900 scroll-mt-16">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-4xl font-bold text-center mb-16 text-white">Cómo trabajamos juntos</h2>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
             {processSteps.map((item) => (
               <div key={item.step} className="text-center">
@@ -244,78 +422,61 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 7 Potencias */}
-      <section id="projects" className="bg-black py-20 px-6 md:px-8 border-t border-gray-900 scroll-mt-16">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-16 text-white">Mis 7 Potencias</h2>
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {projects.map((proj) => (
-              <a
-                key={proj.id}
-                href="https://github.com/DukeCrea"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-gray-950 p-6 rounded-xl border border-gray-800 hover:border-lime-400 hover:shadow-lg hover:shadow-lime-400/20 transition"
+      {/* Planes */}
+      <section id="planes" className="bg-black py-20 px-6 md:px-8 border-t border-gray-900 scroll-mt-16">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl font-bold text-center mb-4 text-white">Planes para cada etapa</h2>
+          <p className="text-gray-400 text-center mb-16 max-w-2xl mx-auto">
+            Precios de referencia para orientarte. El presupuesto final lo defino tras el diagnóstico gratis.
+          </p>
+          <div className="grid md:grid-cols-3 gap-8">
+            {plans.map((plan) => (
+              <div
+                key={plan.name}
+                className={`rounded-xl p-8 flex flex-col ${
+                  plan.featured
+                    ? 'border-2 border-lime-400 bg-gradient-to-br from-gray-900 to-gray-950 shadow-lg shadow-lime-400/10'
+                    : 'border border-gray-800 bg-gray-950'
+                }`}
               >
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 bg-lime-400/10 border border-lime-400/30 rounded-lg flex items-center justify-center font-bold text-lime-400">
-                    {proj.id}
+                {plan.featured && (
+                  <div className="inline-block self-start px-3 py-1 bg-lime-400 text-gray-950 rounded-full text-xs font-bold mb-4">
+                    ⭐ Más elegido
                   </div>
-                  <h3 className="font-bold text-white">{proj.title}</h3>
+                )}
+                <h3 className="text-2xl font-bold text-white mb-1">{plan.name}</h3>
+                <p className="text-gray-400 font-medium mb-6">{plan.tagline}</p>
+                <div className="mb-6">
+                  <span className={`text-4xl font-bold ${plan.featured ? 'text-lime-400' : 'text-white'}`}>{plan.price}</span>
                 </div>
-                <p className="text-gray-400 text-sm mb-4">{proj.desc}</p>
-                <div className="flex gap-2 flex-wrap">
-                  {proj.tech.map((t) => (
-                    <span key={t} className="px-2 py-1 bg-lime-400/10 text-lime-300 border border-lime-400/20 text-xs font-medium rounded-full">
-                      {t}
-                    </span>
+                <ul className="space-y-3 mb-8 flex-1">
+                  {plan.features.map((f) => (
+                    <li key={f} className="flex items-start gap-2 text-sm text-gray-300">
+                      <span className="text-lime-400 mt-0.5" aria-hidden="true">✓</span>
+                      {f}
+                    </li>
                   ))}
-                </div>
-              </a>
+                </ul>
+                <a
+                  href={WHATSAPP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`block w-full px-6 py-3 rounded-lg font-bold text-center transition ${
+                    plan.featured
+                      ? 'bg-lime-400 text-gray-950 hover:bg-lime-300'
+                      : 'border-2 border-gray-700 text-white hover:border-lime-400 hover:text-lime-400'
+                  }`}
+                >
+                  Solicitar cotización
+                </a>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Precios */}
-      <section id="precios" className="py-20 px-6 md:px-8 border-t border-gray-900 scroll-mt-16">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-12 text-white">Planes y precios</h2>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* Freelance */}
-            <div className="border border-gray-800 rounded-xl p-8 bg-gray-950 flex flex-col">
-              <h3 className="text-2xl font-bold text-white mb-2">Freelance</h3>
-              <p className="text-gray-400 font-medium mb-6">Para proyectos puntuales</p>
-              <div className="mb-8">
-                <span className="text-5xl font-bold text-white">$50</span>
-                <span className="text-gray-500">/hora</span>
-              </div>
-              <a href="#contact" className="mt-auto block w-full px-6 py-3 border-2 border-gray-700 text-white rounded-lg font-medium text-center hover:border-lime-400 hover:text-lime-400 transition">
-                Solicitar presupuesto
-              </a>
-            </div>
-
-            {/* Agencia */}
-            <div className="border-2 border-lime-400 rounded-xl p-8 bg-gradient-to-br from-gray-900 to-gray-950 flex flex-col shadow-lg shadow-lime-400/10">
-              <div className="inline-block self-start px-3 py-1 bg-lime-400 text-gray-950 rounded-full text-xs font-bold mb-4">
-                ⭐ Más popular
-              </div>
-              <h3 className="text-2xl font-bold text-white mb-2">Agencia</h3>
-              <p className="text-gray-300 font-medium mb-6">Soluciones completas</p>
-              <div className="mb-8">
-                <span className="text-5xl font-bold text-lime-400">Personalizado</span>
-              </div>
-              <a href="#contact" className="mt-auto block w-full px-6 py-3 bg-lime-400 text-gray-950 rounded-lg font-bold text-center hover:bg-lime-300 transition">
-                Contratar ahora
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* FAQ */}
-      <section id="faq" className="bg-black py-20 px-6 md:px-8 border-t border-gray-900 scroll-mt-16">
+      <section id="faq" className="py-20 px-6 md:px-8 border-t border-gray-900 scroll-mt-16">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-4xl font-bold text-center mb-16 text-white">Preguntas frecuentes</h2>
           <div className="space-y-4">
@@ -334,18 +495,18 @@ export default function Home() {
       {/* CTA Final */}
       <section id="contact" className="bg-gradient-to-r from-lime-400 to-lime-500 py-20 px-6 md:px-8 scroll-mt-16">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-6 text-gray-950">¿Listo para transformar tu negocio?</h2>
+          <h2 className="text-4xl font-bold mb-6 text-gray-950">¿Listo para digitalizar tu negocio?</h2>
           <p className="text-xl mb-8 text-gray-900">
-            Contáctame hoy y convirtamos tu idea en realidad
+            Cuéntame qué te quita el sueño de tu operación y te digo cómo automatizarlo. El diagnóstico es gratis.
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
             <a
-              href="https://www.instagram.com/dukecrea"
+              href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-8 py-3 bg-gray-950 text-white rounded-lg font-medium hover:bg-gray-800 transition"
+              className="px-8 py-3 bg-gray-950 text-white rounded-lg font-bold hover:bg-gray-800 transition"
             >
-              Instagram @dukecrea
+              Escríbeme por WhatsApp
             </a>
             <a href="mailto:duque629@gmail.com" className="px-8 py-3 border-2 border-gray-950 text-gray-950 rounded-lg font-bold hover:bg-gray-950 hover:text-white transition">
               Enviar email
@@ -357,12 +518,20 @@ export default function Home() {
       {/* Footer */}
       <footer className="bg-gray-950 text-gray-400 py-12 px-6 md:px-8 border-t border-gray-900">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-8 mb-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-7 h-7 bg-lime-400 rounded-lg" />
+                <span className="font-bold text-white">DukeCrea</span>
+              </div>
+              <p className="text-sm">Digitalización de negocios en Panamá 🇵🇦</p>
+            </div>
             <div>
               <h4 className="font-bold text-white mb-4">Sitio</h4>
               <ul className="space-y-2 text-sm">
-                <li><a href="#projects" className="hover:text-lime-400 transition">Proyectos</a></li>
-                <li><a href="#precios" className="hover:text-lime-400 transition">Precios</a></li>
+                <li><a href="#servicios" className="hover:text-lime-400 transition">Servicios</a></li>
+                <li><a href="#casos" className="hover:text-lime-400 transition">Casos</a></li>
+                <li><a href="#planes" className="hover:text-lime-400 transition">Planes</a></li>
                 <li><a href="#faq" className="hover:text-lime-400 transition">FAQ</a></li>
               </ul>
             </div>
@@ -383,13 +552,18 @@ export default function Home() {
             </div>
             <div>
               <h4 className="font-bold text-white mb-4">Contacto</h4>
-              <p className="text-sm">
-                <a href="mailto:duque629@gmail.com" className="hover:text-lime-400 transition">duque629@gmail.com</a>
-              </p>
+              <ul className="space-y-2 text-sm">
+                <li>
+                  <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="hover:text-lime-400 transition">WhatsApp</a>
+                </li>
+                <li>
+                  <a href="mailto:duque629@gmail.com" className="hover:text-lime-400 transition">duque629@gmail.com</a>
+                </li>
+              </ul>
             </div>
           </div>
           <div className="border-t border-gray-800 pt-8 text-center text-sm">
-            <p>© {new Date().getFullYear()} DukeCrea. Construido con Next.js + Vercel</p>
+            <p>© {new Date().getFullYear()} DukeCrea. Digitalizo tu negocio con software a medida.</p>
           </div>
         </div>
       </footer>

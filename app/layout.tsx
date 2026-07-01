@@ -12,42 +12,46 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const siteUrl = "https://web-dukecrea.vercel.app";
+const siteUrl = "https://dukecrea.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "DukeCrea — Desarrollador Full-Stack | Node.js, Python, React & IA",
+    default: "DukeCrea — Digitaliza tu negocio | Software, automatización e IA en Panamá",
     template: "%s | DukeCrea",
   },
   description:
-    "Construyo soluciones digitales escalables: aplicaciones web, bots de Telegram y automatización con IA. Especializado en Node.js, Python, React y Next.js.",
+    "Ayudo a PYMEs de Panamá a digitalizar sus operaciones: tiendas online, automatización de ventas y contratos, contabilidad fiscal (DGI, ITBMS) y marketing con IA. Menos trabajo manual, más ventas.",
   keywords: [
-    "desarrollador full-stack",
-    "Node.js",
-    "Python",
-    "React",
-    "Next.js",
-    "automatización IA",
-    "bots Telegram",
+    "digitalizar negocio Panamá",
+    "desarrollo de software Panamá",
+    "tienda online Panamá",
+    "automatización de procesos",
+    "bots de Telegram",
+    "sistema contable DGI ITBMS",
+    "e-commerce Laravel",
+    "automatización con IA",
     "DukeCrea",
   ],
   authors: [{ name: "DukeCrea", url: "https://github.com/DukeCrea" }],
   creator: "DukeCrea",
+  alternates: {
+    canonical: siteUrl,
+  },
   openGraph: {
     type: "website",
-    locale: "es_ES",
+    locale: "es_PA",
     url: siteUrl,
     siteName: "DukeCrea",
-    title: "DukeCrea — Desarrollador Full-Stack",
+    title: "DukeCrea — Digitaliza tu negocio",
     description:
-      "Construyo soluciones digitales escalables: aplicaciones web, bots de Telegram y automatización con IA.",
+      "Tiendas online, automatización de operaciones, contabilidad fiscal y marketing con IA para PYMEs de Panamá.",
   },
   twitter: {
-    card: "summary",
-    title: "DukeCrea — Desarrollador Full-Stack",
+    card: "summary_large_image",
+    title: "DukeCrea — Digitaliza tu negocio",
     description:
-      "Soluciones digitales escalables con Node.js, Python, React y automatización con IA.",
+      "Software a medida, automatización e IA para digitalizar tu negocio en Panamá.",
   },
   robots: {
     index: true,
@@ -56,19 +60,39 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0a0f14",
+  themeColor: "#050505",
   width: "device-width",
   initialScale: 1,
 };
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "Person",
+  "@type": "ProfessionalService",
   name: "DukeCrea",
   url: siteUrl,
   email: "duque629@gmail.com",
-  jobTitle: "Desarrollador Full-Stack",
-  knowsAbout: ["Node.js", "Python", "React", "Next.js", "TypeScript", "Automatización con IA"],
+  description:
+    "Digitalización de negocios: desarrollo de software a medida, tiendas online, automatización de procesos y soluciones con IA para PYMEs.",
+  founder: {
+    "@type": "Person",
+    name: "DukeCrea",
+    jobTitle: "Desarrollador Full-Stack",
+  },
+  areaServed: [
+    { "@type": "Country", name: "Panamá" },
+    { "@type": "Country", name: "Venezuela" },
+  ],
+  knowsAbout: [
+    "Desarrollo web",
+    "E-commerce",
+    "Automatización de procesos",
+    "Bots de Telegram",
+    "Contabilidad fiscal",
+    "Inteligencia artificial",
+    "Laravel",
+    "Next.js",
+    "Python",
+  ],
   sameAs: ["https://github.com/DukeCrea", "https://www.instagram.com/dukecrea"],
 };
 

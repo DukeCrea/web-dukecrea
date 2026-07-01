@@ -3,7 +3,7 @@ import type { MetadataRoute } from 'next';
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: 'https://web-dukecrea.vercel.app',
+      url: 'https://dukecrea.com',
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 1,
