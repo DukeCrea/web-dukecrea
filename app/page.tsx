@@ -14,8 +14,7 @@ import {
   WhatsAppIcon,
 } from './icons';
 
-// ⚠️ REEMPLAZA con el número real de WhatsApp de la agencia (formato: 507 + 8 dígitos, sin espacios)
-const WHATSAPP_NUMBER = '50700000000';
+const WHATSAPP_NUMBER = '50763006579';
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
   'Hola DukeCrea, quiero digitalizar mi negocio. ¿Podemos hablar?'
 )}`;
