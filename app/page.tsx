@@ -1,8 +1,20 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import {
+  CartIcon,
+  ZapIcon,
+  ChartIcon,
+  BotIcon,
+  PhoneIcon,
+  PackageIcon,
+  StarIcon,
+  CheckIcon,
+  UsersIcon,
+  WhatsAppIcon,
+} from './icons';
 
-// ⚠️ REEMPLAZA con tu número real de WhatsApp (formato: 507 + 8 dígitos, sin espacios)
+// ⚠️ REEMPLAZA con el número real de WhatsApp de la agencia (formato: 507 + 8 dígitos, sin espacios)
 const WHATSAPP_NUMBER = '50700000000';
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
   'Hola DukeCrea, quiero digitalizar mi negocio. ¿Podemos hablar?'
@@ -93,37 +105,37 @@ function HeroCanvas() {
 
 const services = [
   {
-    icon: '🛒',
+    Icon: CartIcon,
     title: 'Tiendas online y e-commerce',
     desc: 'Vende por internet con catálogo, carrito, pagos e inventario. Multi-país y multi-moneda si operas en más de un mercado.',
     tags: ['Laravel', 'Filament', 'Next.js'],
   },
   {
-    icon: '⚙️',
+    Icon: ZapIcon,
     title: 'Automatización de operaciones',
     desc: 'Contratos, cotizaciones y facturas que se generan solos. Bots que leen cédulas con OCR y se conectan a tu CRM y Google Drive.',
     tags: ['Python', 'Telegram', 'Zoho CRM'],
   },
   {
-    icon: '📊',
+    Icon: ChartIcon,
     title: 'Contabilidad y facturación fiscal',
     desc: 'Sistema contable localizado para Panamá: DGI, ITBMS, ISR y CSS. Balance, estado de resultados y reportería lista para el fisco.',
     tags: ['TypeScript', 'DGI', 'ITBMS'],
   },
   {
-    icon: '🤖',
+    Icon: BotIcon,
     title: 'Marketing y redes con IA',
     desc: 'Publicación automática de contenido, auto-respuesta de comentarios en Instagram y análisis de Google My Business con IA.',
     tags: ['IA / Claude', 'Instagram', 'Automation'],
   },
   {
-    icon: '📱',
+    Icon: PhoneIcon,
     title: 'Apps y plataformas a medida',
     desc: 'Sistemas web y SaaS para tu rubro: reservas, membresías, validación de eventos con QR o cualquier flujo propio de tu negocio.',
     tags: ['React', 'Next.js', 'Supabase'],
   },
   {
-    icon: '📦',
+    Icon: PackageIcon,
     title: 'Inventario y gestión interna',
     desc: 'Controla stock, clientes y ventas desde un solo lugar. Menos hojas de cálculo sueltas y menos errores manuales.',
     tags: ['Python', 'MySQL', 'Dashboards'],
@@ -169,12 +181,30 @@ const cases = [
   },
 ];
 
+const team = [
+  {
+    name: 'Antonio Duque',
+    role: 'Co-fundador',
+    initials: 'AD',
+  },
+  {
+    name: 'Noe Rivas',
+    role: 'Co-fundador',
+    initials: 'NR',
+  },
+  {
+    name: 'Equipo de desarrollo',
+    role: 'Desarrolladores y especialistas que se integran según cada proyecto',
+    initials: null,
+  },
+];
+
 const processSteps = [
-  { step: 1, title: 'Diagnóstico', desc: 'Entiendo tu negocio y detecto qué procesos te quitan más tiempo.' },
-  { step: 2, title: 'Propuesta', desc: 'Te presento la solución, el alcance y el presupuesto claro.' },
-  { step: 3, title: 'Desarrollo', desc: 'Construyo la solución con entregas parciales para que la veas crecer.' },
-  { step: 4, title: 'Puesta en marcha', desc: 'Instalo, migro tus datos y capacito a tu equipo.' },
-  { step: 5, title: 'Soporte', desc: 'Te acompaño con mantenimiento y mejoras continuas.' },
+  { step: 1, title: 'Diagnóstico', desc: 'Entendemos tu negocio y detectamos qué procesos te quitan más tiempo.' },
+  { step: 2, title: 'Propuesta', desc: 'Te presentamos la solución, el alcance y el presupuesto claro.' },
+  { step: 3, title: 'Desarrollo', desc: 'Construimos la solución con entregas parciales para que la veas crecer.' },
+  { step: 4, title: 'Puesta en marcha', desc: 'Instalamos, migramos tus datos y capacitamos a tu equipo.' },
+  { step: 5, title: 'Soporte', desc: 'Te acompañamos con mantenimiento y mejoras continuas.' },
 ];
 
 const plans = [
@@ -202,12 +232,12 @@ const plans = [
 ];
 
 const faqs = [
-  { q: '¿Trabajas con negocios pequeños o solo grandes empresas?', a: 'Trabajo con PYMEs de todos los tamaños. Empezamos con lo que más impacto te dé y crecemos desde ahí, con un presupuesto acorde a tu realidad.' },
-  { q: '¿Cuánto cuesta digitalizar mi negocio?', a: 'Depende de lo que necesites. Una presencia digital arranca desde $600 y una automatización a medida desde $1,500. Te doy un presupuesto claro tras el diagnóstico inicial, que es gratis.' },
+  { q: '¿Trabajan con negocios pequeños o solo grandes empresas?', a: 'Trabajamos con PYMEs de todos los tamaños. Empezamos con lo que más impacto te dé y crecemos desde ahí, con un presupuesto acorde a tu realidad.' },
+  { q: '¿Cuánto cuesta digitalizar mi negocio?', a: 'Depende de lo que necesites. Una presencia digital arranca desde $600 y una automatización a medida desde $1,500. Te damos un presupuesto claro tras el diagnóstico inicial, que es gratis.' },
   { q: '¿Cuánto tarda un proyecto?', a: 'Una web sencilla puede estar en 1-2 semanas. Una plataforma o automatización completa suele tomar entre 4 y 12 semanas, con entregas parciales para que veas el avance.' },
-  { q: '¿Puedo seguir usando mi WhatsApp e Instagram?', a: 'Claro. De hecho conecto tus herramientas actuales (WhatsApp, Instagram, Google) con los nuevos sistemas para que todo trabaje junto, no por separado.' },
-  { q: '¿Me ayudas con la parte fiscal de Panamá?', a: 'Sí. Tengo sistemas contables preparados para DGI, ITBMS, ISR y CSS, así tu facturación y reportería quedan al día con la ley panameña.' },
-  { q: '¿Ofreces soporte después del lanzamiento?', a: 'Sí, ofrezco planes de mantenimiento y mejoras continuas para que tu solución siga funcionando y evolucionando con tu negocio.' },
+  { q: '¿Puedo seguir usando mi WhatsApp e Instagram?', a: 'Claro. De hecho conectamos tus herramientas actuales (WhatsApp, Instagram, Google) con los nuevos sistemas para que todo trabaje junto, no por separado.' },
+  { q: '¿Me ayudan con la parte fiscal de Panamá?', a: 'Sí. Tenemos sistemas contables preparados para DGI, ITBMS, ISR y CSS, así tu facturación y reportería quedan al día con la ley panameña.' },
+  { q: '¿Ofrecen soporte después del lanzamiento?', a: 'Sí, ofrecemos planes de mantenimiento y mejoras continuas para que tu solución siga funcionando y evolucionando con tu negocio.' },
 ];
 
 export default function Home() {
@@ -216,7 +246,7 @@ export default function Home() {
   const navLinks = [
     { href: '#servicios', label: 'Servicios' },
     { href: '#casos', label: 'Casos' },
-    { href: '#proceso', label: 'Proceso' },
+    { href: '#equipo', label: 'Equipo' },
     { href: '#planes', label: 'Planes' },
     { href: '#faq', label: 'FAQ' },
   ];
@@ -230,7 +260,7 @@ export default function Home() {
             <div className="w-8 h-8 bg-lime-400 rounded-lg shadow-lg shadow-lime-400/50" />
             <span className="font-bold text-lg text-white">DukeCrea</span>
           </a>
-          <nav className="hidden md:flex gap-10" aria-label="Navegación principal">
+          <nav className="hidden md:flex gap-8" aria-label="Navegación principal">
             {navLinks.map((link) => (
               <a key={link.href} href={link.href} className="text-gray-300 font-medium hover:text-lime-400 transition text-sm">
                 {link.label}
@@ -242,8 +272,9 @@ export default function Home() {
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:block px-6 py-2.5 bg-lime-400 text-gray-950 rounded-lg text-sm font-bold hover:bg-lime-300 transition"
+              className="hidden sm:flex items-center gap-2 px-6 py-2.5 bg-lime-400 text-gray-950 rounded-lg text-sm font-bold hover:bg-lime-300 transition"
             >
+              <WhatsAppIcon className="w-4 h-4" />
               Hablemos
             </a>
             <button
@@ -295,23 +326,24 @@ export default function Home() {
 
         <div className="relative z-10 max-w-4xl mx-auto text-center">
           <div className="inline-block mb-6 px-4 py-1.5 rounded-full border border-lime-400/30 bg-lime-400/10 text-lime-300 text-sm font-medium">
-            Software y automatización para PYMEs · Panamá 🇵🇦
+            Agencia de software y automatización · Panamá
           </div>
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-white mb-6 drop-shadow-lg">
             Digitaliza tu negocio y <span className="text-lime-400">deja de trabajar manual</span>
           </h1>
           <p className="text-lg md:text-xl text-gray-100 mb-8 drop-shadow-md max-w-2xl mx-auto">
-            Convierto tus procesos en papel y WhatsApp manual en sistemas que trabajan solos:
-            tiendas online, automatización de ventas, contabilidad y marketing con IA.
+            Somos DukeCrea. Convertimos tus procesos en papel y WhatsApp manual en sistemas que
+            trabajan solos: tiendas online, automatización de ventas, contabilidad y marketing con IA.
           </p>
           <div className="flex gap-4 justify-center mb-8 flex-wrap">
             <a
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-8 py-3 bg-lime-400 text-gray-950 rounded-lg font-bold hover:bg-lime-300 transition shadow-lg shadow-lime-400/30"
+              className="flex items-center gap-2 px-8 py-3 bg-lime-400 text-gray-950 rounded-lg font-bold hover:bg-lime-300 transition shadow-lg shadow-lime-400/30"
             >
-              Habla conmigo por WhatsApp
+              <WhatsAppIcon className="w-5 h-5" />
+              Escríbenos por WhatsApp
             </a>
             <a href="#casos" className="px-8 py-3 border-2 border-white text-white rounded-lg font-bold hover:bg-white hover:text-gray-950 transition shadow-lg">
               Ver casos reales
@@ -343,14 +375,16 @@ export default function Home() {
       {/* Servicios */}
       <section id="servicios" className="py-20 px-6 md:px-8 border-t border-gray-900 scroll-mt-16">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-4 text-white">¿Qué puedo digitalizar de tu negocio?</h2>
+          <h2 className="text-4xl font-bold text-center mb-4 text-white">¿Qué podemos digitalizar de tu negocio?</h2>
           <p className="text-gray-400 text-center mb-16 max-w-2xl mx-auto">
             Desde tu primera tienda online hasta automatizar toda tu operación. Elige por dónde empezar.
           </p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {services.map((s) => (
               <div key={s.title} className="bg-gray-950 p-6 rounded-xl border border-gray-800 hover:border-lime-400/50 transition">
-                <div className="text-3xl mb-4" aria-hidden="true">{s.icon}</div>
+                <div className="w-12 h-12 mb-4 rounded-lg bg-lime-400/10 border border-lime-400/30 flex items-center justify-center text-lime-400">
+                  <s.Icon className="w-6 h-6" />
+                </div>
                 <h3 className="font-bold text-white text-lg mb-2">{s.title}</h3>
                 <p className="text-gray-400 text-sm mb-4">{s.desc}</p>
                 <div className="flex gap-2 flex-wrap">
@@ -369,7 +403,7 @@ export default function Home() {
       {/* Casos reales */}
       <section id="casos" className="bg-black py-20 px-6 md:px-8 border-t border-gray-900 scroll-mt-16">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-4 text-white">Negocios que ya digitalicé</h2>
+          <h2 className="text-4xl font-bold text-center mb-4 text-white">Negocios que ya digitalizamos</h2>
           <p className="text-gray-400 text-center mb-16 max-w-2xl mx-auto">
             Proyectos reales, en producción, para clientes reales de Panamá y la región.
           </p>
@@ -404,10 +438,36 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Equipo */}
+      <section id="equipo" className="py-20 px-6 md:px-8 border-t border-gray-900 scroll-mt-16">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-4xl font-bold text-center mb-4 text-white">El equipo</h2>
+          <p className="text-gray-400 text-center mb-16 max-w-2xl mx-auto">
+            DukeCrea es un equipo de trabajo: fundadores al frente de cada proyecto y desarrolladores
+            que se suman según lo que tu negocio necesite.
+          </p>
+          <div className="grid sm:grid-cols-3 gap-6">
+            {team.map((member) => (
+              <div key={member.name} className="bg-gray-950 p-8 rounded-xl border border-gray-800 hover:border-lime-400/50 transition text-center">
+                <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-lime-400/10 border-2 border-lime-400/40 flex items-center justify-center">
+                  {member.initials ? (
+                    <span className="text-2xl font-bold text-lime-400">{member.initials}</span>
+                  ) : (
+                    <UsersIcon className="w-8 h-8 text-lime-400" />
+                  )}
+                </div>
+                <h3 className="font-bold text-white text-lg mb-1">{member.name}</h3>
+                <p className="text-gray-400 text-sm">{member.role}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Proceso */}
-      <section id="proceso" className="py-20 px-6 md:px-8 border-t border-gray-900 scroll-mt-16">
+      <section id="proceso" className="bg-black py-20 px-6 md:px-8 border-t border-gray-900 scroll-mt-16">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-16 text-white">Cómo trabajamos juntos</h2>
+          <h2 className="text-4xl font-bold text-center mb-16 text-white">Cómo trabajamos</h2>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
             {processSteps.map((item) => (
               <div key={item.step} className="text-center">
@@ -423,11 +483,11 @@ export default function Home() {
       </section>
 
       {/* Planes */}
-      <section id="planes" className="bg-black py-20 px-6 md:px-8 border-t border-gray-900 scroll-mt-16">
+      <section id="planes" className="py-20 px-6 md:px-8 border-t border-gray-900 scroll-mt-16">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl font-bold text-center mb-4 text-white">Planes para cada etapa</h2>
           <p className="text-gray-400 text-center mb-16 max-w-2xl mx-auto">
-            Precios de referencia para orientarte. El presupuesto final lo defino tras el diagnóstico gratis.
+            Precios de referencia para orientarte. El presupuesto final lo definimos tras el diagnóstico gratis.
           </p>
           <div className="grid md:grid-cols-3 gap-8">
             {plans.map((plan) => (
@@ -440,8 +500,9 @@ export default function Home() {
                 }`}
               >
                 {plan.featured && (
-                  <div className="inline-block self-start px-3 py-1 bg-lime-400 text-gray-950 rounded-full text-xs font-bold mb-4">
-                    ⭐ Más elegido
+                  <div className="inline-flex items-center gap-1.5 self-start px-3 py-1 bg-lime-400 text-gray-950 rounded-full text-xs font-bold mb-4">
+                    <StarIcon className="w-3.5 h-3.5" />
+                    Más elegido
                   </div>
                 )}
                 <h3 className="text-2xl font-bold text-white mb-1">{plan.name}</h3>
@@ -452,7 +513,7 @@ export default function Home() {
                 <ul className="space-y-3 mb-8 flex-1">
                   {plan.features.map((f) => (
                     <li key={f} className="flex items-start gap-2 text-sm text-gray-300">
-                      <span className="text-lime-400 mt-0.5" aria-hidden="true">✓</span>
+                      <CheckIcon className="w-4 h-4 text-lime-400 mt-0.5 shrink-0" />
                       {f}
                     </li>
                   ))}
@@ -476,7 +537,7 @@ export default function Home() {
       </section>
 
       {/* FAQ */}
-      <section id="faq" className="py-20 px-6 md:px-8 border-t border-gray-900 scroll-mt-16">
+      <section id="faq" className="bg-black py-20 px-6 md:px-8 border-t border-gray-900 scroll-mt-16">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-4xl font-bold text-center mb-16 text-white">Preguntas frecuentes</h2>
           <div className="space-y-4">
@@ -497,16 +558,17 @@ export default function Home() {
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-4xl font-bold mb-6 text-gray-950">¿Listo para digitalizar tu negocio?</h2>
           <p className="text-xl mb-8 text-gray-900">
-            Cuéntame qué te quita el sueño de tu operación y te digo cómo automatizarlo. El diagnóstico es gratis.
+            Cuéntanos qué te quita el sueño de tu operación y te decimos cómo automatizarlo. El diagnóstico es gratis.
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
             <a
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-8 py-3 bg-gray-950 text-white rounded-lg font-bold hover:bg-gray-800 transition"
+              className="inline-flex items-center gap-2 px-8 py-3 bg-gray-950 text-white rounded-lg font-bold hover:bg-gray-800 transition"
             >
-              Escríbeme por WhatsApp
+              <WhatsAppIcon className="w-5 h-5" />
+              Escríbenos por WhatsApp
             </a>
             <a href="mailto:duque629@gmail.com" className="px-8 py-3 border-2 border-gray-950 text-gray-950 rounded-lg font-bold hover:bg-gray-950 hover:text-white transition">
               Enviar email
@@ -524,13 +586,14 @@ export default function Home() {
                 <div className="w-7 h-7 bg-lime-400 rounded-lg" />
                 <span className="font-bold text-white">DukeCrea</span>
               </div>
-              <p className="text-sm">Digitalización de negocios en Panamá 🇵🇦</p>
+              <p className="text-sm">Agencia de digitalización de negocios en Panamá.</p>
             </div>
             <div>
               <h4 className="font-bold text-white mb-4">Sitio</h4>
               <ul className="space-y-2 text-sm">
                 <li><a href="#servicios" className="hover:text-lime-400 transition">Servicios</a></li>
                 <li><a href="#casos" className="hover:text-lime-400 transition">Casos</a></li>
+                <li><a href="#equipo" className="hover:text-lime-400 transition">Equipo</a></li>
                 <li><a href="#planes" className="hover:text-lime-400 transition">Planes</a></li>
                 <li><a href="#faq" className="hover:text-lime-400 transition">FAQ</a></li>
               </ul>
@@ -563,7 +626,7 @@ export default function Home() {
             </div>
           </div>
           <div className="border-t border-gray-800 pt-8 text-center text-sm">
-            <p>© {new Date().getFullYear()} DukeCrea. Digitalizo tu negocio con software a medida.</p>
+            <p>© {new Date().getFullYear()} DukeCrea. Digitalizamos tu negocio con software a medida.</p>
           </div>
         </div>
       </footer>

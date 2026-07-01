@@ -17,11 +17,11 @@ const siteUrl = "https://dukecrea.com";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "DukeCrea — Digitaliza tu negocio | Software, automatización e IA en Panamá",
+    default: "DukeCrea — Agencia de digitalización | Software, automatización e IA en Panamá",
     template: "%s | DukeCrea",
   },
   description:
-    "Ayudo a PYMEs de Panamá a digitalizar sus operaciones: tiendas online, automatización de ventas y contratos, contabilidad fiscal (DGI, ITBMS) y marketing con IA. Menos trabajo manual, más ventas.",
+    "Somos la agencia que ayuda a PYMEs de Panamá a digitalizar sus operaciones: tiendas online, automatización de ventas y contratos, contabilidad fiscal (DGI, ITBMS) y marketing con IA. Menos trabajo manual, más ventas.",
   keywords: [
     "digitalizar negocio Panamá",
     "desarrollo de software Panamá",
@@ -33,7 +33,10 @@ export const metadata: Metadata = {
     "automatización con IA",
     "DukeCrea",
   ],
-  authors: [{ name: "DukeCrea", url: "https://github.com/DukeCrea" }],
+  authors: [
+    { name: "Antonio Duque" },
+    { name: "Noe Rivas" },
+  ],
   creator: "DukeCrea",
   alternates: {
     canonical: siteUrl,
@@ -43,13 +46,13 @@ export const metadata: Metadata = {
     locale: "es_PA",
     url: siteUrl,
     siteName: "DukeCrea",
-    title: "DukeCrea — Digitaliza tu negocio",
+    title: "DukeCrea — Agencia de digitalización de negocios",
     description:
       "Tiendas online, automatización de operaciones, contabilidad fiscal y marketing con IA para PYMEs de Panamá.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "DukeCrea — Digitaliza tu negocio",
+    title: "DukeCrea — Agencia de digitalización de negocios",
     description:
       "Software a medida, automatización e IA para digitalizar tu negocio en Panamá.",
   },
@@ -72,12 +75,11 @@ const jsonLd = {
   url: siteUrl,
   email: "duque629@gmail.com",
   description:
-    "Digitalización de negocios: desarrollo de software a medida, tiendas online, automatización de procesos y soluciones con IA para PYMEs.",
-  founder: {
-    "@type": "Person",
-    name: "DukeCrea",
-    jobTitle: "Desarrollador Full-Stack",
-  },
+    "Agencia de digitalización de negocios: desarrollo de software a medida, tiendas online, automatización de procesos y soluciones con IA para PYMEs.",
+  founders: [
+    { "@type": "Person", name: "Antonio Duque" },
+    { "@type": "Person", name: "Noe Rivas" },
+  ],
   areaServed: [
     { "@type": "Country", name: "Panamá" },
     { "@type": "Country", name: "Venezuela" },
