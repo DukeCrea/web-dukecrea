@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -20,13 +22,16 @@ import {
   cases,
   faqs,
   getWhatsAppUrl,
+  megaMenuColumns,
   navLinks,
   plans,
+  premiumStack,
   processSteps,
   serviceCategoryMap,
   siteConfig,
   team,
   technologies,
+  workflowSteps,
   type Service,
 } from "./lib/site";
 
@@ -168,83 +173,327 @@ function SectionHeading({
   );
 }
 
-export default function HomePage() {
+function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [megaOpen, setMegaOpen] = useState(false);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion();
+  const whatsappUrl = getWhatsAppUrl();
+  const secondaryLinks = navLinks.filter((link) => link.label !== "Soluciones");
+
+  useEffect(() => {
+    if (!megaOpen || !panelRef.current || reduceMotion) return;
+
+    const context = gsap.context(() => {
+      gsap.fromTo(
+        panelRef.current,
+        { autoAlpha: 0, y: 12, scale: 0.98 },
+        { autoAlpha: 1, y: 0, scale: 1, duration: 0.22, ease: "power2.out" },
+      );
+    }, panelRef.current);
+
+    return () => context.revert();
+  }, [megaOpen, reduceMotion]);
+
+  return (
+    <header className="fixed top-0 z-50 w-full border-b border-gray-900 bg-black/95 backdrop-blur">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 md:px-8">
+        <Link href="/" className="flex items-center gap-2" aria-label="DukeCrea inicio">
+          <div className="h-8 w-8 rounded-lg bg-lime-400 shadow-lg shadow-lime-400/50" />
+          <span className="text-lg font-bold text-white">DukeCrea</span>
+        </Link>
+
+        <nav className="hidden items-center gap-7 md:flex" aria-label="Navegación principal">
+          <div className="relative" onMouseEnter={() => setMegaOpen(true)}>
+            <button
+              type="button"
+              onClick={() => setMegaOpen((open) => !open)}
+              onFocus={() => setMegaOpen(true)}
+              className="text-sm font-semibold text-gray-200 transition hover:text-lime-300"
+              aria-expanded={megaOpen}
+              aria-haspopup="true"
+            >
+              Soluciones
+            </button>
+          </div>
+          {secondaryLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="text-sm font-medium text-gray-300 transition hover:text-lime-400"
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+
+        <div className="flex items-center gap-3">
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden items-center gap-2 rounded-lg bg-lime-400 px-6 py-2.5 text-sm font-bold text-gray-950 transition hover:bg-lime-300 sm:flex"
+          >
+            <WhatsAppIcon className="h-4 w-4" />
+            Hablemos
+          </a>
+          <button
+            type="button"
+            onClick={() => setMenuOpen((open) => !open)}
+            className="rounded-lg p-2 text-gray-300 transition hover:bg-gray-900 hover:text-white md:hidden"
+            aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
+            aria-expanded={menuOpen}
+          >
+            <svg className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
+              {menuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      {megaOpen && (
+        <div
+          ref={panelRef}
+          onMouseLeave={() => setMegaOpen(false)}
+          className="absolute left-1/2 top-full hidden w-[min(960px,calc(100vw-3rem))] -translate-x-1/2 pt-3 md:block"
+        >
+          <div className="grid gap-6 rounded-xl border border-lime-400/20 bg-gray-950/98 p-6 shadow-2xl shadow-black/60 backdrop-blur lg:grid-cols-2">
+            {megaMenuColumns.map((column) => (
+              <div key={column.title}>
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-lime-300">{column.eyebrow}</p>
+                <h3 className="mt-2 text-xl font-bold text-white">{column.title}</h3>
+                <div className="mt-5 grid gap-3">
+                  {column.items.map((item) => (
+                    <Link
+                      key={item.title}
+                      href={item.href}
+                      onClick={() => setMegaOpen(false)}
+                      className="rounded-lg border border-gray-800 bg-black/60 p-4 transition hover:-translate-y-0.5 hover:border-lime-400/60 hover:bg-lime-400/10"
+                    >
+                      <span className="font-bold text-white">{item.title}</span>
+                      <span className="mt-1 block text-sm leading-6 text-gray-400">{item.description}</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {menuOpen && (
+        <nav className="max-h-[calc(100vh-4rem)] overflow-y-auto border-t border-gray-900 bg-black px-6 py-4 md:hidden" aria-label="Navegación móvil">
+          <div className="space-y-5">
+            {megaMenuColumns.map((column) => (
+              <div key={column.title}>
+                <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-lime-300">{column.eyebrow}</p>
+                <div className="space-y-2">
+                  {column.items.map((item) => (
+                    <Link
+                      key={item.title}
+                      href={item.href}
+                      onClick={() => setMenuOpen(false)}
+                      className="block rounded-lg border border-gray-900 bg-gray-950 p-3 text-sm text-gray-300"
+                    >
+                      <span className="font-semibold text-white">{item.title}</span>
+                      <span className="mt-1 block leading-5 text-gray-500">{item.description}</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ))}
+            <div className="grid gap-3 border-t border-gray-900 pt-4">
+              {secondaryLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="font-medium text-gray-300 transition hover:text-lime-400"
+                >
+                  {link.label}
+                </Link>
+              ))}
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMenuOpen(false)}
+                className="rounded-lg bg-lime-400 px-6 py-2.5 text-center text-sm font-bold text-gray-950 transition hover:bg-lime-300"
+              >
+                Hablemos por WhatsApp
+              </a>
+            </div>
+          </div>
+        </nav>
+      )}
+    </header>
+  );
+}
+
+function TechTicker() {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion();
+  const tickerItems = [...premiumStack, ...premiumStack];
+
+  useEffect(() => {
+    if (reduceMotion || !trackRef.current) return;
+
+    const context = gsap.context(() => {
+      gsap.to(trackRef.current, {
+        xPercent: -50,
+        duration: 28,
+        ease: "none",
+        repeat: -1,
+      });
+    }, trackRef.current);
+
+    return () => context.revert();
+  }, [reduceMotion]);
+
+  return (
+    <section className="overflow-hidden border-t border-gray-900 bg-gray-950 py-6" aria-label="Stack tecnológico DukeCrea">
+      <div className="mb-4 text-center text-xs font-semibold uppercase tracking-[0.2em] text-lime-300">
+        Stack tecnológico para ecosistemas B2B
+      </div>
+      <div className="relative mx-auto max-w-7xl overflow-hidden">
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-gray-950 to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-gray-950 to-transparent" />
+        <div ref={trackRef} className={`flex w-max gap-3 px-6 ${reduceMotion ? "flex-wrap justify-center" : ""}`}>
+          {tickerItems.map((tech, index) => (
+            <span
+              key={`${tech}-${index}`}
+              className="rounded-full border border-lime-400/20 bg-black px-5 py-2 text-sm font-semibold text-lime-100 shadow-sm shadow-lime-400/5"
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function WorkflowAutomation() {
+  const containerRef = useRef<HTMLElement>(null);
+  const pathRef = useRef<SVGPathElement>(null);
+  const reduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    if (reduceMotion || !containerRef.current) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const context = gsap.context(() => {
+      if (pathRef.current) {
+        const pathLength = pathRef.current.getTotalLength();
+        gsap.set(pathRef.current, {
+          strokeDasharray: pathLength,
+          strokeDashoffset: pathLength,
+        });
+        gsap.to(pathRef.current, {
+          strokeDashoffset: 0,
+          ease: "none",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 75%",
+            end: "bottom 45%",
+            scrub: true,
+          },
+        });
+      }
+
+      gsap.fromTo(
+        ".workflow-card",
+        { autoAlpha: 0, y: 22 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.45,
+          ease: "power2.out",
+          stagger: 0.1,
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 70%",
+          },
+        },
+      );
+    }, containerRef.current);
+
+    return () => context.revert();
+  }, [reduceMotion]);
+
+  return (
+    <section ref={containerRef} id="automatizacion" className="border-t border-gray-900 bg-black px-6 py-20 md:px-8">
+      <div className="mx-auto max-w-7xl">
+        <SectionHeading
+          eyebrow="Automatización B2B"
+          title="Del anuncio al CRM sin perder trazabilidad"
+          description="Un flujo diseñado para reducir costos operativos, recuperar leads a tiempo y proteger datos relacionales con seguimiento comercial claro."
+        />
+        <div className="grid gap-8 lg:grid-cols-[1fr_1.1fr] lg:items-center">
+          <div className="relative min-h-[320px] rounded-xl border border-gray-800 bg-gray-950 p-6">
+            <svg viewBox="0 0 620 320" className="h-full min-h-[280px] w-full" role="img" aria-label="Flujo desde anuncio hasta CRM y panel de ROI">
+              <defs>
+                <filter id="workflowGlow">
+                  <feGaussianBlur stdDeviation="4" result="coloredBlur" />
+                  <feMerge>
+                    <feMergeNode in="coloredBlur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+              </defs>
+              <path
+                ref={pathRef}
+                d="M56 160 C140 70 214 70 300 160 S468 250 564 160"
+                fill="none"
+                stroke="#a3e635"
+                strokeWidth="4"
+                strokeLinecap="round"
+                filter="url(#workflowGlow)"
+              />
+              {[
+                { x: 56, y: 160, label: "Ads" },
+                { x: 176, y: 96, label: "Lead" },
+                { x: 300, y: 160, label: "DB" },
+                { x: 444, y: 224, label: "CRM" },
+                { x: 564, y: 160, label: "ROI" },
+              ].map((node) => (
+                <g key={node.label}>
+                  <circle cx={node.x} cy={node.y} r="34" fill="#050505" stroke="#a3e635" strokeWidth="2" />
+                  <text x={node.x} y={node.y + 5} textAnchor="middle" className="fill-lime-200 text-[18px] font-bold">
+                    {node.label}
+                  </text>
+                </g>
+              ))}
+            </svg>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {workflowSteps.map((step) => (
+              <div key={step.label} className="workflow-card rounded-xl border border-gray-800 bg-gray-950 p-5">
+                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-lime-400 text-sm font-bold text-gray-950">
+                  {step.label}
+                </div>
+                <h3 className="text-lg font-bold text-white">{step.title}</h3>
+                <p className="mt-2 text-sm leading-6 text-gray-400">{step.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export default function HomePage() {
   const whatsappUrl = getWhatsAppUrl();
 
   return (
     <div className="min-h-screen bg-black text-white">
-      <header className="fixed top-0 z-50 w-full border-b border-gray-900 bg-black/95 backdrop-blur">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 md:px-8">
-          <Link href="/" className="flex items-center gap-2" aria-label="DukeCrea inicio">
-            <div className="h-8 w-8 rounded-lg bg-lime-400 shadow-lg shadow-lime-400/50" />
-            <span className="text-lg font-bold text-white">DukeCrea</span>
-          </Link>
-
-          <nav className="hidden gap-8 md:flex" aria-label="Navegación principal">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-sm font-medium text-gray-300 transition hover:text-lime-400"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-
-          <div className="flex items-center gap-3">
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden items-center gap-2 rounded-lg bg-lime-400 px-6 py-2.5 text-sm font-bold text-gray-950 transition hover:bg-lime-300 sm:flex"
-            >
-              <WhatsAppIcon className="h-4 w-4" />
-              Hablemos
-            </a>
-            <button
-              type="button"
-              onClick={() => setMenuOpen((open) => !open)}
-              className="rounded-lg p-2 text-gray-300 transition hover:bg-gray-900 hover:text-white md:hidden"
-              aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
-              aria-expanded={menuOpen}
-            >
-              <svg className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
-                {menuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
-          </div>
-        </div>
-
-        {menuOpen && (
-          <nav className="flex flex-col gap-4 border-t border-gray-900 bg-black px-6 py-4 md:hidden" aria-label="Navegación móvil">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setMenuOpen(false)}
-                className="font-medium text-gray-300 transition hover:text-lime-400"
-              >
-                {link.label}
-              </Link>
-            ))}
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setMenuOpen(false)}
-              className="rounded-lg bg-lime-400 px-6 py-2.5 text-center text-sm font-bold text-gray-950 transition hover:bg-lime-300"
-            >
-              Hablemos por WhatsApp
-            </a>
-          </nav>
-        )}
-      </header>
+      <Header />
 
       <main>
         <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gray-950 px-6 pb-16 pt-32 md:px-8">
@@ -258,7 +507,7 @@ export default function HomePage() {
               transition={{ duration: 0.5 }}
               className="mb-6 inline-flex rounded-full border border-lime-400/30 bg-lime-400/10 px-4 py-1.5 text-sm font-medium text-lime-300"
             >
-              Agencia de software, automatización e IA para negocios
+              Firma tecnológica para infraestructura digital, adquisición y automatización
             </motion.div>
             <motion.h1
               initial={{ opacity: 0, y: 22 }}
@@ -266,7 +515,7 @@ export default function HomePage() {
               transition={{ duration: 0.6, delay: 0.08 }}
               className="mb-6 text-4xl font-bold leading-tight text-white drop-shadow-lg sm:text-5xl md:text-7xl"
             >
-              Digitaliza tu negocio y <span className="text-lime-400">deja de trabajar manual</span>
+              Infraestructura digital para <span className="text-lime-400">vender, operar y escalar</span>
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 22 }}
@@ -274,8 +523,8 @@ export default function HomePage() {
               transition={{ duration: 0.6, delay: 0.16 }}
               className="mx-auto mb-8 max-w-2xl text-lg leading-8 text-gray-100 drop-shadow-md md:text-xl"
             >
-              Convertimos procesos en papel, Excel y WhatsApp manual en sistemas que trabajan contigo:
-              páginas web, e-commerce, software, automatizaciones, Ads, SEO/GEO y paneles inteligentes.
+              Diseñamos ecosistemas B2B que conectan web, e-commerce, WordPress, Shopify, software, Ads,
+              automatizaciones y datos para reducir costos operativos y recuperar oportunidades.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 22 }}
@@ -296,7 +545,7 @@ export default function HomePage() {
                 href="/#servicios"
                 className="rounded-lg border-2 border-white px-8 py-3 font-bold text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-white hover:text-gray-950"
               >
-                Explorar servicios
+                Explorar soluciones
               </Link>
             </motion.div>
             <p className="text-sm text-gray-400">Diagnóstico inicial gratis · Sin compromiso</p>
@@ -307,7 +556,7 @@ export default function HomePage() {
           <div className="mx-auto grid max-w-7xl grid-cols-2 gap-8 text-center md:grid-cols-4">
             {[
               { value: "15+", label: "Proyectos entregados" },
-              { value: "16", label: "Servicios digitales" },
+              { value: "16", label: "Soluciones digitales" },
               { value: "5+", label: "Años de experiencia" },
               { value: "100%", label: "A medida de tu negocio" },
             ].map((stat) => (
@@ -319,12 +568,14 @@ export default function HomePage() {
           </div>
         </section>
 
+        <TechTicker />
+
         <Reveal id="servicios" className="scroll-mt-16 border-t border-gray-900 px-6 py-20 md:px-8">
           <div className="mx-auto max-w-7xl">
             <SectionHeading
-              eyebrow="Servicios"
-              title="Todo lo que puedes sumar a tu sistema digital"
-              description="La Home conserva su base actual y ahora conecta a páginas específicas para cada servicio, listas para SEO, GEO y campañas."
+              eyebrow="Soluciones"
+              title="Infraestructura digital para cada punto crítico del negocio"
+              description="Cada línea conecta páginas, comercio, automatización, datos y contenido para que la inversión digital tenga lectura de negocio."
             />
             <div className="space-y-12">
               {serviceCategoryMap.map((category) => (
@@ -352,7 +603,7 @@ export default function HomePage() {
                             {service.title}
                           </h4>
                           <p className="mb-4 text-sm leading-6 text-gray-400">{service.summary}</p>
-                          <span className="text-sm font-bold text-lime-300">Ver servicio</span>
+                          <span className="text-sm font-bold text-lime-300">Ver solución</span>
                         </Link>
                       );
                     })}
@@ -373,8 +624,8 @@ export default function HomePage() {
                 Un ecosistema digital, no piezas sueltas
               </h2>
               <p className="mt-4 leading-7 text-gray-400">
-                Sumamos páginas, automatizaciones, datos y marketing alrededor de lo que ya existe en tu negocio.
-                La meta no es tener más herramientas: es que el sistema trabaje mejor.
+                Sumamos infraestructura web, automatizaciones, datos y marketing alrededor de lo que ya existe en tu negocio.
+                La meta no es tener más herramientas: es recuperar oportunidades, reducir fricción y operar con continuidad.
               </p>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
@@ -387,6 +638,8 @@ export default function HomePage() {
             </div>
           </div>
         </Reveal>
+
+        <WorkflowAutomation />
 
         <Reveal id="casos" className="scroll-mt-16 border-t border-gray-900 px-6 py-20 md:px-8">
           <div className="mx-auto max-w-7xl">
@@ -476,7 +729,7 @@ export default function HomePage() {
             <SectionHeading
               eyebrow="Stack"
               title="Tecnologías y herramientas que usamos"
-              description="Elegimos herramientas modernas, mantenibles y apropiadas para el tamaño real del negocio."
+              description="Elegimos tecnología según el modelo operativo: a medida cuando hace falta control, WordPress o Shopify cuando conviene velocidad y administración."
             />
             <div className="flex flex-wrap justify-center gap-3">
               {technologies.map((tech) => (
@@ -608,7 +861,7 @@ export default function HomePage() {
               </ul>
             </div>
             <div>
-              <h4 className="mb-4 font-bold text-white">Servicios</h4>
+              <h4 className="mb-4 font-bold text-white">Soluciones</h4>
               <ul className="space-y-2 text-sm">
                 {serviceCategoryMap.map((category) => (
                   <li key={category.id}>

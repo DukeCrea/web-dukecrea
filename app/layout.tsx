@@ -22,11 +22,13 @@ export const metadata: Metadata = {
     template: "%s | DukeCrea",
   },
   description:
-    "DukeCrea digitaliza negocios con páginas web, e-commerce, software a medida, automatizaciones, SEO/GEO, Ads, análisis de datos y marketing con IA.",
+    "DukeCrea crea infraestructura digital B2B con Next.js, WordPress, Shopify, software a medida, automatizaciones, Ads, SEO/GEO y análisis de datos.",
   keywords: [
     "DukeCrea",
     "desarrollo de software",
     "páginas web corporativas",
+    "WordPress",
+    "Shopify",
     "e-commerce",
     "landing pages",
     "automatización con IA",
@@ -49,7 +51,7 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     title: "DukeCrea - Software, automatización e IA para negocios",
     description:
-      "Webs, e-commerce, software a medida, automatizaciones, SEO/GEO, Ads, paneles inteligentes y marketing con IA.",
+      "Infraestructura web, e-commerce, WordPress, Shopify, software a medida, automatizaciones, SEO/GEO, Ads y paneles inteligentes.",
   },
   twitter: {
     card: "summary_large_image",
@@ -83,7 +85,7 @@ const jsonLd = {
   url: siteConfig.url,
   email: siteConfig.email,
   description:
-    "Agencia de digitalización de negocios: desarrollo web, software a medida, automatización, Ads, SEO/GEO, dashboards e IA.",
+    "Firma tecnológica de infraestructura digital: desarrollo web, WordPress, Shopify, software a medida, automatización, Ads, SEO/GEO, paneles e IA.",
   founders: [
     { "@type": "Person", name: "Antonio Duque" },
     { "@type": "Person", name: "Noe Rivas" },
@@ -95,7 +97,7 @@ const jsonLd = {
   sameAs: [siteConfig.github, siteConfig.instagram],
   hasOfferCatalog: {
     "@type": "OfferCatalog",
-    name: "Servicios DukeCrea",
+    name: "Soluciones DukeCrea",
     itemListElement: services.map((service) => ({
       "@type": "Offer",
       itemOffered: {

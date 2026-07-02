@@ -36,6 +36,22 @@ export type Service = {
   related: string[];
 };
 
+export type MegaMenuColumn = {
+  title: string;
+  eyebrow: string;
+  items: Array<{
+    title: string;
+    description: string;
+    href: string;
+  }>;
+};
+
+export type WorkflowStep = {
+  label: string;
+  title: string;
+  description: string;
+};
+
 export const serviceCategories: Array<{
   id: ServiceCategory;
   label: string;
@@ -45,9 +61,9 @@ export const serviceCategories: Array<{
   {
     id: "dev",
     label: "Dev",
-    headline: "Webs, software y sistemas que venden y operan",
+    headline: "Infraestructura web, commerce y sistemas que venden y operan",
     description:
-      "Construimos presencia digital, tiendas online, plataformas internas y paneles para que tu negocio funcione con menos fricción.",
+      "Construimos presencia digital en Next.js, WordPress o Shopify, tiendas online, plataformas internas y paneles para que el negocio funcione con menos fricción.",
   },
   {
     id: "automation",
@@ -75,13 +91,13 @@ export const services: Service[] = [
     shortTitle: "Web corporativa",
     metaTitle: "Páginas web corporativas en Panamá",
     metaDescription:
-      "Diseño y desarrollo de páginas web corporativas rápidas, profesionales y optimizadas para captar clientes.",
+      "Diseño y desarrollo de páginas web corporativas en Next.js, WordPress o Shopify, rápidas, profesionales y optimizadas para captar clientes.",
     eyebrow: "Presencia digital profesional",
     heroTitle: "Una web corporativa que presenta, convence y convierte",
     summary:
-      "Sitios institucionales rápidos, claros y preparados para Google, WhatsApp y campañas.",
+      "Sitios institucionales rápidos, claros y preparados para Google, WhatsApp, campañas, WordPress, Shopify o desarrollo a medida.",
     description:
-      "Creamos páginas corporativas para empresas que necesitan transmitir confianza, explicar sus servicios y convertir visitas en conversaciones comerciales.",
+      "Creamos páginas corporativas para empresas que necesitan transmitir confianza, explicar su oferta y convertir visitas en conversaciones comerciales, usando Next.js, WordPress o Shopify según el objetivo del proyecto.",
     outcomes: [
       "Tu empresa se ve profesional desde el primer contacto.",
       "Los clientes entienden rápido qué vendes y cómo contactarte.",
@@ -93,9 +109,10 @@ export const services: Service[] = [
       "Texto comercial base",
       "Formulario, WhatsApp y enlaces sociales",
       "SEO técnico inicial",
+      "Base administrable en WordPress o Shopify cuando el cliente lo necesita",
     ],
     process: ["Objetivos iniciales", "Estructura y textos", "Diseño visual", "Desarrollo Next.js", "Revisión final y publicación"],
-    stack: ["Next.js", "React", "Tailwind CSS", "SEO técnico", "Analítica"],
+    stack: ["Next.js", "React", "WordPress", "Shopify", "Tailwind CSS", "SEO técnico", "Analítica"],
     faq: [
       {
         q: "¿En cuánto tiempo puede estar lista?",
@@ -104,6 +121,10 @@ export const services: Service[] = [
       {
         q: "¿Puedo pedir cambios luego del lanzamiento?",
         a: "Sí. Podemos dejar una fase de ajustes y luego un plan de mantenimiento mensual.",
+      },
+      {
+        q: "¿Trabajan con WordPress o Shopify?",
+        a: "Sí. Podemos desarrollar, optimizar o migrar sitios en WordPress y Shopify cuando conviene tener una base administrable o una tienda con operación rápida.",
       },
     ],
     related: ["landing-pages", "seo-y-geo", "gestion-control-ads"],
@@ -117,13 +138,13 @@ export const services: Service[] = [
     shortTitle: "E-commerce",
     metaTitle: "Desarrollo de e-commerce y tiendas online",
     metaDescription:
-      "Tiendas online con catálogo, carrito, pagos, inventario y panel administrativo para vender por internet.",
+      "Tiendas online con Shopify o desarrollo a medida, catálogo, carrito, pagos, inventario y panel administrativo para vender por internet.",
     eyebrow: "Venta online",
     heroTitle: "Una tienda online lista para vender y administrar",
     summary:
-      "E-commerce con catálogo, inventario, proceso de pago, pagos y panel para operar sin depender de hojas de cálculo.",
+      "E-commerce en Shopify o a medida, con catálogo, inventario, proceso de pago y panel para operar sin depender de hojas de cálculo.",
     description:
-      "Desarrollamos tiendas online para negocios que quieren vender con control real sobre productos, precios, inventario, pedidos y clientes.",
+      "Desarrollamos tiendas online para negocios que quieren vender con control real sobre productos, precios, inventario, pedidos y clientes. Podemos trabajar sobre Shopify o crear una solución a medida cuando la operación necesita más control.",
     outcomes: [
       "Centralizas ventas e inventario en un solo sistema.",
       "Puedes vender en más de un mercado o moneda si lo necesitas.",
@@ -135,9 +156,10 @@ export const services: Service[] = [
       "Panel administrativo",
       "Gestión de pedidos e inventario",
       "Integraciones de pago y WhatsApp",
+      "Configuración o evolución de Shopify cuando aplica",
     ],
     process: ["Modelo de catálogo", "Diseño de compra", "Integraciones", "Panel administrativo", "Pruebas de pedido"],
-    stack: ["Next.js", "Laravel", "Filament", "MySQL", "Pasarelas de pago"],
+    stack: ["Shopify", "Next.js", "Laravel", "Filament", "MySQL", "Pasarelas de pago"],
     faq: [
       {
         q: "¿Puede manejar varios países?",
@@ -146,6 +168,10 @@ export const services: Service[] = [
       {
         q: "¿Incluye panel administrativo?",
         a: "Sí. La tienda se entrega con panel para productos, pedidos, clientes y ajustes operativos.",
+      },
+      {
+        q: "¿Conviene Shopify o desarrollo a medida?",
+        a: "Shopify conviene cuando necesitas salir rápido y operar con herramientas maduras. Un desarrollo a medida conviene cuando hay reglas, integraciones o flujos propios que Shopify no cubre bien.",
       },
     ],
     related: ["panel-monitor-administrativo-inteligente", "gestion-control-ads", "seo-y-geo"],
@@ -165,7 +191,7 @@ export const services: Service[] = [
     summary:
       "Páginas de campaña con mensaje claro, CTA fuerte y estructura pensada para Google Ads, Meta Ads y WhatsApp.",
     description:
-      "Creamos landing pages para validar ofertas, lanzar servicios, captar leads y medir mejor el retorno de tus campañas.",
+      "Creamos landing pages para validar ofertas, lanzar soluciones, captar leads y medir mejor el retorno de tus campañas.",
     outcomes: [
       "Reducen distracciones y enfocan al usuario en una acción.",
       "Mejoran la calidad de leads de campañas pagas.",
@@ -187,7 +213,7 @@ export const services: Service[] = [
       },
       {
         q: "¿Puede tener varias versiones?",
-        a: "Sí. Podemos crear variantes para diferentes públicos, ciudades, servicios o anuncios.",
+        a: "Sí. Podemos crear variantes para diferentes públicos, ciudades, soluciones o anuncios.",
       },
     ],
     related: ["gestion-control-ads", "calculo-roi-publicitario", "paginas-web-corporativas"],
@@ -249,7 +275,7 @@ export const services: Service[] = [
     summary:
       "Optimizamos estructura, metadata, contenido, intención de búsqueda y datos estructurados para buscadores y asistentes de IA.",
     description:
-      "Trabajamos SEO tradicional y GEO para que tus servicios sean claros para personas, Google y motores generativos que resumen respuestas.",
+      "Trabajamos SEO tradicional y GEO para que tus soluciones sean claras para personas, Google y motores generativos que resumen respuestas.",
     outcomes: [
       "Mejor estructura para indexación y rastreo.",
       "Contenido con respuestas claras a intención comercial.",
@@ -313,7 +339,7 @@ export const services: Service[] = [
       },
       {
         q: "¿Incluye diseño de anuncios?",
-        a: "Podemos coordinar piezas y textos comerciales, o integrarlo con el servicio de creación de contenido y video.",
+        a: "Podemos coordinar piezas y textos comerciales, o integrarlo con la solución de creación de contenido y video.",
       },
     ],
     related: ["landing-pages", "evaluacion-inversion-ads", "calculo-roi-publicitario"],
@@ -340,13 +366,13 @@ export const services: Service[] = [
       "Mejor control de rendimiento por área.",
     ],
     deliverables: [
-      "Dashboard de KPIs",
+      "Panel de KPIs",
       "Filtros por periodo/canal",
       "Integración de datos",
       "Roles de acceso",
       "Exportes o reportes",
     ],
-    process: ["KPIs", "Fuentes de datos", "Modelo", "Dashboard", "Validación"],
+    process: ["KPIs", "Fuentes de datos", "Modelo", "Panel", "Validación"],
     stack: ["Next.js", "PostgreSQL", "APIs", "Gráficos", "Análisis de datos"],
     faq: [
       {
@@ -397,7 +423,7 @@ export const services: Service[] = [
       },
       {
         q: "¿Puede usar información de mi empresa?",
-        a: "Sí. Creamos una base de conocimiento con servicios, horarios, precios orientativos y reglas de atención.",
+        a: "Sí. Creamos una base de conocimiento con soluciones, horarios, precios orientativos y reglas de atención.",
       },
     ],
     related: ["control-gestion-atencion-leads", "respuestas-automatizadas-comentarios-redes-sociales", "software-automatizado-publicaciones-redes-sociales"],
@@ -473,7 +499,7 @@ export const services: Service[] = [
       "Pruebas de tono",
     ],
     process: ["Auditoría de comentarios", "Guiones", "Reglas", "Automatización", "Monitoreo"],
-    stack: ["Instagram", "Meta", "IA", "Python", "Automation"],
+    stack: ["Instagram", "Meta", "IA", "Python", "Automatización"],
     faq: [
       {
         q: "¿La respuesta puede sonar humana?",
@@ -523,7 +549,7 @@ export const services: Service[] = [
       },
       {
         q: "¿Incluye calendario de publicaciones?",
-        a: "Puede incluir recomendaciones base o conectarse con el servicio de software automatizado para publicaciones.",
+        a: "Puede incluir recomendaciones base o conectarse con la solución de software automatizado para publicaciones.",
       },
     ],
     related: ["creacion-edicion-videos", "seo-y-geo", "software-automatizado-publicaciones-redes-sociales"],
@@ -649,7 +675,7 @@ export const services: Service[] = [
       },
       {
         q: "¿Incluye cálculo de ROI?",
-        a: "Puede incluirlo, y si necesitas una herramienta continua tenemos el servicio de cálculo de ROI publicitario.",
+        a: "Puede incluirlo, y si necesitas una herramienta continua tenemos la solución de cálculo de ROI publicitario.",
       },
     ],
     related: ["calculo-roi-publicitario", "gestion-control-ads", "landing-pages"],
@@ -682,7 +708,7 @@ export const services: Service[] = [
       "Reporte por canal",
       "Recomendaciones",
     ],
-    process: ["Variables", "Datos", "Modelo", "Dashboard", "Optimización"],
+    process: ["Variables", "Datos", "Modelo", "Panel", "Optimización"],
     stack: ["Hojas de cálculo", "Paneles", "GA4", "Ads", "Análisis de datos"],
     faq: [
       {
@@ -750,11 +776,105 @@ export function getServiceBySlug(slug: string) {
 }
 
 export const navLinks = [
-  { href: "/#servicios", label: "Servicios" },
+  { href: "/#servicios", label: "Soluciones" },
   { href: "/#casos", label: "Casos" },
   { href: "/#equipo", label: "Equipo" },
   { href: "/#planes", label: "Planes" },
   { href: "/#faq", label: "FAQ" },
+];
+
+export const megaMenuColumns: MegaMenuColumn[] = [
+  {
+    eyebrow: "Engineering & Growth",
+    title: "Infraestructura que convierte y escala",
+    items: [
+      {
+        title: "Arquitectura Web",
+        description: "Next.js, WordPress, Shopify y sitios corporativos preparados para SEO, velocidad y campañas.",
+        href: "/servicios/paginas-web-corporativas",
+      },
+      {
+        title: "Software a Medida",
+        description: "Sistemas internos, paneles, roles, reportes y flujos operativos para reducir trabajo manual.",
+        href: "/servicios/desarrollo-de-software",
+      },
+      {
+        title: "Automatizaciones/APIs",
+        description: "Conexiones entre formularios, WhatsApp, bases de datos, CRM y herramientas del equipo.",
+        href: "/servicios/control-gestion-atencion-leads",
+      },
+      {
+        title: "Adquisición/Data Analytics",
+        description: "Ads, SEO/GEO, ROI publicitario y paneles para decidir con datos reales.",
+        href: "/servicios/panel-monitor-administrativo-inteligente",
+      },
+    ],
+  },
+  {
+    eyebrow: "Creative & Strategy",
+    title: "Ecosistemas para autoridad y conversión",
+    items: [
+      {
+        title: "Auditorías de Ecosistemas",
+        description: "Lectura de web, contenido, redes, campañas y embudo para encontrar fugas de oportunidad.",
+        href: "/servicios/evaluacion-redes-sociales-estrategia-digital-publicidad",
+      },
+      {
+        title: "Producción Audiovisual CRO",
+        description: "Guiones y edición con objetivo comercial, retención y claridad para campañas o autoridad.",
+        href: "/servicios/creacion-edicion-videos",
+      },
+      {
+        title: "Autoridad de Marca",
+        description: "Contenido, SEO/GEO y publicaciones con consistencia para que la empresa sea más confiable.",
+        href: "/servicios/evaluacion-contenido-empresa",
+      },
+    ],
+  },
+];
+
+export const premiumStack = [
+  "PostgreSQL",
+  "React",
+  "Next.js",
+  "WordPress",
+  "Shopify",
+  "Meta Business",
+  "Zapier",
+  "Google Workspace",
+  "SMTP/API",
+  "Laravel",
+  "Python",
+  "GA4",
+  "CRM",
+];
+
+export const workflowSteps: WorkflowStep[] = [
+  {
+    label: "01",
+    title: "Clic en anuncio",
+    description: "El tráfico pagado llega con intención y se identifica desde la campaña correcta.",
+  },
+  {
+    label: "02",
+    title: "Lead capturado",
+    description: "Formulario, WhatsApp o landing registran datos sin perder contexto comercial.",
+  },
+  {
+    label: "03",
+    title: "Base relacional",
+    description: "El lead queda ordenado en una estructura segura para consulta, trazabilidad y análisis.",
+  },
+  {
+    label: "04",
+    title: "CRM y seguimiento",
+    description: "El equipo recibe tareas, estados y recordatorios para recuperar oportunidades a tiempo.",
+  },
+  {
+    label: "05",
+    title: "Panel de ROI",
+    description: "La dirección ve costos, fuente, conversión y retorno para ajustar inversión.",
+  },
 ];
 
 export const cases = [
@@ -885,7 +1005,7 @@ export const benefits = [
   "Menos tareas manuales y menos errores repetidos.",
   "Mejor atención a leads desde WhatsApp, redes y formularios.",
   "Datos claros para decidir sobre ventas, Ads y operación.",
-  "Web y servicios preparados para SEO, GEO y campañas.",
+  "Infraestructura web preparada para SEO, GEO, campañas, WordPress, Shopify y sistemas a medida.",
 ];
 
 export const technologies = [
@@ -893,11 +1013,16 @@ export const technologies = [
   "React",
   "TypeScript",
   "Tailwind CSS",
+  "WordPress",
+  "Shopify",
   "Laravel",
   "Python",
   "Supabase",
   "PostgreSQL",
+  "Zapier",
+  "Google Workspace",
   "Meta Ads",
   "Google Ads",
+  "SMTP/API",
   "IA",
 ];

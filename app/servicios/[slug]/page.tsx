@@ -104,7 +104,7 @@ export default async function ServicePage({ params }: Props) {
         {
           "@type": "ListItem",
           position: 2,
-          name: "Servicios",
+          name: "Soluciones",
           item: `${siteConfig.url}/#servicios`,
         },
         {
@@ -130,9 +130,9 @@ export default async function ServicePage({ params }: Props) {
             <div className="h-8 w-8 rounded-lg bg-lime-400 shadow-lg shadow-lime-400/50" />
             <span className="text-lg font-bold text-white">DukeCrea</span>
           </Link>
-          <nav className="flex flex-wrap items-center gap-4 text-sm" aria-label="Navegación de servicio">
+          <nav className="flex flex-wrap items-center gap-4 text-sm" aria-label="Navegación de solución">
             <Link href="/#servicios" className="font-medium text-gray-300 transition hover:text-lime-400">
-              Servicios
+              Soluciones
             </Link>
             <Link href="/#casos" className="font-medium text-gray-300 transition hover:text-lime-400">
               Casos
@@ -175,7 +175,7 @@ export default async function ServicePage({ params }: Props) {
                   href="/#servicios"
                   className="rounded-lg border-2 border-gray-700 px-8 py-3 font-bold text-white transition hover:border-lime-400 hover:text-lime-400"
                 >
-                  Ver todos los servicios
+                  Ver todas las soluciones
                 </Link>
               </div>
             </div>
@@ -199,7 +199,7 @@ export default async function ServicePage({ params }: Props) {
               <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-lime-300">
                 Entregables
               </p>
-              <h2 className="text-3xl font-bold text-white">Qué incluye este servicio</h2>
+              <h2 className="text-3xl font-bold text-white">Qué incluye esta solución</h2>
               <div className="mt-8 grid gap-4 sm:grid-cols-2">
                 {service.deliverables.map((deliverable) => (
                   <div key={deliverable} className="rounded-xl border border-gray-800 bg-gray-950 p-5">
@@ -266,7 +266,7 @@ export default async function ServicePage({ params }: Props) {
         {relatedServices.length > 0 && (
           <section className="border-t border-gray-900 bg-black px-6 py-20 md:px-8">
             <div className="mx-auto max-w-7xl">
-              <h2 className="text-3xl font-bold text-white">Servicios relacionados</h2>
+              <h2 className="text-3xl font-bold text-white">Soluciones relacionadas</h2>
               <div className="mt-8 grid gap-5 md:grid-cols-3">
                 {relatedServices.map((related) => (
                   <Link
@@ -288,7 +288,7 @@ export default async function ServicePage({ params }: Props) {
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="text-4xl font-bold text-gray-950">¿Lo implementamos para tu negocio?</h2>
             <p className="mt-5 text-xl leading-8 text-gray-900">
-              Cuéntanos tu caso y te proponemos una ruta concreta para empezar con este servicio.
+              Cuéntanos tu caso y te proponemos una ruta concreta para empezar con esta solución.
             </p>
             <a
               href={whatsappUrl}
