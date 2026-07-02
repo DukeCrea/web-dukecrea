@@ -59,15 +59,15 @@ export default function PanelLogin() {
 
           <form onSubmit={onSubmit} className="space-y-4">
             <div>
-              <label htmlFor="username" className="block text-sm text-gray-300 mb-1.5">Usuario</label>
+              <label htmlFor="username" className="block text-sm text-gray-300 mb-1.5">Correo electrónico</label>
               <input
                 id="username"
                 name="username"
-                type="text"
+                type="email"
                 autoComplete="username"
                 required
                 className="w-full px-4 py-2.5 rounded-lg bg-black border border-gray-800 text-white placeholder-gray-600 focus:border-lime-400 focus:outline-none transition"
-                placeholder="antonio"
+                placeholder="tu@correo.com"
               />
             </div>
             <div>
@@ -80,6 +80,22 @@ export default function PanelLogin() {
                 required
                 className="w-full px-4 py-2.5 rounded-lg bg-black border border-gray-800 text-white placeholder-gray-600 focus:border-lime-400 focus:outline-none transition"
                 placeholder="••••••••"
+              />
+            </div>
+            <div>
+              <label htmlFor="code" className="block text-sm text-gray-300 mb-1.5">
+                Código 2FA <span className="text-gray-600 font-normal">(app de autenticación)</span>
+              </label>
+              <input
+                id="code"
+                name="code"
+                type="text"
+                inputMode="numeric"
+                autoComplete="one-time-code"
+                pattern="[0-9]*"
+                maxLength={6}
+                className="w-full px-4 py-2.5 rounded-lg bg-black border border-gray-800 text-white placeholder-gray-600 focus:border-lime-400 focus:outline-none transition tracking-widest"
+                placeholder="000000"
               />
             </div>
 

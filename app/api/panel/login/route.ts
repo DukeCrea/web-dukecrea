@@ -2,10 +2,21 @@ import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { scryptSync, timingSafeEqual } from 'node:crypto';
 import { createSession } from '@/lib/session';
+import { verifyTOTP } from '@/lib/totp';
 
 const SECRET = process.env.SESSION_SECRET || '';
 const CREDS = process.env.PANEL_CREDENTIALS || '';
 const TS_SECRET = process.env.TURNSTILE_SECRET_KEY || '';
+const TOTP = process.env.PANEL_TOTP || '';
+
+// PANEL_TOTP = "usuario:SECRETO;usuario2:SECRETO2"
+function totpSecretFor(user: string): string | null {
+  for (const entry of TOTP.split(';')) {
+    const i = entry.indexOf(':');
+    if (i > 0 && entry.slice(0, i) === user) return entry.slice(i + 1);
+  }
+  return null;
+}
 
 // PANEL_CREDENTIALS = "usuario:saltHex:hashHex;usuario2:saltHex:hashHex"
 function checkPassword(user: string, password: string): boolean {
@@ -43,8 +54,9 @@ export async function POST(req: Request) {
   }
 
   const form = await req.formData();
-  const user = String(form.get('username') || '').trim();
+  const user = String(form.get('username') || '').trim().toLowerCase();
   const password = String(form.get('password') || '');
+  const code = String(form.get('code') || '').trim();
   const tsToken = String(form.get('cf-turnstile-response') || '');
   const ip = req.headers.get('cf-connecting-ip') || req.headers.get('x-forwarded-for') || '';
 
@@ -53,7 +65,18 @@ export async function POST(req: Request) {
   }
 
   if (!user || !password || !checkPassword(user, password)) {
-    return NextResponse.json({ error: 'Usuario o contraseña incorrectos.' }, { status: 401 });
+    return NextResponse.json({ error: 'Correo o contraseña incorrectos.' }, { status: 401 });
+  }
+
+  // Segundo factor: si el usuario tiene 2FA configurado, exigir el código.
+  const totpSecret = totpSecretFor(user);
+  if (totpSecret) {
+    if (!code) {
+      return NextResponse.json({ error: 'Ingresa el código de 6 dígitos de tu app de autenticación.', needCode: true }, { status: 401 });
+    }
+    if (!verifyTOTP(code, totpSecret)) {
+      return NextResponse.json({ error: 'Código 2FA incorrecto o expirado.', needCode: true }, { status: 401 });
+    }
   }
 
   const token = await createSession(user, SECRET);
