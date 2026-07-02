@@ -24,6 +24,17 @@ This project targets Next.js 16. APIs, conventions, routing behavior, and build 
 - Review desktop and mobile layouts for the Home page and service pages.
 - Confirm metadata, sitemap, robots, canonical URLs, CTAs, and external links work.
 
+## Protocolo Obligatorio De Pruebas Y Verificación
+
+- Ningún trabajo puede considerarse finalizado hasta que se hayan ejecutado y revisado las pruebas, verificaciones y checks relevantes para el área modificada.
+- Para cambios de código, se debe ejecutar la validación local más sólida disponible antes de entregar: linting, type checking, pruebas unitarias o de integración cuando existan, y build de producción cuando el cambio pueda afectar el comportamiento en runtime.
+- En este proyecto Next.js, la verificación base obligatoria es `npm run lint` y `npm run build`. Usar `npm ci` cuando se deba verificar reproducibilidad de dependencias, y `npm audit --audit-level=high` cuando haya cambios de dependencias, seguridad, preparación de despliegue o aprobación para release.
+- Para cambios de frontend, UX o UI, se deben revisar las páginas afectadas manualmente o con automatización de navegador en desktop y mobile. Confirmar layout, navegación, CTAs, metadata, accesibilidad básica, comportamiento responsive y textos visibles en español.
+- Para cambios de contenido, SEO, sitemap, robots, metadata, JSON-LD, rutas o páginas de servicio, se debe hacer smoke test de las URLs locales afectadas y verificar que no haya errores, contenido faltante, enlaces rotos, mojibake ni metadata mal formada.
+- Cualquier error crítico o conjunto de errores críticos que pueda romper la web, bloquear compilación, crashear una ruta, producir una pantalla en blanco, dañar la salida SEO, exponer secretos o crear un riesgo de seguridad debe corregirse antes de marcar el trabajo como completo.
+- Si una verificación requerida no puede ejecutarse, se debe documentar claramente el motivo, el riesgo residual y la siguiente acción concreta necesaria. No se deben ocultar checks fallidos ni describir una tarea como completa si quedan fallos críticos.
+- La entrega final debe indicar qué verificaciones se ejecutaron y si pasaron, para que cualquier revisor entienda el estado real sin tener que adivinar.
+
 ## Credentials Protocol
 
 - `credenciales de acceso dukecrea.txt` may be opened only when direct access to the hosting server is necessary.
