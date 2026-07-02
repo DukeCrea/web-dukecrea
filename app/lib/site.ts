@@ -71,11 +71,11 @@ export const services: Service[] = [
     category: "dev",
     categoryLabel: "Dev",
     icon: "phone",
-    title: "Páginas webs corporativas",
+    title: "Páginas web corporativas",
     shortTitle: "Web corporativa",
-    metaTitle: "Páginas webs corporativas en Panamá",
+    metaTitle: "Páginas web corporativas en Panamá",
     metaDescription:
-      "Diseño y desarrollo de páginas webs corporativas rápidas, profesionales y optimizadas para captar clientes.",
+      "Diseño y desarrollo de páginas web corporativas rápidas, profesionales y optimizadas para captar clientes.",
     eyebrow: "Presencia digital profesional",
     heroTitle: "Una web corporativa que presenta, convence y convierte",
     summary:
@@ -90,12 +90,12 @@ export const services: Service[] = [
     deliverables: [
       "Home y secciones corporativas clave",
       "Diseño responsive",
-      "Copy comercial base",
+      "Texto comercial base",
       "Formulario, WhatsApp y enlaces sociales",
       "SEO técnico inicial",
     ],
-    process: ["Brief y objetivos", "Estructura y copy", "Diseño visual", "Desarrollo Next.js", "QA y publicación"],
-    stack: ["Next.js", "React", "Tailwind CSS", "SEO técnico", "Analytics"],
+    process: ["Objetivos iniciales", "Estructura y textos", "Diseño visual", "Desarrollo Next.js", "Revisión final y publicación"],
+    stack: ["Next.js", "React", "Tailwind CSS", "SEO técnico", "Analítica"],
     faq: [
       {
         q: "¿En cuánto tiempo puede estar lista?",
@@ -121,27 +121,27 @@ export const services: Service[] = [
     eyebrow: "Venta online",
     heroTitle: "Una tienda online lista para vender y administrar",
     summary:
-      "E-commerce con catálogo, inventario, checkout, pagos y panel para operar sin depender de hojas de cálculo.",
+      "E-commerce con catálogo, inventario, proceso de pago, pagos y panel para operar sin depender de hojas de cálculo.",
     description:
-      "Desarrollamos tiendas online para negocios que quieren vender con control real sobre productos, precios, stock, pedidos y clientes.",
+      "Desarrollamos tiendas online para negocios que quieren vender con control real sobre productos, precios, inventario, pedidos y clientes.",
     outcomes: [
-      "Centralizas ventas y stock en un solo sistema.",
+      "Centralizas ventas e inventario en un solo sistema.",
       "Puedes vender en más de un mercado o moneda si lo necesitas.",
       "Tu equipo administra productos sin depender del desarrollador.",
     ],
     deliverables: [
       "Catálogo y fichas de producto",
-      "Carrito y checkout",
+      "Carrito y proceso de pago",
       "Panel administrativo",
       "Gestión de pedidos e inventario",
       "Integraciones de pago y WhatsApp",
     ],
-    process: ["Modelo de catálogo", "Diseño de compra", "Integraciones", "Panel admin", "Pruebas de pedido"],
+    process: ["Modelo de catálogo", "Diseño de compra", "Integraciones", "Panel administrativo", "Pruebas de pedido"],
     stack: ["Next.js", "Laravel", "Filament", "MySQL", "Pasarelas de pago"],
     faq: [
       {
         q: "¿Puede manejar varios países?",
-        a: "Sí. Podemos separar moneda, precio, stock y checkout por país cuando el negocio lo requiere.",
+        a: "Sí. Podemos separar moneda, precio, inventario y proceso de pago por país cuando el negocio lo requiere.",
       },
       {
         q: "¿Incluye panel administrativo?",
@@ -179,7 +179,7 @@ export const services: Service[] = [
       "Optimización mobile",
     ],
     process: ["Oferta y audiencia", "Copy de conversión", "Diseño", "Desarrollo", "Medición"],
-    stack: ["Next.js", "Tailwind CSS", "Meta Pixel", "Google Ads", "Analytics"],
+    stack: ["Next.js", "Tailwind CSS", "Meta Pixel", "Google Ads", "Analítica"],
     faq: [
       {
         q: "¿Sirve para campañas de Ads?",
@@ -193,11 +193,11 @@ export const services: Service[] = [
     related: ["gestion-control-ads", "calculo-roi-publicitario", "paginas-web-corporativas"],
   },
   {
-    slug: "desarrollo-de-softwares",
+    slug: "desarrollo-de-software",
     category: "dev",
     categoryLabel: "Dev",
     icon: "package",
-    title: "Desarrollo de softwares",
+    title: "Desarrollo de software",
     shortTitle: "Software a medida",
     metaTitle: "Desarrollo de software a medida",
     metaDescription:
@@ -220,11 +220,11 @@ export const services: Service[] = [
       "Módulos del flujo principal",
       "Integraciones y soporte inicial",
     ],
-    process: ["Descubrimiento", "Mapa de procesos", "MVP", "Iteraciones", "Escalamiento"],
+    process: ["Descubrimiento", "Mapa de procesos", "Producto mínimo viable", "Iteraciones", "Escalamiento"],
     stack: ["Next.js", "TypeScript", "Python", "Laravel", "Supabase", "PostgreSQL"],
     faq: [
       {
-        q: "¿Primero hacen un MVP?",
+        q: "¿Primero hacen un producto mínimo viable?",
         a: "Sí. Recomendamos empezar por el flujo con más impacto y luego ampliar módulos.",
       },
       {
@@ -232,7 +232,7 @@ export const services: Service[] = [
         a: "Sí. Revisamos APIs, archivos, CRM, Drive, WhatsApp u otros sistemas para conectar lo que ya usas.",
       },
     ],
-    related: ["panel-monitor-administrativo-inteligente", "control-gestion-atencion-leads", "software-automatizado-publicaciones-rrss"],
+    related: ["panel-monitor-administrativo-inteligente", "control-gestion-atencion-leads", "software-automatizado-publicaciones-redes-sociales"],
   },
   {
     slug: "seo-y-geo",
@@ -263,7 +263,7 @@ export const services: Service[] = [
       "Recomendaciones de contenido",
     ],
     process: ["Auditoría", "Mapa de intención", "Optimización técnica", "Contenido", "Medición"],
-    stack: ["Next.js Metadata", "Schema.org", "Search Console", "Core Web Vitals", "Analytics"],
+    stack: ["Metadata de Next.js", "Schema.org", "Search Console", "Core Web Vitals", "Analítica"],
     faq: [
       {
         q: "¿Qué es GEO?",
@@ -313,7 +313,7 @@ export const services: Service[] = [
       },
       {
         q: "¿Incluye diseño de anuncios?",
-        a: "Podemos coordinar piezas y copy, o integrarlo con el servicio de creación de contenido y video.",
+        a: "Podemos coordinar piezas y textos comerciales, o integrarlo con el servicio de creación de contenido y video.",
       },
     ],
     related: ["landing-pages", "evaluacion-inversion-ads", "calculo-roi-publicitario"],
@@ -325,13 +325,13 @@ export const services: Service[] = [
     icon: "chart",
     title: "Panel - monitor administrativo inteligente",
     shortTitle: "Panel inteligente",
-    metaTitle: "Panel administrativo inteligente y data análisis",
+    metaTitle: "Panel administrativo inteligente y análisis de datos",
     metaDescription:
       "Paneles administrativos inteligentes para monitorear ventas, leads, inventario, campañas y operación en tiempo real.",
-    eyebrow: "Data análisis",
+    eyebrow: "Análisis de datos",
     heroTitle: "Un monitor inteligente para entender tu sistema de un vistazo",
     summary:
-      "Dashboards para ver métricas críticas, detectar cuellos de botella y tomar decisiones con menos intuición y más datos.",
+      "Paneles para ver métricas críticas, detectar cuellos de botella y tomar decisiones con menos intuición y más datos.",
     description:
       "Creamos paneles administrativos que conectan fuentes de datos y muestran indicadores útiles para ventas, operación, Ads, leads e inventario.",
     outcomes: [
@@ -347,7 +347,7 @@ export const services: Service[] = [
       "Exportes o reportes",
     ],
     process: ["KPIs", "Fuentes de datos", "Modelo", "Dashboard", "Validación"],
-    stack: ["Next.js", "PostgreSQL", "APIs", "Charts", "Data analysis"],
+    stack: ["Next.js", "PostgreSQL", "APIs", "Gráficos", "Análisis de datos"],
     faq: [
       {
         q: "¿Puede conectarse a mi sistema actual?",
@@ -358,14 +358,14 @@ export const services: Service[] = [
         a: "Puede ser solo monitor, panel administrativo completo o una mezcla según el flujo.",
       },
     ],
-    related: ["desarrollo-de-softwares", "calculo-roi-publicitario", "control-gestion-atencion-leads"],
+    related: ["desarrollo-de-software", "calculo-roi-publicitario", "control-gestion-atencion-leads"],
   },
   {
-    slug: "chatbot-whatsapp-rrss-ia",
+    slug: "chatbot-whatsapp-redes-sociales-ia",
     category: "automation",
     categoryLabel: "Automatizaciones",
     icon: "bot",
-    title: "Chatbot para WhatsApp o RRSS con IA",
+    title: "Chatbot para WhatsApp o redes sociales con IA",
     shortTitle: "Chatbot con IA",
     metaTitle: "Chatbot para WhatsApp y redes sociales con IA",
     metaDescription:
@@ -400,7 +400,7 @@ export const services: Service[] = [
         a: "Sí. Creamos una base de conocimiento con servicios, horarios, precios orientativos y reglas de atención.",
       },
     ],
-    related: ["control-gestion-atencion-leads", "respuestas-automatizadas-comentarios-rrss", "software-automatizado-publicaciones-rrss"],
+    related: ["control-gestion-atencion-leads", "respuestas-automatizadas-comentarios-redes-sociales", "software-automatizado-publicaciones-redes-sociales"],
   },
   {
     slug: "control-gestion-atencion-leads",
@@ -431,7 +431,7 @@ export const services: Service[] = [
       "Reporte por canal",
     ],
     process: ["Fuentes", "Estados", "Automatizaciones", "Panel", "Seguimiento"],
-    stack: ["CRM", "WhatsApp", "Google Sheets", "Next.js", "Automations"],
+    stack: ["CRM", "WhatsApp", "Google Sheets", "Next.js", "Automatización"],
     faq: [
       {
         q: "¿Puede integrarse con mi CRM?",
@@ -442,15 +442,15 @@ export const services: Service[] = [
         a: "Sí. Podemos empezar con WhatsApp y luego sumar formularios, Ads o redes.",
       },
     ],
-    related: ["chatbot-whatsapp-rrss-ia", "gestion-control-ads", "panel-monitor-administrativo-inteligente"],
+    related: ["chatbot-whatsapp-redes-sociales-ia", "gestion-control-ads", "panel-monitor-administrativo-inteligente"],
   },
   {
-    slug: "respuestas-automatizadas-comentarios-rrss",
+    slug: "respuestas-automatizadas-comentarios-redes-sociales",
     category: "automation",
     categoryLabel: "Automatizaciones",
     icon: "bot",
-    title: "Respuestas automatizadas de comentarios para RRSS",
-    shortTitle: "Auto-respuestas RRSS",
+    title: "Respuestas automatizadas de comentarios en redes sociales",
+    shortTitle: "Auto-respuestas en redes",
     metaTitle: "Respuestas automatizadas para comentarios en redes sociales",
     metaDescription:
       "Automatización de respuestas a comentarios en redes sociales para atención al cliente y captación de leads.",
@@ -484,7 +484,7 @@ export const services: Service[] = [
         a: "Sí. Puede responder y orientar hacia el enlace correcto según la intención.",
       },
     ],
-    related: ["chatbot-whatsapp-rrss-ia", "creacion-edicion-videos", "software-automatizado-publicaciones-rrss"],
+    related: ["chatbot-whatsapp-redes-sociales-ia", "creacion-edicion-videos", "software-automatizado-publicaciones-redes-sociales"],
   },
   {
     slug: "evaluacion-contenido-empresa",
@@ -515,7 +515,7 @@ export const services: Service[] = [
       "Prioridades de acción",
     ],
     process: ["Recolección", "Análisis", "Hallazgos", "Plan", "Siguientes pasos"],
-    stack: ["Auditoría", "SEO/GEO", "RRSS", "Copywriting", "Analytics"],
+    stack: ["Auditoría", "SEO/GEO", "Redes sociales", "Redacción comercial", "Analítica"],
     faq: [
       {
         q: "¿Necesito tener mucho contenido publicado?",
@@ -526,7 +526,7 @@ export const services: Service[] = [
         a: "Puede incluir recomendaciones base o conectarse con el servicio de software automatizado para publicaciones.",
       },
     ],
-    related: ["creacion-edicion-videos", "seo-y-geo", "software-automatizado-publicaciones-rrss"],
+    related: ["creacion-edicion-videos", "seo-y-geo", "software-automatizado-publicaciones-redes-sociales"],
   },
   {
     slug: "creacion-edicion-videos",
@@ -557,7 +557,7 @@ export const services: Service[] = [
       "Recomendaciones de publicación",
     ],
     process: ["Objetivo", "Guion", "Material", "Edición", "Entrega"],
-    stack: ["Guion", "Edición", "Short-form", "Ads", "RRSS"],
+    stack: ["Guion", "Edición", "Videos cortos", "Ads", "Redes sociales"],
     faq: [
       {
         q: "¿Pueden trabajar con videos grabados por mi equipo?",
@@ -568,15 +568,15 @@ export const services: Service[] = [
         a: "Sí. Podemos preparar versiones pensadas para retención, claridad y CTA publicitario.",
       },
     ],
-    related: ["evaluacion-contenido-empresa", "gestion-control-ads", "evaluacion-rrss-estrategia-digital-publicidad"],
+    related: ["evaluacion-contenido-empresa", "gestion-control-ads", "evaluacion-redes-sociales-estrategia-digital-publicidad"],
   },
   {
-    slug: "evaluacion-rrss-estrategia-digital-publicidad",
+    slug: "evaluacion-redes-sociales-estrategia-digital-publicidad",
     category: "marketing",
     categoryLabel: "Consulta de marketing",
     icon: "chart",
-    title: "Evaluación de tus RRSS y estrategia digital de publicidad",
-    shortTitle: "Auditoría RRSS",
+    title: "Evaluación de tus redes sociales y estrategia digital de publicidad",
+    shortTitle: "Auditoría de redes",
     metaTitle: "Evaluación de redes sociales y estrategia digital",
     metaDescription:
       "Auditoría de redes sociales, estrategia digital y publicidad para mejorar contenido, campañas y conversión.",
@@ -599,7 +599,7 @@ export const services: Service[] = [
       "Plan de mejoras",
     ],
     process: ["Accesos o evidencias", "Auditoría", "Diagnóstico", "Plan", "Acompañamiento opcional"],
-    stack: ["Instagram", "Meta Ads", "Google Ads", "Analytics", "Copywriting"],
+    stack: ["Instagram", "Meta Ads", "Google Ads", "Analítica", "Redacción comercial"],
     faq: [
       {
         q: "¿Necesitan acceso a mis cuentas?",
@@ -683,7 +683,7 @@ export const services: Service[] = [
       "Recomendaciones",
     ],
     process: ["Variables", "Datos", "Modelo", "Dashboard", "Optimización"],
-    stack: ["Sheets", "Dashboards", "GA4", "Ads", "Data analysis"],
+    stack: ["Hojas de cálculo", "Paneles", "GA4", "Ads", "Análisis de datos"],
     faq: [
       {
         q: "¿Qué datos necesito?",
@@ -697,12 +697,12 @@ export const services: Service[] = [
     related: ["panel-monitor-administrativo-inteligente", "evaluacion-inversion-ads", "gestion-control-ads"],
   },
   {
-    slug: "software-automatizado-publicaciones-rrss",
+    slug: "software-automatizado-publicaciones-redes-sociales",
     category: "marketing",
     categoryLabel: "Consulta de marketing",
     icon: "package",
-    title: "Software automatizado para publicaciones en RRSS",
-    shortTitle: "Publicador RRSS",
+    title: "Software automatizado para publicaciones en redes sociales",
+    shortTitle: "Publicador de redes",
     metaTitle: "Software automatizado para publicaciones en redes sociales",
     metaDescription:
       "Software para planificar, organizar y automatizar publicaciones en redes sociales con flujos de contenido y control.",
@@ -725,7 +725,7 @@ export const services: Service[] = [
       "Reporte básico",
     ],
     process: ["Flujo actual", "Modelo editorial", "Sistema", "Integración", "Uso con equipo"],
-    stack: ["Next.js", "APIs sociales", "Automations", "IA", "Dashboards"],
+    stack: ["Next.js", "APIs sociales", "Automatización", "IA", "Paneles"],
     faq: [
       {
         q: "¿Publica automáticamente?",
@@ -733,10 +733,10 @@ export const services: Service[] = [
       },
       {
         q: "¿Puede usar IA para ideas?",
-        a: "Sí. Podemos incluir generación asistida de ideas, guiones o captions con revisión humana.",
+        a: "Sí. Podemos incluir generación asistida de ideas, guiones o textos para publicaciones con revisión humana.",
       },
     ],
-    related: ["evaluacion-contenido-empresa", "creacion-edicion-videos", "respuestas-automatizadas-comentarios-rrss"],
+    related: ["evaluacion-contenido-empresa", "creacion-edicion-videos", "respuestas-automatizadas-comentarios-redes-sociales"],
   },
 ];
 
@@ -767,7 +767,7 @@ export const cases = [
   {
     client: "Camsmark",
     sector: "E-commerce multi-país",
-    desc: "Tienda online única con dos mercados: precio, moneda, stock y checkout separados por país. Construida para administrar ventas sin duplicar operación.",
+    desc: "Tienda online única con dos mercados: precio, moneda, inventario y proceso de pago separados por país. Construida para administrar ventas sin duplicar operación.",
     tags: ["Laravel", "Filament", "MySQL"],
   },
   {
@@ -853,7 +853,7 @@ export const plans = [
     name: "Solución completa",
     tagline: "Digitaliza todo el negocio",
     price: "Cotización",
-    features: ["Sistema end-to-end", "Marketing e IA", "Data análisis", "Soporte y evolución continua"],
+    features: ["Sistema integral", "Marketing e IA", "Análisis de datos", "Soporte y evolución continua"],
     featured: false,
   },
 ];

@@ -275,7 +275,7 @@ export default function HomePage() {
               className="mx-auto mb-8 max-w-2xl text-lg leading-8 text-gray-100 drop-shadow-md md:text-xl"
             >
               Convertimos procesos en papel, Excel y WhatsApp manual en sistemas que trabajan contigo:
-              webs, e-commerce, software, automatizaciones, Ads, SEO/GEO y paneles inteligentes.
+              páginas web, e-commerce, software, automatizaciones, Ads, SEO/GEO y paneles inteligentes.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 22 }}
@@ -648,4 +648,3 @@ export default function HomePage() {
     </div>
   );
 }
-

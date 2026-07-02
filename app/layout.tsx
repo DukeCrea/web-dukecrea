@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     template: "%s | DukeCrea",
   },
   description:
-    "DukeCrea digitaliza negocios con páginas web, e-commerce, software a medida, automatizaciones, SEO/GEO, Ads, data análisis y marketing con IA.",
+    "DukeCrea digitaliza negocios con páginas web, e-commerce, software a medida, automatizaciones, SEO/GEO, Ads, análisis de datos y marketing con IA.",
   keywords: [
     "DukeCrea",
     "desarrollo de software",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     "SEO GEO",
     "Google Ads",
     "Meta Ads",
-    "data análisis",
+    "análisis de datos",
   ],
   authors: [{ name: "Antonio Duque" }, { name: "Noe Rivas" }],
   creator: siteConfig.name,
