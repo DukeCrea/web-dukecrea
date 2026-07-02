@@ -76,6 +76,11 @@ server {
 NGINX
 ln -sf /etc/nginx/sites-available/dukecrea.com /etc/nginx/sites-enabled/dukecrea.com
 rm -f /etc/nginx/sites-enabled/default
+# Rate-limiting: copia la zona y aplica el límite dentro de location /
+cp "$APPDIR/deploy/nginx-ratelimit.conf" /etc/nginx/conf.d/ratelimit.conf
+if ! grep -q "limit_req zone=dukecrea_req" /etc/nginx/sites-available/dukecrea.com; then
+  sed -i "/location \/ {/a\\        limit_req zone=dukecrea_req burst=60 nodelay;\n        limit_conn dukecrea_conn 40;" /etc/nginx/sites-available/dukecrea.com
+fi
 nginx -t && systemctl reload nginx
 certbot --nginx -d "${DOMAIN}" -d "www.${DOMAIN}" -d "panel.${DOMAIN}" \
   --non-interactive --agree-tos -m "${EMAIL}" --redirect || \
