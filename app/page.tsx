@@ -11,8 +11,8 @@ import {
   StarIcon,
   CheckIcon,
   UsersIcon,
-  WhatsAppIcon,
 } from './icons';
+import LeadQualifier from './LeadQualifier';
 
 const WHATSAPP_NUMBER = '50763006579';
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
@@ -268,13 +268,10 @@ export default function Home() {
           </nav>
           <div className="flex items-center gap-3">
             <a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#contact"
               className="hidden sm:flex items-center gap-2 px-6 py-2.5 bg-lime-400 text-gray-950 rounded-lg text-sm font-bold hover:bg-lime-300 transition"
             >
-              <WhatsAppIcon className="w-4 h-4" />
-              Hablemos
+              Cuéntanos tu proyecto
             </a>
             <button
               onClick={() => setMenuOpen(!menuOpen)}
@@ -305,13 +302,11 @@ export default function Home() {
               </a>
             ))}
             <a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#contact"
               onClick={() => setMenuOpen(false)}
               className="px-6 py-2.5 bg-lime-400 text-gray-950 rounded-lg text-sm font-bold text-center hover:bg-lime-300 transition"
             >
-              Hablemos por WhatsApp
+              Cuéntanos tu proyecto
             </a>
           </nav>
         )}
@@ -336,13 +331,10 @@ export default function Home() {
           </p>
           <div className="flex gap-4 justify-center mb-8 flex-wrap">
             <a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-8 py-3 bg-lime-400 text-gray-950 rounded-lg font-bold hover:bg-lime-300 transition shadow-lg shadow-lime-400/30"
+              href="#contact"
+              className="px-8 py-3 bg-lime-400 text-gray-950 rounded-lg font-bold hover:bg-lime-300 transition shadow-lg shadow-lime-400/30"
             >
-              <WhatsAppIcon className="w-5 h-5" />
-              Escríbenos por WhatsApp
+              Cuéntanos tu proyecto
             </a>
             <a href="#casos" className="px-8 py-3 border-2 border-white text-white rounded-lg font-bold hover:bg-white hover:text-gray-950 transition shadow-lg">
               Ver casos reales
@@ -518,9 +510,7 @@ export default function Home() {
                   ))}
                 </ul>
                 <a
-                  href={WHATSAPP_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="#contact"
                   className={`block w-full px-6 py-3 rounded-lg font-bold text-center transition ${
                     plan.featured
                       ? 'bg-lime-400 text-gray-950 hover:bg-lime-300'
@@ -552,27 +542,18 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Final */}
+      {/* CTA Final — calificador de leads */}
       <section id="contact" className="bg-gradient-to-r from-lime-400 to-lime-500 py-20 px-6 md:px-8 scroll-mt-16">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-6 text-gray-950">¿Listo para digitalizar tu negocio?</h2>
-          <p className="text-xl mb-8 text-gray-900">
-            Cuéntanos qué te quita el sueño de tu operación y te decimos cómo automatizarlo. El diagnóstico es gratis.
+        <div className="max-w-2xl mx-auto text-center">
+          <h2 className="text-4xl font-bold mb-3 text-gray-950">Cuéntanos tu proyecto</h2>
+          <p className="text-lg mb-8 text-gray-900">
+            Responde 2 preguntas rápidas y te decimos cómo lo hacemos. El diagnóstico es gratis.
           </p>
-          <div className="flex gap-4 justify-center flex-wrap">
-            <a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-8 py-3 bg-gray-950 text-white rounded-lg font-bold hover:bg-gray-800 transition"
-            >
-              <WhatsAppIcon className="w-5 h-5" />
-              Escríbenos por WhatsApp
-            </a>
-            <a href="mailto:duque629@gmail.com" className="px-8 py-3 border-2 border-gray-950 text-gray-950 rounded-lg font-bold hover:bg-gray-950 hover:text-white transition">
-              Enviar email
-            </a>
-          </div>
+          <LeadQualifier />
+          <p className="mt-6 text-sm text-gray-900">
+            ¿Prefieres escribir directo?{' '}
+            <a href="mailto:duque629@gmail.com" className="font-bold underline hover:text-gray-950">Envíanos un email</a>
+          </p>
         </div>
       </section>
 
