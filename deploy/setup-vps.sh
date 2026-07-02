@@ -38,13 +38,14 @@ ufw allow 'Nginx Full'
 ufw --force enable
 
 echo "==> 5/9  Endureciendo SSH (solo llaves, sin contraseñas)..."
-cat > /etc/ssh/sshd_config.d/99-dukecrea-hardening.conf <<'SSHD'
+# Prefijo 00- para que se lea ANTES de 50-cloud-init (SSH usa el primer valor).
+cat > /etc/ssh/sshd_config.d/00-dukecrea-hardening.conf <<'SSHD'
 PermitRootLogin prohibit-password
 PasswordAuthentication no
 PubkeyAuthentication yes
 X11Forwarding no
 SSHD
-systemctl restart ssh || systemctl restart sshd
+sshd -t && (systemctl restart ssh || systemctl restart sshd)
 
 echo "==> 6/9  fail2ban activo para SSH..."
 systemctl enable --now fail2ban

@@ -43,9 +43,8 @@ exit 0
 EOF
 chmod +x /usr/local/bin/dukecrea-ioc-guard.sh
 
-# ── 3) Cron (sin duplicar) ──
-( crontab -l 2>/dev/null | grep -vE "dukecrea-watchdog|dukecrea-ioc-guard"
-  echo "*/5 * * * * /usr/local/bin/dukecrea-watchdog.sh"
-  echo "*/3 * * * * /usr/local/bin/dukecrea-ioc-guard.sh" ) | crontab -
+# ── 3) Cron (sin duplicar, tolerante a crontab vacío) ──
+EXISTING="$(crontab -l 2>/dev/null | grep -vE 'dukecrea-watchdog|dukecrea-ioc-guard' || true)"
+printf '%s\n*/5 * * * * /usr/local/bin/dukecrea-watchdog.sh\n*/3 * * * * /usr/local/bin/dukecrea-ioc-guard.sh\n' "$EXISTING" | grep -vE '^$' | crontab -
 
 echo "Vigilancia instalada: watchdog web (5 min) + guardia anti-malware (3 min)."
