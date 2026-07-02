@@ -71,9 +71,9 @@ export default function Panel() {
             <span className="font-bold text-lg">DukeCrea</span>
             <span className="ml-2 text-xs px-2 py-0.5 rounded-full bg-gray-800 text-gray-400 border border-gray-700">Panel</span>
           </div>
-          <div className="flex items-center gap-3 text-sm text-gray-400">
-            <span className="hidden sm:inline">Antonio Duque</span>
-            <div className="w-8 h-8 rounded-full bg-lime-400/20 border border-lime-400/40 flex items-center justify-center text-lime-400 text-xs font-bold">AD</div>
+          <div className="flex items-center gap-4 text-sm text-gray-400">
+            <div className="w-8 h-8 rounded-full bg-lime-400/20 border border-lime-400/40 flex items-center justify-center text-lime-400 text-xs font-bold">DC</div>
+            <a href="/api/panel/logout" className="text-gray-400 hover:text-lime-400 transition font-medium">Salir</a>
           </div>
         </div>
       </header>
