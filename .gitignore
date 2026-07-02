@@ -42,3 +42,10 @@ next-env.d.ts
 
 # claude local config
 .claude/
+
+# local validation artifacts
+.playwright-cli/
+output/
+
+# local server access notes
+credenciales de acceso dukecrea.txt

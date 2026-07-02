@@ -1,13 +1,18 @@
-// Iconos SVG inline (trazos estilo Lucide) — la UI no usa emojis
+import type { ReactNode } from "react";
+
 type IconProps = { className?: string };
 
-function Svg({ children, className = 'w-6 h-6', filled = false }: IconProps & { children: React.ReactNode; filled?: boolean }) {
+function Svg({
+  children,
+  className = "w-6 h-6",
+  filled = false,
+}: IconProps & { children: ReactNode; filled?: boolean }) {
   return (
     <svg
       className={className}
       viewBox="0 0 24 24"
-      fill={filled ? 'currentColor' : 'none'}
-      stroke={filled ? 'none' : 'currentColor'}
+      fill={filled ? "currentColor" : "none"}
+      stroke={filled ? "none" : "currentColor"}
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"

@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { services, siteConfig } from "./lib/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,53 +13,60 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const siteUrl = "https://dukecrea.com";
-
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(siteConfig.url),
+  applicationName: siteConfig.name,
   title: {
-    default: "DukeCrea — Agencia de digitalización | Software, automatización e IA en Panamá",
+    default:
+      "DukeCrea - Agencia de software, automatización e IA para negocios",
     template: "%s | DukeCrea",
   },
   description:
-    "Somos la agencia que ayuda a PYMEs de Panamá a digitalizar sus operaciones: tiendas online, automatización de ventas y contratos, contabilidad fiscal (DGI, ITBMS) y marketing con IA. Menos trabajo manual, más ventas.",
+    "DukeCrea digitaliza negocios con páginas web, e-commerce, software a medida, automatizaciones, SEO/GEO, Ads, data análisis y marketing con IA.",
   keywords: [
-    "digitalizar negocio Panamá",
-    "desarrollo de software Panamá",
-    "tienda online Panamá",
-    "automatización de procesos",
-    "bots de Telegram",
-    "sistema contable DGI ITBMS",
-    "e-commerce Laravel",
-    "automatización con IA",
     "DukeCrea",
+    "desarrollo de software",
+    "páginas web corporativas",
+    "e-commerce",
+    "landing pages",
+    "automatización con IA",
+    "chatbot WhatsApp",
+    "SEO GEO",
+    "Google Ads",
+    "Meta Ads",
+    "data análisis",
   ],
-  authors: [
-    { name: "Antonio Duque" },
-    { name: "Noe Rivas" },
-  ],
-  creator: "DukeCrea",
+  authors: [{ name: "Antonio Duque" }, { name: "Noe Rivas" }],
+  creator: siteConfig.name,
+  publisher: siteConfig.name,
   alternates: {
-    canonical: siteUrl,
+    canonical: "/",
   },
   openGraph: {
     type: "website",
     locale: "es_PA",
-    url: siteUrl,
-    siteName: "DukeCrea",
-    title: "DukeCrea — Agencia de digitalización de negocios",
+    url: "/",
+    siteName: siteConfig.name,
+    title: "DukeCrea - Software, automatización e IA para negocios",
     description:
-      "Tiendas online, automatización de operaciones, contabilidad fiscal y marketing con IA para PYMEs de Panamá.",
+      "Webs, e-commerce, software a medida, automatizaciones, SEO/GEO, Ads, paneles inteligentes y marketing con IA.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "DukeCrea — Agencia de digitalización de negocios",
+    title: "DukeCrea - Software, automatización e IA para negocios",
     description:
-      "Software a medida, automatización e IA para digitalizar tu negocio en Panamá.",
+      "Digitaliza tu negocio con sistemas, automatizaciones, Ads, SEO/GEO y marketing con IA.",
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
 };
 
@@ -71,11 +79,11 @@ export const viewport: Viewport = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
-  name: "DukeCrea",
-  url: siteUrl,
-  email: "duque629@gmail.com",
+  name: siteConfig.name,
+  url: siteConfig.url,
+  email: siteConfig.email,
   description:
-    "Agencia de digitalización de negocios: desarrollo de software a medida, tiendas online, automatización de procesos y soluciones con IA para PYMEs.",
+    "Agencia de digitalización de negocios: desarrollo web, software a medida, automatización, Ads, SEO/GEO, dashboards e IA.",
   founders: [
     { "@type": "Person", name: "Antonio Duque" },
     { "@type": "Person", name: "Noe Rivas" },
@@ -84,19 +92,25 @@ const jsonLd = {
     { "@type": "Country", name: "Panamá" },
     { "@type": "Country", name: "Venezuela" },
   ],
-  knowsAbout: [
-    "Desarrollo web",
-    "E-commerce",
-    "Automatización de procesos",
-    "Bots de Telegram",
-    "Contabilidad fiscal",
-    "Inteligencia artificial",
-    "Laravel",
-    "Next.js",
-    "Python",
-  ],
-  sameAs: ["https://github.com/DukeCrea", "https://www.instagram.com/dukecrea"],
+  sameAs: [siteConfig.github, siteConfig.instagram],
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Servicios DukeCrea",
+    itemListElement: services.map((service) => ({
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: service.title,
+        url: `${siteConfig.url}/servicios/${service.slug}`,
+        description: service.metaDescription,
+      },
+    })),
+  },
 };
+
+function serializeJsonLd(data: unknown) {
+  return JSON.stringify(data).replace(/</g, "\\u003c");
+}
 
 export default function RootLayout({
   children,
@@ -106,12 +120,13 @@ export default function RootLayout({
   return (
     <html
       lang="es"
+      data-scroll-behavior="smooth"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}
         />
         {children}
       </body>
