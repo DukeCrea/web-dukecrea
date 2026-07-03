@@ -34,6 +34,7 @@ import {
   workflowSteps,
   type Service,
 } from "./lib/site";
+import { LeadIntakeSection } from "./lead-intake-section";
 
 const iconMap = {
   bot: BotIcon,
@@ -811,31 +812,7 @@ export default function HomePage() {
           </div>
         </Reveal>
 
-        <section id="contact" className="scroll-mt-16 bg-gradient-to-r from-lime-400 to-lime-500 px-6 py-20 md:px-8">
-          <div className="mx-auto max-w-3xl text-center">
-            <h2 className="mb-6 text-4xl font-bold text-gray-950">¿Listo para digitalizar tu negocio?</h2>
-            <p className="mb-8 text-xl text-gray-900">
-              Cuéntanos qué te quita tiempo, ventas o claridad operativa y te decimos cómo automatizarlo.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-lg bg-gray-950 px-8 py-3 font-bold text-white transition hover:bg-gray-800"
-              >
-                <WhatsAppIcon className="h-5 w-5" />
-                Escríbenos por WhatsApp
-              </a>
-              <a
-                href={`mailto:${siteConfig.email}`}
-                className="rounded-lg border-2 border-gray-950 px-8 py-3 font-bold text-gray-950 transition hover:bg-gray-950 hover:text-white"
-              >
-                Enviar email
-              </a>
-            </div>
-          </div>
-        </section>
+        <LeadIntakeSection />
       </main>
 
       <footer className="border-t border-gray-900 bg-gray-950 px-6 py-12 text-gray-400 md:px-8">

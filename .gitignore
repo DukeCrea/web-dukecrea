@@ -46,6 +46,7 @@ next-env.d.ts
 # local validation artifacts
 .playwright-cli/
 output/
+data/
 
 # local server access notes
 credenciales de acceso dukecrea.txt
