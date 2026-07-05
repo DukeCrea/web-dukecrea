@@ -533,15 +533,12 @@ export default function HomePage() {
               transition={{ duration: 0.6, delay: 0.24 }}
               className="mb-8 flex flex-wrap justify-center gap-4"
             >
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/#contact"
                 className="inline-flex items-center gap-2 rounded-lg bg-lime-400 px-8 py-3 font-bold text-gray-950 shadow-lg shadow-lime-400/30 transition hover:-translate-y-0.5 hover:bg-lime-300"
               >
-                <WhatsAppIcon className="h-5 w-5" />
-                Escríbenos por WhatsApp
-              </a>
+                Solicita tu diagnóstico gratis
+              </Link>
               <Link
                 href="/#servicios"
                 className="rounded-lg border-2 border-white px-8 py-3 font-bold text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-white hover:text-gray-950"
