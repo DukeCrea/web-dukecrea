@@ -1,0 +1,24 @@
+name: Deploy a VPS DukeCrea
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+concurrency:
+  group: deploy-dukecrea-prod
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configurar llave SSH
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_deploy
+          chmod 600 ~/.ssh/id_deploy
+          printf '%s\n' "${{ secrets.SSH_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+      - name: Desplegar en el VPS (pull + build + restart)
+        run: |
+          ssh -i ~/.ssh/id_deploy -o BatchMode=yes root@"${{ secrets.SSH_HOST }}" 2>&1
