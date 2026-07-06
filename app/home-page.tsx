@@ -141,7 +141,7 @@ function Reveal({
   return (
     <motion.section
       id={id}
-      initial={reduceMotion ? false : { opacity: 0, y: 28 }}
+      initial={reduceMotion ? false : { opacity: 0.72, y: 28 }}
       whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-90px" }}
       transition={{ duration: 0.5, ease: "easeOut" }}
@@ -400,16 +400,17 @@ function WorkflowAutomation() {
           ease: "none",
           scrollTrigger: {
             trigger: containerRef.current,
-            start: "top 75%",
-            end: "bottom 45%",
-            scrub: true,
+            start: "top 76%",
+            end: () => `+=${window.innerWidth < 768 ? 220 : 340}`,
+            scrub: 0.35,
+            invalidateOnRefresh: true,
           },
         });
       }
 
       gsap.fromTo(
         ".workflow-card",
-        { autoAlpha: 0, y: 22 },
+        { autoAlpha: 0.72, y: 22 },
         {
           autoAlpha: 1,
           y: 0,
@@ -503,7 +504,7 @@ export default function HomePage() {
 
           <div className="relative z-10 mx-auto max-w-5xl text-center">
             <motion.div
-              initial={{ opacity: 0, y: 18 }}
+              initial={{ opacity: 0.72, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               className="mb-6 inline-flex rounded-full border border-lime-400/30 bg-lime-400/10 px-4 py-1.5 text-sm font-medium text-lime-300"
@@ -511,7 +512,7 @@ export default function HomePage() {
               Firma tecnológica para infraestructura digital, adquisición y automatización
             </motion.div>
             <motion.h1
-              initial={{ opacity: 0, y: 22 }}
+              initial={{ opacity: 0.72, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.08 }}
               className="mb-6 text-4xl font-bold leading-tight text-white drop-shadow-lg sm:text-5xl md:text-7xl"
@@ -519,7 +520,7 @@ export default function HomePage() {
               Infraestructura digital para <span className="text-lime-400">vender, operar y escalar</span>
             </motion.h1>
             <motion.p
-              initial={{ opacity: 0, y: 22 }}
+              initial={{ opacity: 0.72, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.16 }}
               className="mx-auto mb-8 max-w-2xl text-lg leading-8 text-gray-100 drop-shadow-md md:text-xl"
@@ -528,7 +529,7 @@ export default function HomePage() {
               automatizaciones y datos para reducir costos operativos y recuperar oportunidades.
             </motion.p>
             <motion.div
-              initial={{ opacity: 0, y: 22 }}
+              initial={{ opacity: 0.72, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.24 }}
               className="mb-8 flex flex-wrap justify-center gap-4"
@@ -546,7 +547,14 @@ export default function HomePage() {
                 Explorar soluciones
               </Link>
             </motion.div>
-            <p className="text-sm text-gray-400">Diagnóstico inicial gratis · Sin compromiso</p>
+            <motion.p
+              initial={{ opacity: 0.72, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.32 }}
+              className="text-sm text-gray-400"
+            >
+              Diagnóstico inicial gratis · Sin compromiso
+            </motion.p>
           </div>
         </section>
 
