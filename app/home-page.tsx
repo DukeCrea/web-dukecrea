@@ -36,6 +36,7 @@ import {
 } from "./lib/site";
 import { LeadIntakeSection } from "./lead-intake-section";
 import { AutoVideo } from "./auto-video";
+import { Logo } from "./logo";
 
 const iconMap = {
   bot: BotIcon,
@@ -201,7 +202,7 @@ function Header() {
     <header className="fixed top-0 z-50 w-full border-b border-gray-900 bg-black/95 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 md:px-8">
         <Link href="/" className="flex items-center gap-2" aria-label="DukeCrea inicio">
-          <div className="h-8 w-8 rounded-lg bg-lime-400 shadow-lg shadow-lime-400/50" />
+          <Logo className="h-8 w-8 rounded-lg shadow-lg shadow-lime-400/50" />
           <span className="text-lg font-bold text-white">DukeCrea</span>
         </Link>
 
@@ -850,7 +851,7 @@ export default function HomePage() {
           <div className="mb-8 grid grid-cols-2 gap-8 md:grid-cols-4">
             <div>
               <div className="mb-4 flex items-center gap-2">
-                <div className="h-7 w-7 rounded-lg bg-lime-400" />
+                <Logo className="h-7 w-7 rounded-lg" />
                 <span className="font-bold text-white">DukeCrea</span>
               </div>
               <p className="text-sm">Agencia de digitalización de negocios.</p>
