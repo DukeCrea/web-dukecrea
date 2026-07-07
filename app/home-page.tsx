@@ -37,6 +37,7 @@ import {
 import { LeadIntakeSection } from "./lead-intake-section";
 import { AutoVideo } from "./auto-video";
 import { Logo } from "./logo";
+import { ProcesoScroll } from "./proceso-scroll";
 
 const iconMap = {
   bot: BotIcon,
@@ -709,24 +710,13 @@ export default function HomePage() {
           </div>
         </Reveal>
 
-        <Reveal id="proceso" className="relative scroll-mt-16 overflow-hidden border-t border-gray-900 px-6 py-20 md:px-8">
-          <AutoVideo src="/pulso.mp4" poster="/pulso.jpg" className="pointer-events-none absolute inset-0 opacity-20" />
-          <div className="pointer-events-none absolute inset-0 bg-black/75" />
-          <div className="relative z-10 mx-auto max-w-7xl">
-            <SectionHeading title="Cómo trabajamos" description="Un proceso claro para pasar de idea o problema operativo a solución funcionando." />
-            <div className="grid grid-cols-2 gap-8 md:grid-cols-5">
-              {processSteps.map((item) => (
-                <div key={item.step} className="text-center">
-                  <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-lime-400 text-lg font-bold text-gray-950">
-                    {item.step}
-                  </div>
-                  <h3 className="mb-2 font-bold text-white">{item.title}</h3>
-                  <p className="text-sm font-medium leading-6 text-gray-400">{item.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </Reveal>
+        <section id="proceso" className="scroll-mt-16 border-t border-gray-900 bg-black">
+          <ProcesoScroll
+            steps={processSteps}
+            title="Cómo trabajamos"
+            description="Un proceso claro para pasar de idea o problema operativo a solución funcionando."
+          />
+        </section>
 
         <div className="relative h-24 w-full overflow-hidden border-t border-gray-900 bg-black md:h-32" aria-hidden="true">
           <AutoVideo src="/divisor.mp4" poster="/divisor.jpg" className="pointer-events-none absolute inset-0" />
