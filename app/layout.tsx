@@ -52,12 +52,21 @@ export const metadata: Metadata = {
     title: "DukeCrea - Software, automatización e IA para negocios",
     description:
       "Infraestructura web, e-commerce, WordPress, Shopify, software a medida, automatizaciones, SEO/GEO, Ads y paneles inteligentes.",
+    images: [
+      {
+        url: "/og.jpg",
+        width: 1200,
+        height: 630,
+        alt: "DukeCrea — de procesos manuales a inteligencia artificial",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "DukeCrea - Software, automatización e IA para negocios",
     description:
       "Digitaliza tu negocio con sistemas, automatizaciones, Ads, SEO/GEO y marketing con IA.",
+    images: ["/og.jpg"],
   },
   robots: {
     index: true,

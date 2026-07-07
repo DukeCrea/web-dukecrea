@@ -35,6 +35,7 @@ import {
   type Service,
 } from "./lib/site";
 import { LeadIntakeSection } from "./lead-intake-section";
+import { AutoVideo } from "./auto-video";
 
 const iconMap = {
   bot: BotIcon,
@@ -428,8 +429,10 @@ function WorkflowAutomation() {
   }, [reduceMotion]);
 
   return (
-    <section ref={containerRef} id="automatizacion" className="border-t border-gray-900 bg-black px-6 py-20 md:px-8">
-      <div className="mx-auto max-w-7xl">
+    <section ref={containerRef} id="automatizacion" className="relative overflow-hidden border-t border-gray-900 bg-black px-6 py-20 md:px-8">
+      <AutoVideo src="/grid.mp4" poster="/grid.jpg" className="pointer-events-none absolute inset-0 opacity-30" />
+      <div className="pointer-events-none absolute inset-0 bg-black/70" />
+      <div className="relative z-10 mx-auto max-w-7xl">
         <SectionHeading
           eyebrow="Automatización B2B"
           title="Del anuncio al CRM sin perder trazabilidad"
@@ -705,8 +708,10 @@ export default function HomePage() {
           </div>
         </Reveal>
 
-        <Reveal id="proceso" className="scroll-mt-16 border-t border-gray-900 px-6 py-20 md:px-8">
-          <div className="mx-auto max-w-7xl">
+        <Reveal id="proceso" className="relative scroll-mt-16 overflow-hidden border-t border-gray-900 px-6 py-20 md:px-8">
+          <AutoVideo src="/pulso.mp4" poster="/pulso.jpg" className="pointer-events-none absolute inset-0 opacity-20" />
+          <div className="pointer-events-none absolute inset-0 bg-black/75" />
+          <div className="relative z-10 mx-auto max-w-7xl">
             <SectionHeading title="Cómo trabajamos" description="Un proceso claro para pasar de idea o problema operativo a solución funcionando." />
             <div className="grid grid-cols-2 gap-8 md:grid-cols-5">
               {processSteps.map((item) => (
@@ -721,6 +726,10 @@ export default function HomePage() {
             </div>
           </div>
         </Reveal>
+
+        <div className="relative h-24 w-full overflow-hidden border-t border-gray-900 bg-black md:h-32" aria-hidden="true">
+          <AutoVideo src="/divisor.mp4" poster="/divisor.jpg" className="pointer-events-none absolute inset-0" />
+        </div>
 
         <Reveal className="border-t border-gray-900 bg-black px-6 py-20 md:px-8">
           <div className="mx-auto max-w-7xl">
@@ -808,6 +817,30 @@ export default function HomePage() {
             </div>
           </div>
         </Reveal>
+
+        <section className="relative overflow-hidden border-t border-gray-900 bg-black">
+          <AutoVideo
+            src="/hero-loop.mp4"
+            poster="/hero-loop-poster.jpg"
+            label="De procesos manuales a inteligencia artificial"
+            className="absolute inset-0"
+          />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black via-black/60 to-transparent" />
+          <div className="relative z-10 mx-auto flex min-h-[60vh] max-w-7xl items-center px-6 py-24 md:px-8">
+            <div className="max-w-xl">
+              <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-lime-400">
+                De lo manual a la IA
+              </p>
+              <h2 className="text-3xl font-bold leading-tight text-white md:text-5xl">
+                Del caos operativo a flujos inteligentes
+              </h2>
+              <p className="mt-4 text-lg leading-8 text-gray-300">
+                Ordenamos tu operación con automatización, datos y software a medida — para que tu
+                negocio venda, opere y escale.
+              </p>
+            </div>
+          </div>
+        </section>
 
         <LeadIntakeSection />
       </main>
