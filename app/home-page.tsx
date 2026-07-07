@@ -38,6 +38,8 @@ import { LeadIntakeSection } from "./lead-intake-section";
 import { AutoVideo } from "./auto-video";
 import { Logo } from "./logo";
 import { ProcesoScroll } from "./proceso-scroll";
+import { CountUp } from "./count-up";
+import { Magnetic } from "./magnetic";
 
 const iconMap = {
   bot: BotIcon,
@@ -538,12 +540,14 @@ export default function HomePage() {
               transition={{ duration: 0.6, delay: 0.24 }}
               className="mb-8 flex flex-wrap justify-center gap-4"
             >
-              <Link
-                href="/#contact"
-                className="inline-flex items-center gap-2 rounded-lg bg-lime-400 px-8 py-3 font-bold text-gray-950 shadow-lg shadow-lime-400/30 transition hover:-translate-y-0.5 hover:bg-lime-300"
-              >
-                Solicita tu diagnóstico gratis
-              </Link>
+              <Magnetic>
+                <Link
+                  href="/#contact"
+                  className="inline-flex items-center gap-2 rounded-lg bg-lime-400 px-8 py-3 font-bold text-gray-950 shadow-lg shadow-lime-400/30 transition hover:bg-lime-300"
+                >
+                  Solicita tu diagnóstico gratis
+                </Link>
+              </Magnetic>
               <Link
                 href="/#servicios"
                 className="rounded-lg border-2 border-white px-8 py-3 font-bold text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-white hover:text-gray-950"
@@ -564,7 +568,9 @@ export default function HomePage() {
               { value: "100%", label: "A medida de tu negocio" },
             ].map((stat) => (
               <div key={stat.label}>
-                <div className="mb-2 text-4xl font-bold text-lime-400">{stat.value}</div>
+                <div className="mb-2 text-4xl font-bold text-lime-400">
+                  <CountUp value={stat.value} />
+                </div>
                 <p className="font-medium text-gray-300">{stat.label}</p>
               </div>
             ))}
