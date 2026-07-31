@@ -19,12 +19,24 @@ type LeadEmailPayload = {
   storedInDatabase: boolean;
 };
 
-const apiKey = process.env.RESEND_API_KEY?.trim();
-const to = (process.env.LEADS_EMAIL_TO || siteConfig.email).trim();
-// El dominio remitente debe estar verificado en Resend. Mientras tanto,
-// `onboarding@resend.dev` funciona sin verificar y solo entrega al correo
-// dueño de la cuenta, que es justo lo que se necesita para avisos internos.
-const from = (process.env.LEADS_EMAIL_FROM || "DukeCrea <onboarding@resend.dev>").trim();
+/**
+ * Lee la configuración en cada llamada, no al cargar el módulo.
+ *
+ * Las variables marcadas como "Sensitive" en Vercel no están disponibles
+ * mientras se construye el proyecto, así que leerlas arriba del archivo las
+ * dejaba vacías y el envío se saltaba en silencio. Dentro de la función se
+ * evalúan ya en ejecución, cuando el valor sí existe.
+ */
+function getConfig() {
+  return {
+    apiKey: process.env.RESEND_API_KEY?.trim(),
+    to: (process.env.LEADS_EMAIL_TO || siteConfig.email).trim(),
+    // El dominio remitente debe estar verificado en Resend. Mientras tanto,
+    // `onboarding@resend.dev` funciona sin verificar y solo entrega al correo
+    // dueño de la cuenta, que es justo lo que se necesita para avisos internos.
+    from: (process.env.LEADS_EMAIL_FROM || "DukeCrea <onboarding@resend.dev>").trim(),
+  };
+}
 
 function escapeHtml(value: string) {
   return value
@@ -51,7 +63,14 @@ function row(label: string, value?: string) {
  * de lanzar, para que un fallo de correo nunca tumbe la respuesta al visitante.
  */
 export async function sendLeadEmail(lead: LeadEmailPayload): Promise<boolean> {
-  if (!apiKey) return false;
+  const { apiKey, to, from } = getConfig();
+
+  if (!apiKey) {
+    // Se registra en vez de fallar callado: sin este aviso, un lead perdido
+    // por falta de configuración es indistinguible de "nadie escribió".
+    console.error("[leads] Falta RESEND_API_KEY: no se envió el aviso por correo.");
+    return false;
+  }
 
   const whatsappDigits = lead.phone.replace(/\D/g, "");
   const alerta = lead.storedInDatabase
