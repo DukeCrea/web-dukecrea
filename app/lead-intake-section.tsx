@@ -12,6 +12,7 @@ import {
   ZapIcon,
 } from "./icons";
 import { getWhatsAppUrl, siteConfig } from "./lib/site";
+import { AnalyticsEvent, tagSession, track } from "./lib/analytics";
 
 type IconComponent = (props: { className?: string }) => React.ReactNode;
 
@@ -164,6 +165,15 @@ function pushLeadFormEvent(event: string, payload: Record<string, unknown> = {})
     form: "dukecrea_lead_intake",
     ...payload,
   });
+
+  // El dataLayer solo sirve si algún día se instala GTM; esto además manda el
+  // mismo evento a GA4, Clarity y Vercel, que son las que están activas hoy.
+  track(event, {
+    ...(Object.fromEntries(
+      Object.entries(payload).map(([key, value]) => [key, String(value)]),
+    ) as Record<string, string>),
+    form: "dukecrea_lead_intake",
+  });
 }
 
 export function LeadIntakeSection() {
@@ -236,13 +246,29 @@ export function LeadIntakeSection() {
         projectType,
         need,
       });
+
+      // `generate_lead` es el nombre estándar de GA4: al usarlo tal cual, se
+      // puede marcar como evento clave (conversión) sin configuración extra y
+      // sirve de objetivo para campañas de Google Ads.
+      track(AnalyticsEvent.leadSuccess, {
+        tipo_proyecto: projectType,
+        necesidad: need,
+        presupuesto: form.budget || "sin indicar",
+        plazo: form.timeline || "sin indicar",
+      });
+      // Marca la sesión en Clarity para poder ver solo las grabaciones de
+      // quienes sí convirtieron y compararlas con las que se cayeron.
+      tagSession("lead", "si");
     } catch (submitError) {
       setStatus("error");
-      setError(
+      const message =
         submitError instanceof Error
           ? submitError.message
-          : "No pudimos registrar la solicitud. Inténtalo nuevamente.",
-      );
+          : "No pudimos registrar la solicitud. Inténtalo nuevamente.";
+      setError(message);
+      // Sin esto, un fallo del backend se ve igual que "nadie llenó el
+      // formulario": tráfico que llega, cero leads y ninguna pista del porqué.
+      track(AnalyticsEvent.leadError, { motivo: message.slice(0, 100) });
     }
   };
 

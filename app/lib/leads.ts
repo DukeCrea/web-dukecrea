@@ -2,6 +2,8 @@ import "server-only";
 
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
+import { sendLeadEmail } from "./lead-email";
+
 export type LeadStatus = "Nuevo" | "Contactado" | "Propuesta" | "Ganado" | "Perdido";
 
 export type LeadRecord = {
@@ -180,6 +182,14 @@ export async function listLeads() {
   return (data as LeadRow[]).map(rowToLead);
 }
 
+/**
+ * Registra un lead con doble destino: base de datos y correo.
+ *
+ * El correo es obligatorio como red de seguridad y la base es el registro
+ * consultable desde el panel. Basta con que UNO de los dos funcione para dar la
+ * solicitud por recibida; solo si fallan ambos se le pide al visitante que
+ * reintente, porque solo entonces el contacto se habría perdido de verdad.
+ */
 export async function createLead(input: LeadInput) {
   const valid = validateLead(input);
   const interest = `${valid.projectType} — ${valid.need}`;
@@ -201,17 +211,69 @@ export async function createLead(input: LeadInput) {
     value_usd: estimateValueUsd(valid.budget),
   };
 
-  const { data, error } = await getClient()
-    .from("leads")
-    .insert(insertRow)
-    .select("*")
-    .single();
+  let stored: LeadRecord | null = null;
+  let dbError = "";
 
-  if (error) {
-    throw new Error(`No pudimos registrar la solicitud: ${error.message}`);
+  try {
+    const { data, error } = await getClient()
+      .from("leads")
+      .insert(insertRow)
+      .select("*")
+      .single();
+
+    if (error) throw new Error(error.message);
+    stored = rowToLead(data as LeadRow);
+  } catch (error) {
+    // No se relanza todavía: primero se intenta el correo, que es el canal que
+    // no depende de que la base esté despierta.
+    dbError = error instanceof Error ? error.message : "error desconocido";
+    console.error("[leads] No se pudo guardar en Supabase:", dbError);
   }
 
-  return rowToLead(data as LeadRow);
+  const emailSent = await sendLeadEmail({
+    name: valid.name,
+    company: valid.company || undefined,
+    email: valid.email || undefined,
+    phone: valid.phone,
+    projectType: valid.projectType,
+    need: valid.need,
+    budget: valid.budget || undefined,
+    timeline: valid.timeline || undefined,
+    message: valid.message || undefined,
+    sourcePath: valid.sourcePath || undefined,
+    storedInDatabase: Boolean(stored),
+  });
+
+  if (stored) return stored;
+
+  if (!emailSent) {
+    throw new Error(
+      "No pudimos registrar la solicitud en este momento. Escríbenos por WhatsApp y te atendemos de inmediato.",
+    );
+  }
+
+  // La base falló pero el aviso salió por correo: para el visitante la
+  // solicitud está recibida, que es la verdad.
+  const now = new Date().toISOString();
+  return {
+    id: "sin-registrar",
+    name: valid.name,
+    company: valid.company || undefined,
+    email: valid.email || undefined,
+    phone: valid.phone,
+    projectType: valid.projectType,
+    need: valid.need,
+    interest,
+    budget: valid.budget || undefined,
+    timeline: valid.timeline || undefined,
+    message: valid.message || undefined,
+    sourcePath: valid.sourcePath || undefined,
+    origin: "Formulario",
+    status: "Nuevo",
+    valueUsd: estimateValueUsd(valid.budget),
+    createdAt: now,
+    updatedAt: now,
+  } satisfies LeadRecord;
 }
 
 export async function updateLeadStatus(id: string, status: string) {

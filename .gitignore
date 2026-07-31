@@ -50,3 +50,7 @@ data/
 
 # local server access notes
 credenciales de acceso dukecrea.txt
+.gstack/
+
+# Supabase CLI (estado local del enlace, no debe versionarse)
+supabase/.temp/
