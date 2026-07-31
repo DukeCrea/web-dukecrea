@@ -53,9 +53,12 @@ function ClickTracker() {
 
       const href = link.getAttribute("href") || "";
       const label = (link.textContent || "").replace(/\s+/g, " ").trim().slice(0, 60);
+      // Saber DE DÓNDE salió el clic es lo que permite decidir después:
+      // si el CTA del menú convierte y el del pie no, se sabe dónde invertir.
       const section =
         link.closest("[data-track-section]")?.getAttribute("data-track-section") ||
         link.closest("section")?.getAttribute("id") ||
+        link.closest("header, nav, footer")?.tagName.toLowerCase() ||
         "sin-seccion";
 
       if (href.includes("wa.me") || href.includes("api.whatsapp.com")) {

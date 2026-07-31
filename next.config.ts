@@ -2,9 +2,25 @@ import type { NextConfig } from "next";
 
 const isDev = process.env.NODE_ENV === "development";
 
+/**
+ * Dominios de medición autorizados a ejecutar scripts.
+ *
+ * Sin esta lista la política bloquea el archivo de Google Analytics y el de
+ * Clarity, y la web parece no recibir visitas aunque las tenga. Se enumeran uno
+ * por uno a propósito: abrir `script-src` a `https:` dejaría entrar cualquier
+ * script de terceros, que es justo lo que esta cabecera debe impedir.
+ */
+const analyticsScriptHosts = [
+  "https://www.googletagmanager.com",
+  "https://www.google-analytics.com",
+  "https://www.clarity.ms",
+  "https://*.clarity.ms",
+  "https://va.vercel-scripts.com",
+].join(" ");
+
 const contentSecurityPolicy = `
   default-src 'self';
-  script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""};
+  script-src 'self' 'unsafe-inline' ${analyticsScriptHosts}${isDev ? " 'unsafe-eval'" : ""};
   style-src 'self' 'unsafe-inline';
   img-src 'self' data: blob: https:;
   font-src 'self';
