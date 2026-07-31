@@ -21,47 +21,108 @@ type Option = {
   icon: IconComponent;
 };
 
-const projectOptions: Option[] = [
+type ProjectId = "web" | "ecommerce" | "automation" | "software" | "data" | "audit";
+
+type ProjectOption = Option & {
+  id: ProjectId;
+  shortLabel: string;
+};
+
+const projectOptions: ProjectOption[] = [
   {
+    id: "web",
     label: "Página web, WordPress o rediseño",
+    shortLabel: "tu web",
     description: "Sitios corporativos, landings y presencia digital administrable.",
     icon: PhoneIcon,
   },
   {
+    id: "ecommerce",
     label: "E-commerce o Shopify",
+    shortLabel: "tu tienda online",
     description: "Tiendas online, catálogos, pagos, inventario y ventas medibles.",
     icon: CartIcon,
   },
   {
+    id: "automation",
     label: "Automatización de procesos",
+    shortLabel: "tu automatización",
     description: "WhatsApp, CRM, formularios, notificaciones, APIs y tareas repetitivas.",
     icon: ZapIcon,
   },
   {
+    id: "software",
     label: "Software o app a medida",
+    shortLabel: "tu sistema",
     description: "Sistemas internos, SaaS, portales, paneles y flujos operativos.",
     icon: PackageIcon,
   },
   {
+    id: "data",
     label: "Panel de datos, Ads o ROI",
+    shortLabel: "tus datos",
     description: "Métricas, leads, campañas, inversión, dashboards y toma de decisiones.",
     icon: ChartIcon,
   },
   {
+    id: "audit",
     label: "Auditoría de ecosistema digital",
+    shortLabel: "tu ecosistema digital",
     description: "Evaluamos web, redes, contenido, pauta y oportunidades de mejora.",
     icon: BotIcon,
   },
 ];
 
-const needOptions = [
-  "Captar más leads calificados",
-  "Reducir tareas manuales",
-  "Ordenar clientes, datos o CRM",
-  "Vender mejor por web o tienda online",
-  "Medir inversión, Ads y ROI",
-  "No lo tengo claro y necesito diagnóstico",
-];
+const needOptionsByProject: Record<ProjectId, string[]> = {
+  web: [
+    "Crear una web corporativa desde cero",
+    "Rediseñar una web que ya no convierte",
+    "Trabajar con WordPress y poder editar contenido",
+    "Mejorar velocidad, SEO y estructura",
+    "Captar leads con formularios o WhatsApp",
+    "Migrar o integrar una web existente",
+  ],
+  ecommerce: [
+    "Lanzar una tienda online nueva",
+    "Trabajar con Shopify",
+    "Mejorar conversión y checkout",
+    "Ordenar productos, inventario y pagos",
+    "Integrar envíos, CRM o automatizaciones",
+    "Medir ventas, ROAS y recuperación de carritos",
+  ],
+  automation: [
+    "Capturar leads desde WhatsApp, web o redes",
+    "Responder mensajes o comentarios automáticamente",
+    "Conectar formularios, CRM, Sheets o email",
+    "Asignar tareas y seguimiento comercial",
+    "Reducir trabajo manual del equipo",
+    "Crear un agente con IA para atención",
+  ],
+  software: [
+    "Crear un sistema interno a medida",
+    "Automatizar un proceso operativo completo",
+    "Construir app web, portal o SaaS",
+    "Integrar roles, permisos y base de datos",
+    "Reemplazar hojas de cálculo o herramientas sueltas",
+    "Escalar o mantener un software existente",
+  ],
+  data: [
+    "Centralizar métricas de leads, ventas o Ads",
+    "Crear un dashboard administrativo",
+    "Medir ROI, ROAS y pipeline comercial",
+    "Conectar Google Ads, Meta Ads o CRM",
+    "Recibir alertas y reportes automáticos",
+    "Limpiar y ordenar bases de datos",
+  ],
+  audit: [
+    "Auditar web, SEO/GEO y conversión",
+    "Evaluar redes sociales y contenido",
+    "Revisar inversión en Ads y estrategia",
+    "Detectar fugas de leads y seguimiento",
+    "Priorizar mejoras de alto impacto",
+    "Necesito un diagnóstico completo del ecosistema",
+  ],
+};
 
 const budgetOptions = [
   "Menos de USD 1,000",
@@ -89,13 +150,33 @@ const initialForm = {
   message: "",
 };
 
+declare global {
+  interface Window {
+    dataLayer?: Array<Record<string, unknown>>;
+  }
+}
+
+function pushLeadFormEvent(event: string, payload: Record<string, unknown> = {}) {
+  if (typeof window === "undefined") return;
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event,
+    form: "dukecrea_lead_intake",
+    ...payload,
+  });
+}
+
 export function LeadIntakeSection() {
   const [step, setStep] = useState(0);
+  const [projectId, setProjectId] = useState<ProjectId | "">("");
   const [projectType, setProjectType] = useState("");
   const [need, setNeed] = useState("");
+  const [website, setWebsite] = useState("");
   const [form, setForm] = useState(initialForm);
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [error, setError] = useState("");
+  const selectedProject = projectOptions.find((option) => option.id === projectId);
+  const currentNeedOptions = projectId ? needOptionsByProject[projectId] : [];
   const whatsappUrl = useMemo(
     () =>
       getWhatsAppUrl(
@@ -114,7 +195,7 @@ export function LeadIntakeSection() {
     event.preventDefault();
     setError("");
 
-    if (!projectType || !need) {
+    if (!projectId || !projectType || !need) {
       setError("Selecciona el tipo de proyecto y la necesidad principal.");
       return;
     }
@@ -134,8 +215,10 @@ export function LeadIntakeSection() {
         },
         body: JSON.stringify({
           ...form,
+          projectId,
           projectType,
           need,
+          website,
           sourcePath: window.location.pathname,
         }),
       });
@@ -147,6 +230,12 @@ export function LeadIntakeSection() {
 
       setStatus("success");
       setForm(initialForm);
+      setWebsite("");
+      pushLeadFormEvent("lead_form_submitted", {
+        projectId,
+        projectType,
+        need,
+      });
     } catch (submitError) {
       setStatus("error");
       setError(
@@ -206,8 +295,10 @@ export function LeadIntakeSection() {
                 <button
                   type="button"
                   onClick={() => {
+                    setProjectId("");
                     setProjectType("");
                     setNeed("");
+                    setWebsite("");
                     setStep(0);
                     setStatus("idle");
                   }}
@@ -219,6 +310,19 @@ export function LeadIntakeSection() {
             </div>
           ) : (
             <form onSubmit={submitLead}>
+              <div className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
+                <label>
+                  Sitio web
+                  <input
+                    tabIndex={-1}
+                    autoComplete="off"
+                    name="website"
+                    value={website}
+                    onChange={(event) => setWebsite(event.target.value)}
+                  />
+                </label>
+              </div>
+
               {step === 0 && (
                 <div>
                   <h3 className="text-2xl font-bold">¿Qué quieres construir o mejorar?</h3>
@@ -228,13 +332,19 @@ export function LeadIntakeSection() {
                   <div className="mt-7 grid gap-3 md:grid-cols-2">
                     {projectOptions.map((option) => {
                       const Icon = option.icon;
-                      const selected = projectType === option.label;
+                      const selected = projectId === option.id;
                       return (
                         <button
                           key={option.label}
                           type="button"
                           onClick={() => {
+                            setProjectId(option.id);
                             setProjectType(option.label);
+                            setNeed("");
+                            pushLeadFormEvent("lead_form_project_selected", {
+                              projectId: option.id,
+                              projectType: option.label,
+                            });
                             setStep(1);
                           }}
                           className={`group min-h-28 rounded-lg border p-4 text-left transition hover:-translate-y-0.5 hover:border-lime-400 ${
@@ -265,12 +375,15 @@ export function LeadIntakeSection() {
 
               {step === 1 && (
                 <div>
-                  <h3 className="text-2xl font-bold">¿Qué necesitas resolver primero?</h3>
+                  <h3 className="text-2xl font-bold">
+                    ¿Qué necesitas resolver primero
+                    {selectedProject ? ` en ${selectedProject.shortLabel}` : ""}?
+                  </h3>
                   <p className="mt-2 text-sm leading-6 text-gray-400">
                     Esto nos ayuda a estimar impacto, prioridad y ruta de implementación.
                   </p>
                   <div className="mt-7 grid gap-3 md:grid-cols-2">
-                    {needOptions.map((option) => {
+                    {currentNeedOptions.map((option) => {
                       const selected = need === option;
                       return (
                         <button
@@ -278,6 +391,11 @@ export function LeadIntakeSection() {
                           type="button"
                           onClick={() => {
                             setNeed(option);
+                            pushLeadFormEvent("lead_form_need_selected", {
+                              projectId,
+                              projectType,
+                              need: option,
+                            });
                             setStep(2);
                           }}
                           className={`rounded-lg border px-4 py-4 text-left font-semibold transition hover:-translate-y-0.5 hover:border-lime-400 ${
