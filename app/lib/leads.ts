@@ -183,6 +183,23 @@ export async function listLeads() {
 }
 
 /**
+ * Consulta mínima para mantener despierto el proyecto de Supabase.
+ *
+ * El plan gratuito pausa la base tras unos días sin actividad, y mientras está
+ * pausada los leads no se registran. Cualquier petición cuenta como actividad,
+ * así que basta con pedir una fila.
+ */
+export async function pingLeadsStore() {
+  const { error } = await getClient().from("leads").select("id").limit(1);
+
+  if (error) {
+    throw new Error(`No pudimos consultar la base de datos: ${error.message}`);
+  }
+
+  return true;
+}
+
+/**
  * Registra un lead con doble destino: base de datos y correo.
  *
  * El correo es obligatorio como red de seguridad y la base es el registro
