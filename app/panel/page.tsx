@@ -11,10 +11,10 @@ import { getLeadStatuses, listLeads, type LeadRecord } from "../lib/leads";
 import {
   isPanelAuthorized,
   loginPanel,
-  logoutPanel,
   panelPasswordConfigured,
   setLeadStatus,
 } from "./actions";
+import { PanelHeader } from "./panel-header";
 
 export const dynamic = "force-dynamic";
 
@@ -226,22 +226,7 @@ export default async function PanelPage({ searchParams }: PanelPageProps) {
 
   return (
     <main className="min-h-screen bg-black text-white">
-      <header className="border-b border-gray-900 bg-gray-950 px-6 py-4 md:px-8">
-        <div className="mx-auto flex max-w-7xl items-center justify-between">
-          <Link href="/" className="flex items-center gap-2" aria-label="DukeCrea inicio">
-            <div className="h-8 w-8 rounded-lg bg-lime-400 shadow-lg shadow-lime-400/50" />
-            <span className="text-lg font-bold text-white">DukeCrea</span>
-            <span className="rounded-full border border-gray-700 px-2 py-0.5 text-xs text-gray-400">
-              Panel
-            </span>
-          </Link>
-          <form action={logoutPanel}>
-            <button type="submit" className="font-semibold text-gray-300 transition hover:text-lime-300">
-              Salir
-            </button>
-          </form>
-        </div>
-      </header>
+      <PanelHeader activo="leads" />
 
       <section className="mx-auto max-w-7xl px-6 py-10 md:px-8">
         <div className="mb-8">
