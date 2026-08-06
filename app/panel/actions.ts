@@ -4,7 +4,14 @@ import { createHash } from "crypto";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { updateLeadStatus } from "../lib/leads";
+import {
+  addLeadNote,
+  createManualLead,
+  deleteLead,
+  updateLeadDetails,
+  updateLeadStatus,
+} from "../lib/leads";
+import { createTrabajo, deleteTrabajo, updateTrabajo } from "../lib/trabajos";
 
 const cookieName = "dukecrea_panel";
 
@@ -79,4 +86,146 @@ export async function setLeadStatus(formData: FormData) {
   await updateLeadStatus(id, status);
   revalidatePath("/panel");
   redirect(`/panel?status=${encodeURIComponent(status)}`);
+}
+
+/**
+ * Envuelve una acción del panel: exige sesión y convierte cualquier fallo en un
+ * mensaje visible, en vez de la pantalla de error de Next.
+ *
+ * `redirect` funciona lanzando una excepción, así que hay que dejarla pasar o
+ * cada redirección correcta se reportaría como error.
+ */
+async function accionProtegida(destino: string, tarea: () => Promise<void>) {
+  const authorized = await isPanelAuthorized();
+  if (!authorized) {
+    redirect("/panel?error=session");
+  }
+
+  try {
+    await tarea();
+  } catch (error) {
+    if (error instanceof Error && error.message === "NEXT_REDIRECT") throw error;
+    if (typeof error === "object" && error && "digest" in error) {
+      const digest = String((error as { digest?: unknown }).digest || "");
+      if (digest.startsWith("NEXT_REDIRECT")) throw error;
+    }
+    const mensaje = error instanceof Error ? error.message : "No pudimos completar la acción.";
+    redirect(`${destino}${destino.includes("?") ? "&" : "?"}aviso=${encodeURIComponent(mensaje)}`);
+  }
+}
+
+function texto(formData: FormData, campo: string) {
+  return String(formData.get(campo) || "");
+}
+
+export async function crearLeadManual(formData: FormData) {
+  let destino = "/panel";
+
+  await accionProtegida("/panel", async () => {
+    const lead = await createManualLead({
+      name: texto(formData, "name"),
+      company: texto(formData, "company"),
+      email: texto(formData, "email"),
+      phone: texto(formData, "phone"),
+      projectType: texto(formData, "projectType"),
+      need: texto(formData, "need"),
+      budget: texto(formData, "budget"),
+      message: texto(formData, "message"),
+      origin: texto(formData, "origin"),
+      status: texto(formData, "status"),
+      valueUsd: texto(formData, "valueUsd"),
+      nextAction: texto(formData, "nextAction"),
+      nextActionAt: texto(formData, "nextActionAt"),
+    });
+    destino = `/panel/leads/${lead.id}`;
+  });
+
+  revalidatePath("/panel");
+  redirect(destino);
+}
+
+export async function guardarSeguimiento(formData: FormData) {
+  const id = texto(formData, "id");
+
+  await accionProtegida(`/panel/leads/${id}`, async () => {
+    await updateLeadDetails(id, {
+      status: texto(formData, "status"),
+      valueUsd: texto(formData, "valueUsd"),
+      nextAction: texto(formData, "nextAction"),
+      nextActionAt: texto(formData, "nextActionAt"),
+    });
+  });
+
+  revalidatePath(`/panel/leads/${id}`);
+  revalidatePath("/panel");
+  redirect(`/panel/leads/${id}`);
+}
+
+export async function agregarNota(formData: FormData) {
+  const id = texto(formData, "id");
+
+  await accionProtegida(`/panel/leads/${id}`, async () => {
+    await addLeadNote(id, texto(formData, "nota"));
+  });
+
+  revalidatePath(`/panel/leads/${id}`);
+  redirect(`/panel/leads/${id}`);
+}
+
+export async function borrarLead(formData: FormData) {
+  const id = texto(formData, "id");
+
+  await accionProtegida(`/panel/leads/${id}`, async () => {
+    await deleteLead(id);
+  });
+
+  revalidatePath("/panel");
+  redirect("/panel");
+}
+
+function datosTrabajo(formData: FormData) {
+  return {
+    leadId: texto(formData, "leadId"),
+    cliente: texto(formData, "cliente"),
+    titulo: texto(formData, "titulo"),
+    estado: texto(formData, "estado"),
+    montoUsd: texto(formData, "montoUsd"),
+    cobradoUsd: texto(formData, "cobradoUsd"),
+    fechaInicio: texto(formData, "fechaInicio"),
+    fechaEntrega: texto(formData, "fechaEntrega"),
+    notas: texto(formData, "notas"),
+  };
+}
+
+export async function crearTrabajo(formData: FormData) {
+  const destino = texto(formData, "volverA") || "/panel/trabajos";
+
+  await accionProtegida(destino, async () => {
+    await createTrabajo(datosTrabajo(formData));
+  });
+
+  revalidatePath("/panel/trabajos");
+  redirect(destino);
+}
+
+export async function actualizarTrabajo(formData: FormData) {
+  const id = texto(formData, "id");
+
+  await accionProtegida("/panel/trabajos", async () => {
+    await updateTrabajo(id, datosTrabajo(formData));
+  });
+
+  revalidatePath("/panel/trabajos");
+  redirect("/panel/trabajos");
+}
+
+export async function borrarTrabajo(formData: FormData) {
+  const id = texto(formData, "id");
+
+  await accionProtegida("/panel/trabajos", async () => {
+    await deleteTrabajo(id);
+  });
+
+  revalidatePath("/panel/trabajos");
+  redirect("/panel/trabajos");
 }

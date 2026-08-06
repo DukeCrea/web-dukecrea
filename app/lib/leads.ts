@@ -19,11 +19,19 @@ export type LeadRecord = {
   timeline?: string;
   message?: string;
   sourcePath?: string;
-  origin: "Formulario";
+  origin: string;
   status: LeadStatus;
   valueUsd: number;
+  nextAction?: string;
+  nextActionAt?: string;
   createdAt: string;
   updatedAt: string;
+};
+
+export type LeadNote = {
+  id: string;
+  nota: string;
+  createdAt: string;
 };
 
 type LeadInput = {
@@ -77,6 +85,8 @@ type LeadRow = {
   origin: string;
   status: string;
   value_usd: number;
+  next_action: string | null;
+  next_action_at: string | null;
   created_at: string;
   updated_at: string;
 };
@@ -95,11 +105,13 @@ function rowToLead(row: LeadRow): LeadRecord {
     timeline: row.timeline || undefined,
     message: row.message || undefined,
     sourcePath: row.source_path || undefined,
-    origin: "Formulario",
+    origin: row.origin || "Formulario",
     status: (statuses.includes(row.status as LeadStatus)
       ? (row.status as LeadStatus)
       : "Nuevo"),
     valueUsd: row.value_usd ?? 0,
+    nextAction: row.next_action || undefined,
+    nextActionAt: row.next_action_at || undefined,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
   };
@@ -310,4 +322,157 @@ export async function updateLeadStatus(id: string, status: string) {
 
 export function getLeadStatuses() {
   return statuses;
+}
+
+export async function getLead(id: string) {
+  const { data, error } = await getClient().from("leads").select("*").eq("id", id).maybeSingle();
+
+  if (error) {
+    throw new Error(`No pudimos cargar el lead: ${error.message}`);
+  }
+
+  return data ? rowToLead(data as LeadRow) : null;
+}
+
+export const origenesManuales = [
+  "Prospección",
+  "Referido",
+  "WhatsApp",
+  "Instagram",
+  "LinkedIn",
+  "Llamada",
+  "Evento",
+  "Otro",
+];
+
+type ManualLeadInput = LeadInput & {
+  origin?: unknown;
+  status?: unknown;
+  valueUsd?: unknown;
+  nextAction?: unknown;
+  nextActionAt?: unknown;
+};
+
+function cleanDate(value: unknown) {
+  const text = cleanText(value, 10);
+  return /^\d{4}-\d{2}-\d{2}$/.test(text) ? text : "";
+}
+
+function cleanAmount(value: unknown) {
+  const number = Number(typeof value === "string" ? value.replace(/[^\d.-]/g, "") : value);
+  if (!Number.isFinite(number) || number < 0) return 0;
+  return Math.round(Math.min(number, 10_000_000));
+}
+
+/**
+ * Alta de un lead desde el panel.
+ *
+ * A diferencia de `createLead`, este NO manda correo: el aviso existe para
+ * enterarte de algo que llegó solo, y aquí lo estás escribiendo tú. También
+ * deja fijar origen, estado y valor de entrada, que en el formulario público
+ * se deducen.
+ */
+export async function createManualLead(input: ManualLeadInput) {
+  const valid = validateLead(input);
+  const origin = cleanText(input.origin, 60) || "Prospección";
+  const statusInput = cleanText(input.status, 30);
+  const status = statuses.includes(statusInput as LeadStatus) ? statusInput : "Nuevo";
+  const interest = `${valid.projectType} — ${valid.need}`;
+
+  const { data, error } = await getClient()
+    .from("leads")
+    .insert({
+      name: valid.name,
+      company: valid.company || null,
+      email: valid.email || null,
+      phone: valid.phone,
+      project_type: valid.projectType,
+      need: valid.need,
+      interest,
+      budget: valid.budget || null,
+      timeline: valid.timeline || null,
+      message: valid.message || null,
+      source_path: null,
+      origin,
+      status,
+      value_usd: cleanAmount(input.valueUsd),
+      next_action: cleanText(input.nextAction, 200) || null,
+      next_action_at: cleanDate(input.nextActionAt) || null,
+    })
+    .select("*")
+    .single();
+
+  if (error) {
+    throw new Error(`No pudimos guardar el lead: ${error.message}`);
+  }
+
+  return rowToLead(data as LeadRow);
+}
+
+export async function updateLeadDetails(
+  id: string,
+  input: { status?: unknown; valueUsd?: unknown; nextAction?: unknown; nextActionAt?: unknown },
+) {
+  const statusInput = cleanText(input.status, 30);
+
+  if (statusInput && !statuses.includes(statusInput as LeadStatus)) {
+    throw new Error("Estado inválido.");
+  }
+
+  const { error } = await getClient()
+    .from("leads")
+    .update({
+      ...(statusInput ? { status: statusInput } : {}),
+      value_usd: cleanAmount(input.valueUsd),
+      next_action: cleanText(input.nextAction, 200) || null,
+      next_action_at: cleanDate(input.nextActionAt) || null,
+      updated_at: new Date().toISOString(),
+    })
+    .eq("id", id);
+
+  if (error) {
+    throw new Error(`No pudimos actualizar el lead: ${error.message}`);
+  }
+}
+
+export async function deleteLead(id: string) {
+  const { error } = await getClient().from("leads").delete().eq("id", id);
+
+  if (error) {
+    throw new Error(`No pudimos borrar el lead: ${error.message}`);
+  }
+}
+
+export async function listLeadNotes(leadId: string): Promise<LeadNote[]> {
+  const { data, error } = await getClient()
+    .from("lead_notes")
+    .select("id, nota, created_at")
+    .eq("lead_id", leadId)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    throw new Error(`No pudimos cargar el seguimiento: ${error.message}`);
+  }
+
+  return (data as { id: string; nota: string; created_at: string }[]).map((row) => ({
+    id: row.id,
+    nota: row.nota,
+    createdAt: row.created_at,
+  }));
+}
+
+export async function addLeadNote(leadId: string, nota: unknown) {
+  const texto = cleanMessage(nota);
+
+  if (!texto) {
+    throw new Error("Escribe algo antes de guardar la nota.");
+  }
+
+  const { error } = await getClient().from("lead_notes").insert({ lead_id: leadId, nota: texto });
+
+  if (error) {
+    throw new Error(`No pudimos guardar la nota: ${error.message}`);
+  }
+
+  await getClient().from("leads").update({ updated_at: new Date().toISOString() }).eq("id", leadId);
 }

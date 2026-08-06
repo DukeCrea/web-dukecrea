@@ -7,13 +7,20 @@ import {
   WhatsAppIcon,
   ZapIcon,
 } from "../icons";
-import { getLeadStatuses, listLeads, type LeadRecord } from "../lib/leads";
 import {
+  getLeadStatuses,
+  listLeads,
+  origenesManuales,
+  type LeadRecord,
+} from "../lib/leads";
+import {
+  crearLeadManual,
   isPanelAuthorized,
   loginPanel,
   panelPasswordConfigured,
   setLeadStatus,
 } from "./actions";
+import { AreaTexto, Aviso, BotonPrimario, Campo, Selector } from "./campos";
 import { PanelHeader } from "./panel-header";
 
 export const dynamic = "force-dynamic";
@@ -32,6 +39,7 @@ type PanelPageProps = {
   searchParams?: Promise<{
     status?: string;
     error?: string;
+    aviso?: string;
   }>;
 };
 
@@ -153,9 +161,17 @@ function LeadRow({ lead }: { lead: LeadRecord }) {
   return (
     <tr className="border-t border-gray-900 align-top">
       <td className="px-4 py-4">
-        <p className="font-bold text-white">{lead.name}</p>
+        <Link href={`/panel/leads/${lead.id}`} className="font-bold text-white hover:text-lime-300">
+          {lead.name}
+        </Link>
         {lead.company && <p className="text-xs text-gray-500">{lead.company}</p>}
         {lead.email && <p className="mt-1 text-xs text-gray-400">{lead.email}</p>}
+        {lead.nextAction && (
+          <p className="mt-2 text-xs text-amber-200">
+            Siguiente: {lead.nextAction}
+            {lead.nextActionAt ? ` (${formatDate(lead.nextActionAt)})` : ""}
+          </p>
+        )}
       </td>
       <td className="min-w-[280px] px-4 py-4">
         <p className="font-medium text-gray-100">{lead.interest}</p>
@@ -197,8 +213,75 @@ function LeadRow({ lead }: { lead: LeadRecord }) {
           <WhatsAppIcon className="h-4 w-4" />
           {lead.phone}
         </a>
+        <Link
+          href={`/panel/leads/${lead.id}`}
+          className="mt-2 block text-xs text-gray-400 transition hover:text-lime-300"
+        >
+          Seguimiento →
+        </Link>
       </td>
     </tr>
+  );
+}
+
+function FormularioNuevoLead() {
+  return (
+    <details className="mt-8 rounded-lg border border-gray-800 bg-gray-950">
+      <summary className="cursor-pointer list-none px-5 py-4 text-sm font-bold text-lime-400 transition hover:text-lime-300">
+        + Cargar un lead a mano
+      </summary>
+
+      <form action={crearLeadManual} className="grid gap-4 border-t border-gray-900 p-5">
+        <p className="text-xs text-gray-500">
+          Para lo que no entra por la web: prospección, referidos, alguien que te escribió por
+          WhatsApp. Obligatorio: nombre, teléfono, tipo de proyecto y necesidad.
+        </p>
+
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <Campo etiqueta="Nombre" nombre="name" requerido placeholder="María Pérez" />
+          <Campo etiqueta="Empresa" nombre="company" placeholder="Distribuidora XYZ" />
+          <Campo etiqueta="WhatsApp o teléfono" nombre="phone" requerido placeholder="+507 6000 0000" />
+          <Campo etiqueta="Correo" nombre="email" tipo="email" placeholder="maria@empresa.com" />
+          <Campo
+            etiqueta="Tipo de proyecto"
+            nombre="projectType"
+            requerido
+            placeholder="Sitio web corporativo"
+          />
+          <Campo
+            etiqueta="Necesidad principal"
+            nombre="need"
+            requerido
+            placeholder="Conseguir más clientes"
+          />
+          <Selector etiqueta="Origen" nombre="origin" opciones={origenesManuales} />
+          <Selector etiqueta="Estado" nombre="status" opciones={getLeadStatuses()} />
+          <Campo
+            etiqueta="Valor estimado (USD)"
+            nombre="valueUsd"
+            tipo="number"
+            placeholder="0"
+            ayuda="Suma al pipeline"
+          />
+          <Campo
+            etiqueta="Próxima acción"
+            nombre="nextAction"
+            placeholder="Llamar para agendar demo"
+          />
+          <Campo etiqueta="Fecha de esa acción" nombre="nextActionAt" tipo="date" />
+        </div>
+
+        <AreaTexto
+          etiqueta="Notas"
+          nombre="message"
+          placeholder="De dónde salió, qué te dijo, qué presupuesto maneja…"
+        />
+
+        <div>
+          <BotonPrimario>Guardar lead</BotonPrimario>
+        </div>
+      </form>
+    </details>
   );
 }
 
@@ -229,10 +312,12 @@ export default async function PanelPage({ searchParams }: PanelPageProps) {
       <PanelHeader activo="leads" />
 
       <section className="mx-auto max-w-7xl px-6 py-10 md:px-8">
+        <Aviso mensaje={params.aviso} />
+
         <div className="mb-8">
-          <h1 className="text-3xl font-bold">Clientes y oportunidades</h1>
+          <h1 className="text-3xl font-bold">Leads y oportunidades</h1>
           <p className="mt-2 text-gray-400">
-            Los leads del formulario de la web llegan aquí automáticamente.
+            Los del formulario de la web entran solos. Los de prospección y referidos los cargas tú.
           </p>
         </div>
 
@@ -247,6 +332,8 @@ export default async function PanelPage({ searchParams }: PanelPageProps) {
           <MetricCard title="En proceso" value={String(activeLeads)} icon={<ChartIcon className="h-5 w-5" />} />
           <MetricCard title="Pipeline estimado" value={formatCurrency(pipeline)} icon={<CheckIcon className="h-5 w-5" />} />
         </div>
+
+        <FormularioNuevoLead />
 
         <div className="mt-8 flex flex-wrap gap-2">
           {filters.map((status) => (

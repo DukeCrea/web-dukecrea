@@ -2,11 +2,12 @@ import Link from "next/link";
 import { logoutPanel } from "./actions";
 
 type PanelHeaderProps = {
-  activo: "leads" | "clientes";
+  activo: "leads" | "trabajos" | "clientes";
 };
 
 const pestanas = [
   { id: "leads" as const, etiqueta: "Leads", href: "/panel" },
+  { id: "trabajos" as const, etiqueta: "Trabajos", href: "/panel/trabajos" },
   { id: "clientes" as const, etiqueta: "Clientes", href: "/panel/clientes" },
 ];
 
