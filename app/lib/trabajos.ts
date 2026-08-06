@@ -15,9 +15,30 @@ export type Trabajo = {
   fechaInicio?: string;
   fechaEntrega?: string;
   notas?: string;
+  tareas: Tarea[];
   createdAt: string;
   updatedAt: string;
 };
+
+export type Tarea = {
+  id: string;
+  titulo: string;
+  hecha: boolean;
+  orden: number;
+};
+
+/** Porcentaje de tareas completadas. Sin tareas cargadas devuelve 0. */
+export function avanceDe(trabajo: Trabajo) {
+  if (trabajo.tareas.length === 0) return 0;
+  const hechas = trabajo.tareas.filter((tarea) => tarea.hecha).length;
+  return Math.round((hechas / trabajo.tareas.length) * 100);
+}
+
+/** Porcentaje cobrado sobre el monto acordado. */
+export function cobroDe(trabajo: Trabajo) {
+  if (trabajo.montoUsd <= 0) return 0;
+  return Math.round((trabajo.cobradoUsd / trabajo.montoUsd) * 100);
+}
 
 const estados: EstadoTrabajo[] = ["Propuesta", "En curso", "Entregado", "Cobrado", "Cancelado"];
 
@@ -52,10 +73,28 @@ type TrabajoRow = {
   notas: string | null;
   created_at: string;
   updated_at: string;
+  trabajo_tareas?: TareaRow[] | null;
+};
+
+type TareaRow = {
+  id: string;
+  titulo: string;
+  hecha: boolean;
+  orden: number;
 };
 
 function rowToTrabajo(row: TrabajoRow): Trabajo {
+  const tareas = (row.trabajo_tareas || [])
+    .map((tarea) => ({
+      id: tarea.id,
+      titulo: tarea.titulo,
+      hecha: Boolean(tarea.hecha),
+      orden: tarea.orden ?? 0,
+    }))
+    .sort((a, b) => a.orden - b.orden);
+
   return {
+    tareas,
     id: row.id,
     leadId: row.lead_id || undefined,
     cliente: row.cliente,
@@ -101,7 +140,7 @@ export function getEstadosTrabajo() {
 export async function listTrabajos() {
   const { data, error } = await getClient()
     .from("trabajos")
-    .select("*")
+    .select("*, trabajo_tareas(id, titulo, hecha, orden)")
     .order("created_at", { ascending: false });
 
   if (error) {
@@ -114,7 +153,7 @@ export async function listTrabajos() {
 export async function listTrabajosDeLead(leadId: string) {
   const { data, error } = await getClient()
     .from("trabajos")
-    .select("*")
+    .select("*, trabajo_tareas(id, titulo, hecha, orden)")
     .eq("lead_id", leadId)
     .order("created_at", { ascending: false });
 
@@ -221,5 +260,49 @@ export async function deleteTrabajo(id: string) {
 
   if (error) {
     throw new Error(`No pudimos borrar el trabajo: ${error.message}`);
+  }
+}
+
+export async function agregarTarea(trabajoId: string, titulo: unknown) {
+  const texto = cleanText(titulo, 200);
+
+  if (!texto) {
+    throw new Error("Escribe qué hay que hacer antes de añadir la tarea.");
+  }
+
+  const { data } = await getClient()
+    .from("trabajo_tareas")
+    .select("orden")
+    .eq("trabajo_id", trabajoId)
+    .order("orden", { ascending: false })
+    .limit(1);
+
+  const siguiente = ((data as { orden: number }[] | null)?.[0]?.orden ?? -1) + 1;
+
+  const { error } = await getClient()
+    .from("trabajo_tareas")
+    .insert({ trabajo_id: trabajoId, titulo: texto, orden: siguiente });
+
+  if (error) {
+    throw new Error(`No pudimos añadir la tarea: ${error.message}`);
+  }
+}
+
+export async function alternarTarea(tareaId: string, hecha: boolean) {
+  const { error } = await getClient()
+    .from("trabajo_tareas")
+    .update({ hecha })
+    .eq("id", tareaId);
+
+  if (error) {
+    throw new Error(`No pudimos actualizar la tarea: ${error.message}`);
+  }
+}
+
+export async function borrarTarea(tareaId: string) {
+  const { error } = await getClient().from("trabajo_tareas").delete().eq("id", tareaId);
+
+  if (error) {
+    throw new Error(`No pudimos borrar la tarea: ${error.message}`);
   }
 }

@@ -53,7 +53,7 @@ export const clientes: Cliente[] = [
       ["Monto total", "USD 400"],
       ["Desglose", "Tema WordPress $300 · Instalación $40 · Correos $60"],
       ["Forma de pago", "50 % inicial / 50 % contra entrega"],
-      ["Estado de pago", "Por confirmar"],
+      ["Estado de pago", "Abonados USD 200 — falta el 50 % contra entrega"],
       ["Regla del cliente", "El template se cobra a $300; lo adicional se cobra aparte pero barato"],
     ],
 
@@ -76,14 +76,64 @@ export const clientes: Cliente[] = [
     ],
 
     pendientes: [
-      "Aprobación del demo por parte de la clienta",
       "Instalar el tema en EasyWP y migrar el contenido",
       "Configurar los correos en Google Workspace",
       "Apuntar baretecpanama.com al hosting final",
+      "Entrega y cobro del 50 % restante",
     ],
 
     notas:
       "El DNS de dukecrea.com vive en Cloudflare, no en Vercel: el registro del subdominio debe quedar en DNS only (nube gris) o Vercel no emite el certificado SSL. Contenido fuente: documento «BARETEC Panamá — Contenido del sitio web (ES) v6.5». Se maquetó la Opción A (con retrato de la fundadora); si el campo se deja vacío en el Customizer, el bloque degrada solo a la Opción B.",
+  },
+
+  {
+    slug: "camsmark",
+    nombre: "Camsmark",
+    corto: "Camsmark",
+    sector: "E-commerce industrial · Herramientas y equipo",
+    resumen:
+      "Tienda en línea multi-país Panamá + Venezuela, con precio, stock y checkout separados por país e integración con el ERP SAINT de la sede de Caracas. Fase 1 en producción, pendiente de entrega.",
+    contacto: "Ricardo Contreras",
+    pais: "Panamá y Venezuela",
+    alta: "Julio 2026",
+    estado: "produccion",
+    demo: "",
+    produccion: "https://camsmark.shop",
+
+    comercial: [
+      ["Fase 1", "USD 3,000 — 8 a 10 semanas"],
+      ["Estado de pago", "Abonados USD 1,500 — falta el 50 % contra entrega"],
+      ["Equipo", "Antonio (backend, SAINT, SEO) + Noé (storefront, UI)"],
+    ],
+
+    tecnico: [
+      ["Stack", "Laravel 10 + Filament 3.2"],
+      ["Tiendas", "/pa en USD y /ve en VES; precio y stock en el pivote product_store"],
+      ["Venezuela en Fase 1", "Navegable sin cobro — el carrito termina en WhatsApp"],
+      ["ERP", "SAINT Enterprise Administrativo 9.0.2.5 sobre SQL Server, agente local en Caracas"],
+      ["PHP local", "/opt/homebrew/opt/php@8.2/bin/php — nunca php a secas"],
+      ["Proyecto local", "~/MisProyectos/camsmark"],
+      ["Tablero de avance", "docs/PLAN-OPTIMIZADO.md dentro del repo"],
+    ],
+
+    infra: [
+      ["Dominio", "camsmark.shop"],
+      ["Hosting", "Forge sobre Vultr — /home/forge/camsmark.shop"],
+      ["Despliegue", "Manual por SSH; Forge NO auto-despliega"],
+      ["Respaldos", "bash /home/forge/backup-camsmark.sh"],
+    ],
+
+    pendientes: [
+      "Mergear el PR #24 (colecciones por oficio)",
+      "Publicar las fotos etiquetadas al catálogo real",
+      "Motor de cross-sell y kits",
+      "Piloto de 10 SKU con el agente SAINT de Caracas",
+      "Aplicar la regla «Panamá = resto del mundo» al ITBMS",
+      "Entrega de Fase 1 y cobro del 50 % restante",
+    ],
+
+    notas:
+      "Trampa cara: ->after('columna') solo vale en ALTER TABLE; dentro de Schema::create MySQL da error 1064 y sqlite lo ignora, así que los tests locales pasan y explota en producción. En SAINT, Precio1 es el mínimo y Precio3 el máximo: publicar el equivocado vende bajo margen sin dar ningún error. La oficina de Caracas sale por Starlink con CGNAT, por eso el agente habla solo hacia afuera y se autentica por token, nunca por lista de IP.",
   },
 
   {

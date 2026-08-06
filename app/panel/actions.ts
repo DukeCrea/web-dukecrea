@@ -11,7 +11,14 @@ import {
   updateLeadDetails,
   updateLeadStatus,
 } from "../lib/leads";
-import { createTrabajo, deleteTrabajo, updateTrabajo } from "../lib/trabajos";
+import {
+  agregarTarea,
+  alternarTarea,
+  borrarTarea,
+  createTrabajo,
+  deleteTrabajo,
+  updateTrabajo,
+} from "../lib/trabajos";
 
 const cookieName = "dukecrea_panel";
 
@@ -224,6 +231,40 @@ export async function borrarTrabajo(formData: FormData) {
 
   await accionProtegida("/panel/trabajos", async () => {
     await deleteTrabajo(id);
+  });
+
+  revalidatePath("/panel/trabajos");
+  redirect("/panel/trabajos");
+}
+
+export async function anadirTarea(formData: FormData) {
+  const trabajoId = texto(formData, "trabajoId");
+
+  await accionProtegida("/panel/trabajos", async () => {
+    await agregarTarea(trabajoId, texto(formData, "titulo"));
+  });
+
+  revalidatePath("/panel/trabajos");
+  redirect("/panel/trabajos");
+}
+
+export async function marcarTarea(formData: FormData) {
+  const tareaId = texto(formData, "tareaId");
+  const hecha = texto(formData, "hecha") === "1";
+
+  await accionProtegida("/panel/trabajos", async () => {
+    await alternarTarea(tareaId, hecha);
+  });
+
+  revalidatePath("/panel/trabajos");
+  redirect("/panel/trabajos");
+}
+
+export async function quitarTarea(formData: FormData) {
+  const tareaId = texto(formData, "tareaId");
+
+  await accionProtegida("/panel/trabajos", async () => {
+    await borrarTarea(tareaId);
   });
 
   revalidatePath("/panel/trabajos");
