@@ -11,6 +11,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 1,
     },
+    {
+      url: `${siteConfig.url}/venezuela`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.95,
+    },
     ...services.map((service) => ({
       url: `${siteConfig.url}/servicios/${service.slug}`,
       lastModified: now,

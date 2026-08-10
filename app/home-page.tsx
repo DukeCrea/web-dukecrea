@@ -562,7 +562,7 @@ export default function HomePage() {
               transition={{ duration: 0.5, delay: 0.32 }}
               className="text-sm text-gray-400"
             >
-              Diagnóstico inicial gratis · Sin compromiso
+              Empresas en Panamá y Venezuela · Diagnóstico inicial gratis · Sin compromiso
             </motion.p>
           </div>
         </section>
@@ -859,6 +859,13 @@ export default function HomePage() {
                 <span className="font-bold text-white">DukeCrea</span>
               </div>
               <p className="text-sm">Agencia de digitalización de negocios.</p>
+              <p className="mt-3 text-sm">
+                Trabajamos con empresas en Panamá y{" "}
+                <Link href="/venezuela" className="text-lime-400 transition hover:text-lime-300">
+                  Venezuela
+                </Link>
+                .
+              </p>
             </div>
             <div>
               <h4 className="mb-4 font-bold text-white">Sitio</h4>

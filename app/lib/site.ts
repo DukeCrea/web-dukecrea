@@ -885,6 +885,12 @@ export const cases = [
     tags: ["Laravel", "Python", "Telegram", "Zoho CRM"],
   },
   {
+    client: "BARETEC Panamá",
+    sector: "Comercio internacional",
+    desc: "Web corporativa para una comercializadora de baterías usadas entre América Latina y Corea del Sur. Tema WordPress a medida con todos los textos e imágenes editables desde el panel, sin depender de nosotros para actualizar.",
+    tags: ["WordPress", "PHP", "Tema a medida"],
+  },
+  {
     client: "Camsmark",
     sector: "E-commerce multi-país",
     desc: "Tienda online única con dos mercados: precio, moneda, inventario y proceso de pago separados por país. Construida para administrar ventas sin duplicar operación.",
@@ -907,6 +913,12 @@ export const cases = [
     sector: "Gestión de eventos",
     desc: "Registro y validación de asistentes mediante códigos QR con verificación visual en la entrada.",
     tags: ["Next.js", "TypeScript", "QR"],
+  },
+  {
+    client: "Mili & Molo",
+    sector: "E-commerce educativo",
+    desc: "Tienda online para una marca educativa bilingüe: libros, cuadernillos descargables y productos físicos en un mismo catálogo, con tema propio, carga masiva de contenido y medición de e-commerce.",
+    tags: ["WordPress", "WooCommerce", "PHP"],
   },
   {
     client: "DukeGBP + marketing bots",

@@ -284,6 +284,24 @@ export default async function ServicePage({ params }: Props) {
           </section>
         )}
 
+        <section className="border-t border-gray-900 px-6 py-12 md:px-8">
+          <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 rounded-xl border border-gray-800 bg-gray-950 p-6">
+            <div>
+              <h2 className="text-lg font-bold text-white">¿Tu empresa está en Venezuela?</h2>
+              <p className="mt-2 text-sm leading-6 text-gray-400">
+                Trabajamos en remoto con empresas venezolanas y tenemos sistemas en producción que
+                operan con Venezuela y Panamá a la vez.
+              </p>
+            </div>
+            <Link
+              href="/venezuela"
+              className="rounded-lg border-2 border-gray-700 px-6 py-2.5 font-bold text-white transition hover:border-lime-400 hover:text-lime-400"
+            >
+              Ver soluciones para Venezuela
+            </Link>
+          </div>
+        </section>
+
         <section className="bg-gradient-to-r from-lime-400 to-lime-500 px-6 py-20 md:px-8">
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="text-4xl font-bold text-gray-950">¿Lo implementamos para tu negocio?</h2>

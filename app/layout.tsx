@@ -20,12 +20,11 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   applicationName: siteConfig.name,
   title: {
-    default:
-      "DukeCrea - Agencia de software, automatización e IA para negocios",
+    default: "Agencia de software e IA en Panamá y Venezuela | DukeCrea",
     template: "%s | DukeCrea",
   },
   description:
-    "DukeCrea crea infraestructura digital B2B con Next.js, WordPress, Shopify, software a medida, automatizaciones, Ads, SEO/GEO y análisis de datos.",
+    "Agencia de software, e-commerce, automatización con IA y Ads para empresas en Panamá y Venezuela. Infraestructura digital B2B con operación multi-país.",
   keywords: [
     "DukeCrea",
     "desarrollo de software",
