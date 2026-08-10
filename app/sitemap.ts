@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { industrias } from "./lib/industrias";
 import { services, siteConfig } from "./lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -17,6 +18,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.95,
     },
+    ...industrias.map((industria) => ({
+      url: `${siteConfig.url}/industrias/${industria.slug}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.95,
+    })),
     ...services.map((service) => ({
       url: `${siteConfig.url}/servicios/${service.slug}`,
       lastModified: now,

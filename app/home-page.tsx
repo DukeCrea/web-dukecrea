@@ -34,6 +34,7 @@ import {
   workflowSteps,
   type Service,
 } from "./lib/site";
+import { industrias } from "./lib/industrias";
 import { LeadIntakeSection } from "./lead-intake-section";
 import { AutoVideo } from "./auto-video";
 import { Logo } from "./logo";
@@ -852,7 +853,7 @@ export default function HomePage() {
 
       <footer className="border-t border-gray-900 bg-gray-950 px-6 py-12 text-gray-400 md:px-8">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-8 grid grid-cols-2 gap-8 md:grid-cols-4">
+          <div className="mb-8 grid grid-cols-2 gap-8 md:grid-cols-5">
             <div>
               <div className="mb-4 flex items-center gap-2">
                 <Logo className="h-7 w-7 rounded-lg" />
@@ -889,6 +890,26 @@ export default function HomePage() {
                     </Link>
                   </li>
                 ))}
+              </ul>
+            </div>
+            <div>
+              <h4 className="mb-4 font-bold text-white">Industrias</h4>
+              <ul className="space-y-2 text-sm">
+                {industrias.map((industria) => (
+                  <li key={industria.slug}>
+                    <Link
+                      href={`/industrias/${industria.slug}`}
+                      className="transition hover:text-lime-400"
+                    >
+                      {industria.eyebrow}
+                    </Link>
+                  </li>
+                ))}
+                <li>
+                  <Link href="/venezuela" className="transition hover:text-lime-400">
+                    Empresas en Venezuela
+                  </Link>
+                </li>
               </ul>
             </div>
             <div>
