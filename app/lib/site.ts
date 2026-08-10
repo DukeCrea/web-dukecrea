@@ -91,7 +91,7 @@ export const services: Service[] = [
     shortTitle: "Web corporativa",
     metaTitle: "Páginas web corporativas en Panamá",
     metaDescription:
-      "Diseño y desarrollo de páginas web corporativas en Next.js, WordPress o Shopify, rápidas, profesionales y optimizadas para captar clientes.",
+      "Diseño y desarrollo de páginas web corporativas en Panamá con Next.js, WordPress o Shopify: rápidas, profesionales y pensadas para captar clientes.",
     eyebrow: "Presencia digital profesional",
     heroTitle: "Una web corporativa que presenta, convence y convierte",
     summary:
@@ -136,9 +136,9 @@ export const services: Service[] = [
     icon: "cart",
     title: "E-commerce",
     shortTitle: "E-commerce",
-    metaTitle: "Desarrollo de e-commerce y tiendas online",
+    metaTitle: "Tiendas online y e-commerce en Panamá",
     metaDescription:
-      "Tiendas online con Shopify o desarrollo a medida, catálogo, carrito, pagos, inventario y panel administrativo para vender por internet.",
+      "Creamos tu tienda online en Panamá con Shopify o a medida: catálogo, carrito, pagos, inventario y panel administrativo para vender por internet.",
     eyebrow: "Venta online",
     heroTitle: "Una tienda online lista para vender y administrar",
     summary:
@@ -183,9 +183,9 @@ export const services: Service[] = [
     icon: "zap",
     title: "Landing pages",
     shortTitle: "Landing pages",
-    metaTitle: "Landing pages de alta conversión",
+    metaTitle: "Landing pages de alta conversión en Panamá",
     metaDescription:
-      "Landing pages rápidas y enfocadas para campañas, lanzamientos, captación de leads y ventas.",
+      "Landing pages rápidas y enfocadas para campañas, lanzamientos y captación de leads en Panamá. Hechas para convertir clics en clientes.",
     eyebrow: "Conversión para campañas",
     heroTitle: "Landing pages enfocadas en convertir tráfico en leads",
     summary:
@@ -225,9 +225,9 @@ export const services: Service[] = [
     icon: "package",
     title: "Desarrollo de software",
     shortTitle: "Software a medida",
-    metaTitle: "Desarrollo de software a medida",
+    metaTitle: "Desarrollo de software a medida en Panamá",
     metaDescription:
-      "Software a medida para operaciones, ventas, inventario, reservas, validaciones y flujos internos.",
+      "Software a medida en Panamá para operaciones, ventas, inventario, reservas y flujos internos. Automatiza lo que hoy resuelves a mano en Excel.",
     eyebrow: "Sistemas a medida",
     heroTitle: "Software hecho para la forma real en que trabaja tu negocio",
     summary:
@@ -267,9 +267,9 @@ export const services: Service[] = [
     icon: "chart",
     title: "SEO y GEO",
     shortTitle: "SEO y GEO",
-    metaTitle: "SEO y GEO para empresas",
+    metaTitle: "SEO y GEO para empresas en Panamá",
     metaDescription:
-      "Optimización SEO y GEO para aparecer mejor en buscadores y respuestas generativas con contenido útil y estructura técnica.",
+      "SEO y GEO en Panamá para que tu empresa aparezca en Google y en las respuestas de la IA, con contenido útil y una base técnica sólida.",
     eyebrow: "Visibilidad orgánica",
     heroTitle: "SEO y GEO para que tu oferta sea encontrable y entendible",
     summary:
@@ -309,9 +309,9 @@ export const services: Service[] = [
     icon: "chart",
     title: "Gestión y control de ADS",
     shortTitle: "Control de Ads",
-    metaTitle: "Gestión y control de Google Ads y Meta Ads",
+    metaTitle: "Gestión de Google Ads y Meta Ads en Panamá",
     metaDescription:
-      "Control, seguimiento y optimización de campañas en Google Ads y Meta Ads con foco en leads, ventas y ROI.",
+      "Gestión de Google Ads y Meta Ads en Panamá con foco en leads, ventas y ROI. Sabrás qué campaña te trae clientes y cuál te quema el presupuesto.",
     eyebrow: "Publicidad con medición",
     heroTitle: "Campañas de Ads con control, seguimiento y decisiones claras",
     summary:
@@ -351,9 +351,9 @@ export const services: Service[] = [
     icon: "chart",
     title: "Panel - monitor administrativo inteligente",
     shortTitle: "Panel inteligente",
-    metaTitle: "Panel administrativo inteligente y análisis de datos",
+    metaTitle: "Panel administrativo inteligente en Panamá",
     metaDescription:
-      "Paneles administrativos inteligentes para monitorear ventas, leads, inventario, campañas y operación en tiempo real.",
+      "Paneles administrativos en Panamá para monitorear ventas, leads, inventario y campañas en tiempo real, todo en una sola pantalla.",
     eyebrow: "Análisis de datos",
     heroTitle: "Un monitor inteligente para entender tu sistema de un vistazo",
     summary:
@@ -393,9 +393,9 @@ export const services: Service[] = [
     icon: "bot",
     title: "Chatbot para WhatsApp o redes sociales con IA",
     shortTitle: "Chatbot con IA",
-    metaTitle: "Chatbot para WhatsApp y redes sociales con IA",
+    metaTitle: "Chatbot de WhatsApp con IA en Panamá",
     metaDescription:
-      "Chatbots con IA para WhatsApp y redes sociales que atienden, califican y responden clientes automáticamente.",
+      "Chatbots con IA para WhatsApp y redes sociales en Panamá: atienden, califican y responden a tus clientes 24/7 sin que pierdas una venta.",
     eyebrow: "Atención con IA",
     heroTitle: "Un chatbot con IA para responder sin dejar leads esperando",
     summary:
@@ -435,9 +435,9 @@ export const services: Service[] = [
     icon: "users",
     title: "Control, gestión y atención de leads",
     shortTitle: "Gestión de leads",
-    metaTitle: "Control y gestión de leads",
+    metaTitle: "Control y gestión de leads en Panamá",
     metaDescription:
-      "Sistemas para capturar, organizar, atender y dar seguimiento a leads desde formularios, WhatsApp, Ads y redes.",
+      "Sistemas en Panamá para capturar, organizar y dar seguimiento a leads de formularios, WhatsApp, Ads y redes. Ningún cliente se vuelve a perder.",
     eyebrow: "Pipeline comercial",
     heroTitle: "Que ningún lead se pierda entre WhatsApp, formularios y Ads",
     summary:
@@ -477,9 +477,9 @@ export const services: Service[] = [
     icon: "bot",
     title: "Respuestas automatizadas de comentarios en redes sociales",
     shortTitle: "Auto-respuestas en redes",
-    metaTitle: "Respuestas automatizadas para comentarios en redes sociales",
+    metaTitle: "Respuestas automáticas en redes para Panamá",
     metaDescription:
-      "Automatización de respuestas a comentarios en redes sociales para atención al cliente y captación de leads.",
+      "Automatizamos las respuestas a comentarios en redes sociales para empresas en Panamá: atención más rápida y más leads sin sumar personal.",
     eyebrow: "Atención social",
     heroTitle: "Convierte comentarios en conversaciones atendidas a tiempo",
     summary:
@@ -519,9 +519,9 @@ export const services: Service[] = [
     icon: "chart",
     title: "Evaluación de contenido para tu empresa",
     shortTitle: "Evaluación de contenido",
-    metaTitle: "Evaluación de contenido para empresas",
+    metaTitle: "Auditoría de contenido para empresas en Panamá",
     metaDescription:
-      "Auditoría de contenido para detectar mejoras en mensaje, formatos, embudos, frecuencia y conversión.",
+      "Auditoría de contenido para empresas en Panamá: revisamos mensaje, formatos, embudos y frecuencia para saber qué publicar y qué dejar de hacer.",
     eyebrow: "Auditoría de contenido",
     heroTitle: "Contenido con intención, no solo publicaciones sueltas",
     summary:
@@ -561,9 +561,9 @@ export const services: Service[] = [
     icon: "zap",
     title: "Creación y edición de videos",
     shortTitle: "Videos",
-    metaTitle: "Creación y edición profesional de videos",
+    metaTitle: "Creación y edición de videos en Panamá",
     metaDescription:
-      "Guiones, edición profesional y optimización de videos para redes sociales, campañas y contenido empresarial.",
+      "Creación y edición profesional de videos en Panamá para redes sociales, campañas y contenido empresarial, con guion incluido.",
     eyebrow: "Video marketing",
     heroTitle: "Videos con guion, edición y objetivo comercial",
     summary:
@@ -603,9 +603,9 @@ export const services: Service[] = [
     icon: "chart",
     title: "Evaluación de tus redes sociales y estrategia digital de publicidad",
     shortTitle: "Auditoría de redes",
-    metaTitle: "Evaluación de redes sociales y estrategia digital",
+    metaTitle: "Auditoría de redes sociales en Panamá",
     metaDescription:
-      "Auditoría de redes sociales, estrategia digital y publicidad para mejorar contenido, campañas y conversión.",
+      "Auditoría de redes sociales y estrategia digital en Panamá: qué está funcionando, qué no y dónde estás dejando dinero sobre la mesa.",
     eyebrow: "Estrategia digital",
     heroTitle: "Una revisión completa de redes, oferta y publicidad",
     summary:
@@ -645,9 +645,9 @@ export const services: Service[] = [
     icon: "chart",
     title: "Evaluación de inversión en Ads",
     shortTitle: "Inversión Ads",
-    metaTitle: "Evaluación de inversión en Ads",
+    metaTitle: "Auditoría de inversión en Ads en Panamá",
     metaDescription:
-      "Evaluamos tu inversión en Google Ads y Meta Ads para detectar fugas, oportunidades y decisiones de presupuesto.",
+      "Evaluamos tu inversión en Google Ads y Meta Ads en Panamá para detectar fugas de presupuesto, oportunidades y decisiones de gasto.",
     eyebrow: "Presupuesto publicitario",
     heroTitle: "Descubre si tu inversión en Ads está trabajando a favor del negocio",
     summary:
@@ -687,9 +687,9 @@ export const services: Service[] = [
     icon: "chart",
     title: "Cálculo de ROI publicitario",
     shortTitle: "ROI publicitario",
-    metaTitle: "Cálculo de ROI publicitario",
+    metaTitle: "Cálculo de ROI publicitario en Panamá",
     metaDescription:
-      "Calcula y visualiza el retorno de inversión publicitaria conectando gasto, leads, ventas y margen.",
+      "Calcula el retorno real de tu publicidad en Panamá conectando gasto, leads, ventas y margen. Deja de invertir a ciegas.",
     eyebrow: "Rentabilidad publicitaria",
     heroTitle: "Mide el ROI real de tus campañas y decide con números",
     summary:
@@ -729,9 +729,9 @@ export const services: Service[] = [
     icon: "package",
     title: "Software automatizado para publicaciones en redes sociales",
     shortTitle: "Publicador de redes",
-    metaTitle: "Software automatizado para publicaciones en redes sociales",
+    metaTitle: "Automatizar publicaciones en redes en Panamá",
     metaDescription:
-      "Software para planificar, organizar y automatizar publicaciones en redes sociales con flujos de contenido y control.",
+      "Software para planificar y automatizar publicaciones en redes sociales para empresas en Panamá. Menos trabajo manual y mucha más constancia.",
     eyebrow: "Operación de contenido",
     heroTitle: "Un sistema para organizar y automatizar publicaciones en redes",
     summary:
