@@ -145,7 +145,7 @@ function validateLead(input: LeadInput) {
   const budget = cleanText(input.budget, 80);
   const timeline = cleanText(input.timeline, 80);
   const message = cleanMessage(input.message);
-  const sourcePath = cleanText(input.sourcePath, 160);
+  const sourcePath = cleanText(input.sourcePath, 500);
 
   if (name.length < 2) {
     throw new Error("Indica tu nombre para poder registrar la oportunidad.");

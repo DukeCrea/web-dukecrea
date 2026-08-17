@@ -4,6 +4,7 @@ export const runtime = "nodejs";
 
 const rateLimitWindowMs = 10 * 60 * 1000;
 const maxRequestsPerWindow = 8;
+const maxRequestBytes = 32 * 1024;
 const rateLimitBuckets = new Map<string, { count: number; resetAt: number }>();
 
 function jsonResponse(payload: unknown, init?: ResponseInit) {
@@ -11,6 +12,7 @@ function jsonResponse(payload: unknown, init?: ResponseInit) {
     ...init,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
+      "Cache-Control": "no-store",
       ...init?.headers,
     },
   });
@@ -62,6 +64,22 @@ function hasFilledHoneypot(body: unknown) {
 
 export async function POST(request: Request) {
   try {
+    const contentType = request.headers.get("content-type") || "";
+    if (!contentType.toLowerCase().includes("application/json")) {
+      return jsonResponse(
+        { ok: false, message: "El formulario debe enviarse como JSON válido." },
+        { status: 415 },
+      );
+    }
+
+    const contentLength = Number(request.headers.get("content-length") || 0);
+    if (Number.isFinite(contentLength) && contentLength > maxRequestBytes) {
+      return jsonResponse(
+        { ok: false, message: "La solicitud supera el tamaño permitido." },
+        { status: 413 },
+      );
+    }
+
     const body = await request.json();
 
     if (hasFilledHoneypot(body)) {

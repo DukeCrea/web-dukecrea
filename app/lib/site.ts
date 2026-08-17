@@ -177,6 +177,100 @@ export const services: Service[] = [
     related: ["panel-monitor-administrativo-inteligente", "gestion-control-ads", "seo-y-geo"],
   },
   {
+    slug: "desarrollo-wordpress",
+    category: "dev",
+    categoryLabel: "Dev",
+    icon: "phone",
+    title: "Desarrollo y optimización WordPress",
+    shortTitle: "WordPress",
+    metaTitle: "Desarrollo WordPress a medida en Panamá",
+    metaDescription:
+      "Desarrollo, rediseño y optimización WordPress en Panamá: temas a medida, WooCommerce, velocidad, seguridad y contenido administrable.",
+    eyebrow: "WordPress administrable",
+    heroTitle: "WordPress a medida para publicar con autonomía y crecer sin desorden",
+    summary:
+      "Creamos, rediseñamos y optimizamos sitios WordPress con estructura propia, buen rendimiento y una administración clara para el equipo.",
+    description:
+      "Trabajamos con empresas que necesitan lanzar o mejorar una web en WordPress sin quedar atadas a plantillas pesadas. Diseñamos la arquitectura, el tema, los campos editables, las integraciones y el mantenimiento según el uso real del sitio.",
+    outcomes: [
+      "El equipo puede actualizar contenido sin depender del desarrollador.",
+      "La web conserva una estructura consistente al crecer.",
+      "Plugins, seguridad y rendimiento se gestionan con criterio técnico.",
+    ],
+    deliverables: [
+      "Arquitectura y diseño responsive",
+      "Tema o bloques a medida",
+      "Campos administrables",
+      "Optimización de rendimiento",
+      "Configuración de seguridad y copias",
+      "Migración o integración cuando aplica",
+    ],
+    process: ["Auditoría o alcance", "Arquitectura", "Diseño", "Desarrollo WordPress", "Contenido y publicación"],
+    stack: ["WordPress", "PHP", "WooCommerce", "ACF", "SEO técnico", "Analítica"],
+    faq: [
+      {
+        q: "¿Trabajan sobre una web WordPress existente?",
+        a: "Sí. Primero auditamos tema, plugins, hosting, contenido y rendimiento para decidir qué conviene conservar, corregir o reconstruir.",
+      },
+      {
+        q: "¿Usan plantillas prediseñadas?",
+        a: "Podemos partir de una base probada si el presupuesto lo requiere, pero evitamos acumular componentes innecesarios. Para proyectos con identidad y operación propias preferimos un tema a medida.",
+      },
+      {
+        q: "¿Incluyen mantenimiento?",
+        a: "Podemos incluir actualizaciones, copias de seguridad, monitoreo y mejoras continuas después del lanzamiento.",
+      },
+    ],
+    related: ["paginas-web-corporativas", "e-commerce", "seo-y-geo"],
+  },
+  {
+    slug: "desarrollo-shopify",
+    category: "dev",
+    categoryLabel: "Dev",
+    icon: "cart",
+    title: "Desarrollo y optimización Shopify",
+    shortTitle: "Shopify",
+    metaTitle: "Desarrollo de tiendas Shopify en Panamá",
+    metaDescription:
+      "Diseño, desarrollo y optimización de tiendas Shopify en Panamá: catálogo, tema, pagos, analítica, automatizaciones y conversión.",
+    eyebrow: "Comercio sobre Shopify",
+    heroTitle: "Una tienda Shopify preparada para vender, medir y administrar",
+    summary:
+      "Configuramos y personalizamos Shopify para que catálogo, pagos, contenido, automatizaciones y medición funcionen como un sistema.",
+    description:
+      "Desarrollamos tiendas Shopify para marcas que necesitan salir con rapidez sin renunciar a una experiencia cuidada. Revisamos tema, navegación, fichas de producto, checkout, aplicaciones, analítica y operación diaria.",
+    outcomes: [
+      "La tienda queda lista para administrar catálogo y pedidos.",
+      "El recorrido de compra reduce fricción en móvil.",
+      "Ventas y campañas cuentan con eventos de medición consistentes.",
+    ],
+    deliverables: [
+      "Configuración de tienda y mercados",
+      "Personalización de tema",
+      "Catálogo y colecciones",
+      "Pagos, envíos e impuestos según alcance",
+      "Analítica de comercio electrónico",
+      "Automatizaciones e integraciones prioritarias",
+    ],
+    process: ["Modelo de tienda", "Arquitectura de catálogo", "Tema y contenido", "Integraciones", "Pruebas de compra"],
+    stack: ["Shopify", "Liquid", "JavaScript", "Shopify Analytics", "GA4", "Meta Ads"],
+    faq: [
+      {
+        q: "¿Pueden mejorar una tienda Shopify que ya existe?",
+        a: "Sí. Auditamos navegación, tema, aplicaciones, velocidad, catálogo, medición y conversión antes de priorizar cambios.",
+      },
+      {
+        q: "¿Shopify sirve para vender en varios países?",
+        a: "Sí, dependiendo de pagos, moneda, catálogo y logística. Definimos qué puede resolverse con Shopify Markets y qué requiere una integración adicional.",
+      },
+      {
+        q: "¿Cuándo no conviene Shopify?",
+        a: "Cuando la operación depende de reglas muy particulares, flujos internos complejos o integraciones que harían la tienda difícil de mantener. En esos casos comparamos una solución a medida.",
+      },
+    ],
+    related: ["e-commerce", "gestion-control-ads", "calculo-roi-publicitario"],
+  },
+  {
     slug: "landing-pages",
     category: "dev",
     categoryLabel: "Dev",
@@ -776,9 +870,9 @@ export function getServiceBySlug(slug: string) {
 }
 
 export const navLinks = [
-  { href: "/#servicios", label: "Soluciones" },
-  { href: "/#casos", label: "Casos" },
-  { href: "/#equipo", label: "Equipo" },
+  { href: "/servicios", label: "Soluciones" },
+  { href: "/casos", label: "Casos" },
+  { href: "/nosotros", label: "Equipo" },
   { href: "/#planes", label: "Planes" },
   { href: "/#faq", label: "FAQ" },
 ];

@@ -68,7 +68,7 @@ export function ProcesoScroll({ steps, eyebrow = "Proceso", title, description }
       <div className="mx-auto max-w-7xl px-6 py-20 md:px-8">
         <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-lime-400">{eyebrow}</p>
         <h2 className="text-3xl font-bold text-white md:text-4xl">{title}</h2>
-        <p className="mt-3 max-w-2xl text-gray-400">{description}</p>
+        <p className="mt-3 max-w-2xl text-gray-300">{description}</p>
         <div className="mt-10 grid grid-cols-2 gap-8 md:grid-cols-5">
           {steps.map((item) => (
             <div key={item.step} className="text-center">
@@ -76,7 +76,7 @@ export function ProcesoScroll({ steps, eyebrow = "Proceso", title, description }
                 {item.step}
               </div>
               <h3 className="mb-2 font-bold text-white">{item.title}</h3>
-              <p className="text-sm leading-6 text-gray-400">{item.desc}</p>
+              <p className="text-sm leading-6 text-gray-300">{item.desc}</p>
             </div>
           ))}
         </div>
@@ -89,7 +89,11 @@ export function ProcesoScroll({ steps, eyebrow = "Proceso", title, description }
   const current = steps[active];
 
   return (
-    <div ref={wrapRef} style={{ height: `${steps.length * 85}vh` }} className="relative">
+    <div
+      ref={wrapRef}
+      style={{ height: `calc(100vh + ${steps.length * 24}vh)` }}
+      className="relative"
+    >
       <div className="sticky top-0 flex h-screen flex-col items-center justify-center overflow-hidden px-6">
         <AutoVideo src="/pulso.mp4" poster="/pulso.jpg" className="pointer-events-none absolute inset-0 opacity-15" />
         <div className="pointer-events-none absolute inset-0 bg-black/80" />
@@ -124,7 +128,7 @@ export function ProcesoScroll({ steps, eyebrow = "Proceso", title, description }
 
         <div key={current.step} className="relative z-10 mt-8 max-w-xl animate-[fadeIn_0.4s_ease] text-center">
           <h3 className="text-3xl font-bold text-white md:text-4xl">{current.title}</h3>
-          <p className="mt-3 text-lg leading-7 text-gray-400">{current.desc}</p>
+          <p className="mt-3 text-lg leading-7 text-gray-300">{current.desc}</p>
         </div>
 
         <div className="relative z-10 mt-8 flex gap-2">

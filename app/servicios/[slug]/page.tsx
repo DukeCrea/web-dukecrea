@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CheckIcon, WhatsAppIcon } from "../../icons";
+import { Breadcrumbs, MarketingHeader, SiteFooter, SystemVisual } from "../../marketing-layout";
+import { breadcrumbJsonLd, buildMetadata, organizationId, serializeJsonLd } from "../../lib/seo";
 import { getServiceBySlug, getWhatsAppUrl, services, siteConfig } from "../../lib/site";
 
 type Props = {
@@ -25,32 +27,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
-  const url = `/servicios/${service.slug}`;
-
-  return {
+  return buildMetadata({
     title: service.metaTitle,
     description: service.metaDescription,
-    alternates: {
-      canonical: url,
-    },
-    openGraph: {
-      type: "website",
-      locale: "es_PA",
-      url,
-      title: service.metaTitle,
-      description: service.metaDescription,
-      siteName: siteConfig.name,
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: service.metaTitle,
-      description: service.metaDescription,
-    },
-  };
-}
-
-function serializeJsonLd(data: unknown) {
-  return JSON.stringify(data).replace(/</g, "\\u003c");
+    path: `/servicios/${service.slug}`,
+  });
 }
 
 export default async function ServicePage({ params }: Props) {
@@ -75,12 +56,7 @@ export default async function ServicePage({ params }: Props) {
       category: service.categoryLabel,
       description: service.metaDescription,
       url: serviceUrl,
-      provider: {
-        "@type": "ProfessionalService",
-        name: siteConfig.name,
-        url: siteConfig.url,
-        email: siteConfig.email,
-      },
+      provider: { "@id": organizationId },
       areaServed: [
         { "@type": "Country", name: "Panamá" },
         { "@type": "Country", name: "Venezuela" },
@@ -93,27 +69,21 @@ export default async function ServicePage({ params }: Props) {
     },
     {
       "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "Inicio",
-          item: siteConfig.url,
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: "Soluciones",
-          item: `${siteConfig.url}/#servicios`,
-        },
-        {
-          "@type": "ListItem",
-          position: 3,
-          name: service.title,
-          item: serviceUrl,
-        },
-      ],
+      "@type": "FAQPage",
+      "@id": `${serviceUrl}#faq`,
+      mainEntity: service.faq.map((item) => ({
+        "@type": "Question",
+        name: item.q,
+        acceptedAnswer: { "@type": "Answer", text: item.a },
+      })),
+    },
+    {
+      "@context": "https://schema.org",
+      ...breadcrumbJsonLd([
+        { name: "Inicio", path: "/" },
+        { name: "Soluciones", path: "/servicios" },
+        { name: service.title, path: `/servicios/${service.slug}` },
+      ]),
     },
   ];
 
@@ -124,36 +94,19 @@ export default async function ServicePage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}
       />
 
-      <header className="border-b border-gray-900 bg-black/95">
-        <div className="mx-auto flex min-h-16 max-w-7xl flex-wrap items-center justify-between gap-4 px-6 py-4 md:px-8">
-          <Link href="/" className="flex items-center gap-2" aria-label="DukeCrea inicio">
-            <div className="h-8 w-8 rounded-lg bg-lime-400 shadow-lg shadow-lime-400/50" />
-            <span className="text-lg font-bold text-white">DukeCrea</span>
-          </Link>
-          <nav className="flex flex-wrap items-center gap-4 text-sm" aria-label="Navegación de solución">
-            <Link href="/#servicios" className="font-medium text-gray-300 transition hover:text-lime-400">
-              Soluciones
-            </Link>
-            <Link href="/#casos" className="font-medium text-gray-300 transition hover:text-lime-400">
-              Casos
-            </Link>
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-lg bg-lime-400 px-4 py-2 font-bold text-gray-950 transition hover:bg-lime-300"
-            >
-              <WhatsAppIcon className="h-4 w-4" />
-              Hablemos
-            </a>
-          </nav>
-        </div>
-      </header>
+      <MarketingHeader whatsappMessage={`Hola DukeCrea, quiero información sobre ${service.title}.`} />
 
       <main>
         <section className="border-b border-gray-900 bg-gray-950 px-6 py-20 md:px-8">
           <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
             <div>
+              <Breadcrumbs
+                items={[
+                  { label: "Inicio", href: "/" },
+                  { label: "Soluciones", href: "/servicios" },
+                  { label: service.title, href: `/servicios/${service.slug}` },
+                ]}
+              />
               <div className="mb-5 inline-flex rounded-full border border-lime-400/30 bg-lime-400/10 px-4 py-1.5 text-sm font-semibold text-lime-300">
                 {service.categoryLabel} · {service.eyebrow}
               </div>
@@ -179,17 +132,31 @@ export default async function ServicePage({ params }: Props) {
                 </Link>
               </div>
             </div>
-            <div className="rounded-xl border border-gray-800 bg-black p-6">
-              <h2 className="text-xl font-bold text-white">Resultados esperados</h2>
-              <ul className="mt-5 space-y-4">
-                {service.outcomes.map((outcome) => (
-                  <li key={outcome} className="flex gap-3 text-sm leading-6 text-gray-300">
-                    <CheckIcon className="mt-1 h-4 w-4 shrink-0 text-lime-400" />
-                    {outcome}
-                  </li>
-                ))}
-              </ul>
+            <div className="space-y-5">
+              <SystemVisual labels={service.stack.slice(0, 4)} />
+              <div className="rounded-lg border border-gray-800 bg-black p-6">
+                <h2 className="text-xl font-bold text-white">Resultados esperados</h2>
+                <ul className="mt-5 space-y-4">
+                  {service.outcomes.map((outcome) => (
+                    <li key={outcome} className="flex gap-3 text-sm leading-6 text-gray-300">
+                      <CheckIcon className="mt-1 h-4 w-4 shrink-0 text-lime-400" />
+                      {outcome}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
+          </div>
+        </section>
+
+        <section className="border-b border-gray-900 bg-black px-6 py-10 md:px-8">
+          <div className="mx-auto max-w-4xl rounded-lg border border-lime-400/30 bg-lime-400/10 p-6">
+            <p className="text-sm font-bold uppercase tracking-[0.16em] text-lime-300">Respuesta directa</p>
+            <h2 className="mt-3 text-2xl font-bold text-white">¿Qué resuelve {service.shortTitle}?</h2>
+            <p className="mt-3 leading-7 text-gray-200">
+              {service.summary} El alcance se define después de revisar el proceso actual, las
+              integraciones y el resultado comercial u operativo que debe medirse.
+            </p>
           </div>
         </section>
 
@@ -320,6 +287,7 @@ export default async function ServicePage({ params }: Props) {
           </div>
         </section>
       </main>
+      <SiteFooter />
     </div>
   );
 }

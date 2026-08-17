@@ -29,6 +29,7 @@ const contentSecurityPolicy = `
   base-uri 'self';
   form-action 'self';
   frame-ancestors 'none';
+  ${isDev ? "" : "upgrade-insecure-requests;"}
 `;
 
 const securityHeaders = [
@@ -56,6 +57,10 @@ const securityHeaders = [
     key: "X-DNS-Prefetch-Control",
     value: "on",
   },
+  {
+    key: "Strict-Transport-Security",
+    value: "max-age=31536000; includeSubDomains",
+  },
 ];
 
 const nextConfig: NextConfig = {
@@ -69,6 +74,12 @@ const nextConfig: NextConfig = {
    */
   async redirects() {
     return [
+      {
+        source: "/:path*",
+        has: [{ type: "header", key: "x-forwarded-proto", value: "http" }],
+        destination: "https://dukecrea.com/:path*",
+        permanent: true,
+      },
       {
         source: "/:path*",
         has: [{ type: "host", value: "www.dukecrea.com" }],

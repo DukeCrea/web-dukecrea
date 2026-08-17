@@ -1,20 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { Analytics } from "@vercel/analytics/next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import { services, siteConfig } from "./lib/site";
 import { AnalyticsScripts } from "./analytics-scripts";
+import { defaultSocialImage, organizationId, serializeJsonLd, websiteId } from "./lib/seo";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -45,6 +33,11 @@ export const metadata: Metadata = {
   publisher: siteConfig.name,
   alternates: {
     canonical: "/",
+    languages: {
+      "es-PA": "/",
+      "es-VE": "/venezuela",
+      "x-default": "/",
+    },
   },
   openGraph: {
     type: "website",
@@ -54,14 +47,7 @@ export const metadata: Metadata = {
     title: "DukeCrea - Software, automatización e IA para negocios",
     description:
       "Infraestructura web, e-commerce, WordPress, Shopify, software a medida, automatizaciones, SEO/GEO, Ads y paneles inteligentes.",
-    images: [
-      {
-        url: "/og.jpg",
-        width: 1200,
-        height: 630,
-        alt: "DukeCrea — de procesos manuales a inteligencia artificial",
-      },
-    ],
+    images: [defaultSocialImage],
   },
   twitter: {
     card: "summary_large_image",
@@ -91,39 +77,61 @@ export const viewport: Viewport = {
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  name: siteConfig.name,
-  url: siteConfig.url,
-  email: siteConfig.email,
-  description:
-    "Firma tecnológica de infraestructura digital: desarrollo web, WordPress, Shopify, software a medida, automatización, Ads, SEO/GEO, paneles e IA.",
-  founders: [
-    { "@type": "Person", name: "Antonio Duque" },
-    { "@type": "Person", name: "Noe Rivas" },
-  ],
-  areaServed: [
-    { "@type": "Country", name: "Panamá" },
-    { "@type": "Country", name: "Venezuela" },
-  ],
-  sameAs: [siteConfig.github, siteConfig.instagram],
-  hasOfferCatalog: {
-    "@type": "OfferCatalog",
-    name: "Soluciones DukeCrea",
-    itemListElement: services.map((service) => ({
-      "@type": "Offer",
-      itemOffered: {
-        "@type": "Service",
-        name: service.title,
-        url: `${siteConfig.url}/servicios/${service.slug}`,
-        description: service.metaDescription,
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "@id": organizationId,
+      name: siteConfig.name,
+      url: siteConfig.url,
+      logo: `${siteConfig.url}/icon.svg`,
+      image: `${siteConfig.url}/og.jpg`,
+      email: siteConfig.email,
+      description:
+        "Firma tecnológica de infraestructura digital: desarrollo web, WordPress, Shopify, software a medida, automatización, Ads, SEO/GEO, paneles e IA.",
+      founders: [
+        { "@type": "Person", "@id": `${siteConfig.url}/nosotros#antonio-duque`, name: "Antonio Duque" },
+        { "@type": "Person", "@id": `${siteConfig.url}/nosotros#noe-rivas`, name: "Noe Rivas" },
+      ],
+      areaServed: [
+        { "@type": "Country", name: "Panamá" },
+        { "@type": "Country", name: "Venezuela" },
+      ],
+      sameAs: [siteConfig.github, siteConfig.instagram],
+      knowsAbout: [
+        "Desarrollo web",
+        "WordPress",
+        "Shopify",
+        "Desarrollo de software",
+        "Automatización con inteligencia artificial",
+        "SEO y GEO",
+        "Google Ads",
+        "Meta Ads",
+        "Análisis de datos",
+      ],
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "Soluciones DukeCrea",
+        itemListElement: services.map((service) => ({
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: service.title,
+            url: `${siteConfig.url}/servicios/${service.slug}`,
+            description: service.metaDescription,
+          },
+        })),
       },
-    })),
-  },
+    },
+    {
+      "@type": "WebSite",
+      "@id": websiteId,
+      url: siteConfig.url,
+      name: siteConfig.name,
+      inLanguage: "es",
+      publisher: { "@id": organizationId },
+    },
+  ],
 };
-
-function serializeJsonLd(data: unknown) {
-  return JSON.stringify(data).replace(/</g, "\\u003c");
-}
 
 export default function RootLayout({
   children,
@@ -134,7 +142,7 @@ export default function RootLayout({
     <html
       lang="es"
       data-scroll-behavior="smooth"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className="h-full antialiased"
     >
       <body className="min-h-full flex flex-col">
         <script
@@ -143,8 +151,6 @@ export default function RootLayout({
         />
         {children}
         <AnalyticsScripts />
-        <Analytics />
-        <SpeedInsights />
       </body>
     </html>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useMemo, useState } from "react";
+import Link from "next/link";
 import {
   BotIcon,
   CartIcon,
@@ -182,6 +183,7 @@ export function LeadIntakeSection() {
   const [projectType, setProjectType] = useState("");
   const [need, setNeed] = useState("");
   const [website, setWebsite] = useState("");
+  const [privacyAccepted, setPrivacyAccepted] = useState(false);
   const [form, setForm] = useState(initialForm);
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [error, setError] = useState("");
@@ -215,7 +217,16 @@ export function LeadIntakeSection() {
       return;
     }
 
+    if (!privacyAccepted) {
+      setError("Debes aceptar la política de privacidad para enviar la solicitud.");
+      return;
+    }
+
     setStatus("submitting");
+    track(AnalyticsEvent.formSubmit, {
+      tipo_proyecto: projectType,
+      necesidad: need,
+    });
 
     try {
       const response = await fetch("/api/leads", {
@@ -229,7 +240,7 @@ export function LeadIntakeSection() {
           projectType,
           need,
           website,
-          sourcePath: window.location.pathname,
+          sourcePath: `${window.location.pathname}${window.location.search}`,
         }),
       });
       const payload = (await response.json()) as { ok?: boolean; message?: string };
@@ -241,6 +252,7 @@ export function LeadIntakeSection() {
       setStatus("success");
       setForm(initialForm);
       setWebsite("");
+      setPrivacyAccepted(false);
       pushLeadFormEvent("lead_form_submitted", {
         projectId,
         projectType,
@@ -287,10 +299,19 @@ export function LeadIntakeSection() {
         </div>
 
         <div className="mx-auto max-w-4xl rounded-xl border border-lime-300/30 bg-gray-950 p-5 text-white shadow-2xl shadow-black/30 sm:p-8">
-          <div className="mb-8 grid grid-cols-3 gap-3" aria-label={`Paso ${progress} de 3`}>
+          <div
+            className="mb-8 grid grid-cols-3 gap-3"
+            role="progressbar"
+            aria-label="Progreso del formulario"
+            aria-valuemin={1}
+            aria-valuemax={3}
+            aria-valuenow={progress}
+            aria-valuetext={`Paso ${progress} de 3`}
+          >
             {[1, 2, 3].map((item) => (
               <div
                 key={item}
+                aria-hidden="true"
                 className={`h-1.5 rounded-full ${
                   item <= progress ? "bg-lime-400" : "bg-gray-800"
                 }`}
@@ -325,6 +346,7 @@ export function LeadIntakeSection() {
                     setProjectType("");
                     setNeed("");
                     setWebsite("");
+                    setPrivacyAccepted(false);
                     setStep(0);
                     setStatus("idle");
                   }}
@@ -371,6 +393,8 @@ export function LeadIntakeSection() {
                               projectId: option.id,
                               projectType: option.label,
                             });
+                            track(AnalyticsEvent.formStart, { tipo_proyecto: option.label });
+                            track(AnalyticsEvent.formStep, { paso: 2, tipo_proyecto: option.label });
                             setStep(1);
                           }}
                           className={`group min-h-28 rounded-lg border p-4 text-left transition hover:-translate-y-0.5 hover:border-lime-400 ${
@@ -422,6 +446,7 @@ export function LeadIntakeSection() {
                               projectType,
                               need: option,
                             });
+                            track(AnalyticsEvent.formStep, { paso: 3, necesidad: option });
                             setStep(2);
                           }}
                           className={`rounded-lg border px-4 py-4 text-left font-semibold transition hover:-translate-y-0.5 hover:border-lime-400 ${
@@ -530,6 +555,23 @@ export function LeadIntakeSection() {
                         className="min-h-28 rounded-lg border border-gray-800 bg-black px-4 py-3 text-white outline-none transition focus:border-lime-400"
                         placeholder="Qué tienes hoy, qué necesitas mejorar y qué resultado esperas."
                       />
+                    </label>
+                    <label className="flex items-start gap-3 text-sm leading-6 text-gray-300 md:col-span-2">
+                      <input
+                        type="checkbox"
+                        required
+                        checked={privacyAccepted}
+                        onChange={(event) => setPrivacyAccepted(event.target.checked)}
+                        className="mt-1 h-4 w-4 shrink-0 accent-lime-400"
+                      />
+                      <span>
+                        Acepto que DukeCrea use estos datos para responder mi solicitud, de acuerdo
+                        con la{" "}
+                        <Link href="/privacidad" className="font-bold text-lime-300 underline underline-offset-4">
+                          política de privacidad
+                        </Link>
+                        .
+                      </span>
                     </label>
                   </div>
 

@@ -1,9 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import {
   BotIcon,
@@ -34,13 +31,12 @@ import {
   workflowSteps,
   type Service,
 } from "./lib/site";
-import { industrias } from "./lib/industrias";
 import { LeadIntakeSection } from "./lead-intake-section";
 import { AutoVideo } from "./auto-video";
 import { Logo } from "./logo";
 import { ProcesoScroll } from "./proceso-scroll";
 import { CountUp } from "./count-up";
-import { Magnetic } from "./magnetic";
+import { SiteFooter } from "./marketing-layout";
 
 const iconMap = {
   bot: BotIcon,
@@ -52,85 +48,54 @@ const iconMap = {
   zap: ZapIcon,
 } satisfies Record<Service["icon"], typeof BotIcon>;
 
-function HeroCanvas() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+type GsapRuntime = {
+  gsap: (typeof import("gsap"))["gsap"];
+  ScrollTrigger: (typeof import("gsap/ScrollTrigger"))["ScrollTrigger"];
+};
+
+let gsapRuntimePromise: Promise<GsapRuntime> | null = null;
+
+function loadGsap() {
+  if (!gsapRuntimePromise) {
+    gsapRuntimePromise = Promise.all([import("gsap"), import("gsap/ScrollTrigger")]).then(
+      ([gsapModule, scrollTriggerModule]) => ({
+        gsap: gsapModule.gsap,
+        ScrollTrigger: scrollTriggerModule.ScrollTrigger,
+      }),
+    );
+  }
+
+  return gsapRuntimePromise;
+}
+
+function scheduleAnimationStart(callback: () => void) {
+  let started = false;
+  const run = () => {
+    if (started) return;
+    started = true;
+    callback();
+  };
+  const timer = window.setTimeout(run, 5000);
+  window.addEventListener("scroll", run, { once: true, passive: true });
+
+  return () => {
+    window.clearTimeout(timer);
+    window.removeEventListener("scroll", run);
+  };
+}
+
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState(false);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-    let animationId: number | null = null;
-    let time = 0;
-
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-
-    const handleMouseMove = (event: MouseEvent) => {
-      mouse.x = event.clientX;
-      mouse.y = event.clientY;
-    };
-
-    const handleTouchMove = (event: TouchEvent) => {
-      if (event.touches.length > 0) {
-        mouse.x = event.touches[0].clientX;
-        mouse.y = event.touches[0].clientY;
-      }
-    };
-
-    const drawFrame = () => {
-      ctx.fillStyle = "rgba(5, 5, 5, 0.32)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      time += reducedMotion ? 0.002 : 0.008;
-
-      const step = window.innerWidth < 768 ? 72 : 54;
-      for (let x = 0; x < canvas.width; x += step) {
-        for (let y = 0; y < canvas.height; y += step) {
-          const dx = mouse.x - x;
-          const dy = mouse.y - y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-          const intensity = Math.max(0, 1 - distance / 420);
-          if (intensity <= 0) continue;
-
-          const wave = Math.sin(distance * 0.015 - time * 4) * 4;
-          const waveSize = Math.max(1, 10 - distance * 0.02 + wave);
-          const hue = 78 + Math.sin(time * 0.5 + distance * 0.02) * 18;
-
-          ctx.fillStyle = `hsla(${hue}, 100%, 55%, ${intensity * 0.34})`;
-          ctx.beginPath();
-          ctx.arc(x, y, waveSize * 0.42, 0, Math.PI * 2);
-          ctx.fill();
-        }
-      }
-
-      if (!reducedMotion) {
-        animationId = requestAnimationFrame(drawFrame);
-      }
-    };
-
-    resize();
-    drawFrame();
-
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("touchmove", handleTouchMove, { passive: true });
-    window.addEventListener("resize", resize);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("touchmove", handleTouchMove);
-      window.removeEventListener("resize", resize);
-      if (animationId) cancelAnimationFrame(animationId);
-    };
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setReduced(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
   }, []);
 
-  return <canvas ref={canvasRef} aria-hidden="true" className="absolute inset-0 h-full w-full" />;
+  return reduced;
 }
 
 function Reveal({
@@ -142,19 +107,53 @@ function Reveal({
   className?: string;
   id?: string;
 }) {
-  const reduceMotion = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+  const reduceMotion = usePrefersReducedMotion();
+
+  useEffect(() => {
+    if (reduceMotion || !sectionRef.current) return;
+
+    let cancelled = false;
+    let context: { revert: () => void } | undefined;
+    const cancelStart = scheduleAnimationStart(() => {
+      void loadGsap().then(({ gsap, ScrollTrigger }) => {
+        if (cancelled || !sectionRef.current) return;
+        gsap.registerPlugin(ScrollTrigger);
+        context = gsap.context(() => {
+          gsap.fromTo(
+            sectionRef.current,
+            { autoAlpha: 0.82, y: 28 },
+            {
+              autoAlpha: 1,
+              y: 0,
+              duration: 0.5,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: sectionRef.current,
+                start: "top 88%",
+                once: true,
+              },
+            },
+          );
+        }, sectionRef.current);
+      });
+    });
+
+    return () => {
+      cancelled = true;
+      cancelStart();
+      context?.revert();
+    };
+  }, [reduceMotion]);
 
   return (
-    <motion.section
+    <section
+      ref={sectionRef}
       id={id}
-      initial={reduceMotion ? false : { opacity: 0.72, y: 28 }}
-      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-90px" }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
       className={className}
     >
       {children}
-    </motion.section>
+    </section>
   );
 }
 
@@ -184,22 +183,30 @@ function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = usePrefersReducedMotion();
   const whatsappUrl = getWhatsAppUrl();
   const secondaryLinks = navLinks.filter((link) => link.label !== "Soluciones");
 
   useEffect(() => {
     if (!megaOpen || !panelRef.current || reduceMotion) return;
 
-    const context = gsap.context(() => {
-      gsap.fromTo(
-        panelRef.current,
-        { autoAlpha: 0, y: 12, scale: 0.98 },
-        { autoAlpha: 1, y: 0, scale: 1, duration: 0.22, ease: "power2.out" },
-      );
-    }, panelRef.current);
+    let cancelled = false;
+    let context: { revert: () => void } | undefined;
+    void loadGsap().then(({ gsap }) => {
+      if (cancelled || !panelRef.current) return;
+      context = gsap.context(() => {
+        gsap.fromTo(
+          panelRef.current,
+          { autoAlpha: 0, y: 12, scale: 0.98 },
+          { autoAlpha: 1, y: 0, scale: 1, duration: 0.22, ease: "power2.out" },
+        );
+      }, panelRef.current);
+    });
 
-    return () => context.revert();
+    return () => {
+      cancelled = true;
+      context?.revert();
+    };
   }, [megaOpen, reduceMotion]);
 
   return (
@@ -343,22 +350,33 @@ function Header() {
 
 function TechTicker() {
   const trackRef = useRef<HTMLDivElement>(null);
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = usePrefersReducedMotion();
   const tickerItems = [...premiumStack, ...premiumStack];
 
   useEffect(() => {
     if (reduceMotion || !trackRef.current) return;
 
-    const context = gsap.context(() => {
-      gsap.to(trackRef.current, {
-        xPercent: -50,
-        duration: 28,
-        ease: "none",
-        repeat: -1,
+    let cancelled = false;
+    let context: { revert: () => void } | undefined;
+    const cancelStart = scheduleAnimationStart(() => {
+      void loadGsap().then(({ gsap }) => {
+        if (cancelled || !trackRef.current) return;
+        context = gsap.context(() => {
+          gsap.to(trackRef.current, {
+            xPercent: -50,
+            duration: 28,
+            ease: "none",
+            repeat: -1,
+          });
+        }, trackRef.current);
       });
-    }, trackRef.current);
+    });
 
-    return () => context.revert();
+    return () => {
+      cancelled = true;
+      cancelStart();
+      context?.revert();
+    };
   }, [reduceMotion]);
 
   return (
@@ -387,51 +405,61 @@ function TechTicker() {
 function WorkflowAutomation() {
   const containerRef = useRef<HTMLElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     if (reduceMotion || !containerRef.current) return;
 
-    gsap.registerPlugin(ScrollTrigger);
+    let cancelled = false;
+    let context: { revert: () => void } | undefined;
+    const cancelStart = scheduleAnimationStart(() => {
+      void loadGsap().then(({ gsap, ScrollTrigger }) => {
+        if (cancelled || !containerRef.current) return;
+        gsap.registerPlugin(ScrollTrigger);
+        context = gsap.context(() => {
+          if (pathRef.current) {
+            const pathLength = pathRef.current.getTotalLength();
+            gsap.set(pathRef.current, {
+              strokeDasharray: pathLength,
+              strokeDashoffset: pathLength,
+            });
+            gsap.to(pathRef.current, {
+              strokeDashoffset: 0,
+              ease: "none",
+              scrollTrigger: {
+                trigger: containerRef.current,
+                start: "top 82%",
+                end: () => `+=${window.innerWidth < 768 ? 160 : 240}`,
+                scrub: 0.3,
+                invalidateOnRefresh: true,
+              },
+            });
+          }
 
-    const context = gsap.context(() => {
-      if (pathRef.current) {
-        const pathLength = pathRef.current.getTotalLength();
-        gsap.set(pathRef.current, {
-          strokeDasharray: pathLength,
-          strokeDashoffset: pathLength,
-        });
-        gsap.to(pathRef.current, {
-          strokeDashoffset: 0,
-          ease: "none",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top 76%",
-            end: () => `+=${window.innerWidth < 768 ? 220 : 340}`,
-            scrub: 0.35,
-            invalidateOnRefresh: true,
-          },
-        });
-      }
+          gsap.fromTo(
+            ".workflow-card",
+            { autoAlpha: 0.82, y: 22 },
+            {
+              autoAlpha: 1,
+              y: 0,
+              duration: 0.45,
+              ease: "power2.out",
+              stagger: 0.1,
+              scrollTrigger: {
+                trigger: containerRef.current,
+                start: "top 78%",
+              },
+            },
+          );
+        }, containerRef.current);
+      });
+    });
 
-      gsap.fromTo(
-        ".workflow-card",
-        { autoAlpha: 0.72, y: 22 },
-        {
-          autoAlpha: 1,
-          y: 0,
-          duration: 0.45,
-          ease: "power2.out",
-          stagger: 0.1,
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top 70%",
-          },
-        },
-      );
-    }, containerRef.current);
-
-    return () => context.revert();
+    return () => {
+      cancelled = true;
+      cancelStart();
+      context?.revert();
+    };
   }, [reduceMotion]);
 
   return (
@@ -498,75 +526,13 @@ function WorkflowAutomation() {
   );
 }
 
-export default function HomePage() {
-  const whatsappUrl = getWhatsAppUrl();
-
+export default function HomePage({ hero }: { hero: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-black text-white">
       <Header />
 
       <main>
-        <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gray-950 px-6 pb-16 pt-32 md:px-8">
-          <HeroCanvas />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-gray-950/20 to-gray-950" />
-
-          <div className="relative z-10 mx-auto max-w-5xl text-center">
-            <motion.div
-              initial={{ opacity: 0.72, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="mb-6 inline-flex rounded-full border border-lime-400/30 bg-lime-400/10 px-4 py-1.5 text-sm font-medium text-lime-300"
-            >
-              Firma tecnológica para infraestructura digital, adquisición y automatización
-            </motion.div>
-            <motion.h1
-              initial={{ opacity: 0.72, y: 22 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.08 }}
-              className="mb-6 text-4xl font-bold leading-tight text-white drop-shadow-lg sm:text-5xl md:text-7xl"
-            >
-              Infraestructura digital para <span className="text-lime-400">vender, operar y escalar</span>
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0.72, y: 22 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.16 }}
-              className="mx-auto mb-8 max-w-2xl text-lg leading-8 text-gray-100 drop-shadow-md md:text-xl"
-            >
-              Diseñamos ecosistemas B2B que conectan web, e-commerce, WordPress, Shopify, software, Ads,
-              automatizaciones y datos para reducir costos operativos y recuperar oportunidades.
-            </motion.p>
-            <motion.div
-              initial={{ opacity: 0.72, y: 22 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.24 }}
-              className="mb-8 flex flex-wrap justify-center gap-4"
-            >
-              <Magnetic>
-                <Link
-                  href="/#contact"
-                  className="inline-flex items-center gap-2 rounded-lg bg-lime-400 px-8 py-3 font-bold text-gray-950 shadow-lg shadow-lime-400/30 transition hover:bg-lime-300"
-                >
-                  Solicita tu diagnóstico gratis
-                </Link>
-              </Magnetic>
-              <Link
-                href="/#servicios"
-                className="rounded-lg border-2 border-white px-8 py-3 font-bold text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-white hover:text-gray-950"
-              >
-                Explorar soluciones
-              </Link>
-            </motion.div>
-            <motion.p
-              initial={{ opacity: 0.72, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.32 }}
-              className="text-sm text-gray-400"
-            >
-              Empresas en Panamá y Venezuela · Diagnóstico inicial gratis · Sin compromiso
-            </motion.p>
-          </div>
-        </section>
+        {hero}
 
         <section className="border-t border-gray-900 bg-black px-6 py-12 md:px-8">
           <div className="mx-auto grid max-w-7xl grid-cols-2 gap-8 text-center md:grid-cols-4">
@@ -687,7 +653,13 @@ export default function HomePage() {
                 </article>
               ))}
             </div>
-            <div className="mt-12 text-center">
+            <div className="mt-12 flex flex-wrap justify-center gap-3 text-center">
+              <Link
+                href="/casos"
+                className="inline-block rounded-lg bg-lime-400 px-8 py-3 font-bold text-gray-950 transition hover:bg-lime-300"
+              >
+                Leer casos completos
+              </Link>
               <a
                 href={siteConfig.github}
                 target="_blank"
@@ -851,93 +823,7 @@ export default function HomePage() {
         <LeadIntakeSection />
       </main>
 
-      <footer className="border-t border-gray-900 bg-gray-950 px-6 py-12 text-gray-400 md:px-8">
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-8 grid grid-cols-2 gap-8 md:grid-cols-5">
-            <div>
-              <div className="mb-4 flex items-center gap-2">
-                <Logo className="h-7 w-7 rounded-lg" />
-                <span className="font-bold text-white">DukeCrea</span>
-              </div>
-              <p className="text-sm">Agencia de digitalización de negocios.</p>
-              <p className="mt-3 text-sm">
-                Trabajamos con empresas en Panamá y{" "}
-                <Link href="/venezuela" className="text-lime-400 transition hover:text-lime-300">
-                  Venezuela
-                </Link>
-                .
-              </p>
-            </div>
-            <div>
-              <h4 className="mb-4 font-bold text-white">Sitio</h4>
-              <ul className="space-y-2 text-sm">
-                {navLinks.map((link) => (
-                  <li key={link.href}>
-                    <Link href={link.href} className="transition hover:text-lime-400">
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h4 className="mb-4 font-bold text-white">Soluciones</h4>
-              <ul className="space-y-2 text-sm">
-                {serviceCategoryMap.map((category) => (
-                  <li key={category.id}>
-                    <Link href="/#servicios" className="transition hover:text-lime-400">
-                      {category.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h4 className="mb-4 font-bold text-white">Industrias</h4>
-              <ul className="space-y-2 text-sm">
-                {industrias.map((industria) => (
-                  <li key={industria.slug}>
-                    <Link
-                      href={`/industrias/${industria.slug}`}
-                      className="transition hover:text-lime-400"
-                    >
-                      {industria.eyebrow}
-                    </Link>
-                  </li>
-                ))}
-                <li>
-                  <Link href="/venezuela" className="transition hover:text-lime-400">
-                    Empresas en Venezuela
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="mb-4 font-bold text-white">Contacto</h4>
-              <ul className="space-y-2 text-sm">
-                <li>
-                  <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="transition hover:text-lime-400">
-                    WhatsApp
-                  </a>
-                </li>
-                <li>
-                  <a href={`mailto:${siteConfig.email}`} className="transition hover:text-lime-400">
-                    {siteConfig.email}
-                  </a>
-                </li>
-                <li>
-                  <a href={siteConfig.instagram} target="_blank" rel="noopener noreferrer" className="transition hover:text-lime-400">
-                    Instagram
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t border-gray-800 pt-8 text-center text-sm">
-            <p>© {new Date().getFullYear()} DukeCrea. Digitalizamos tu negocio con software a medida.</p>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

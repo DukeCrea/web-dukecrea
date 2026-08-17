@@ -1,30 +1,30 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CheckIcon, WhatsAppIcon } from "../icons";
+import { Breadcrumbs, MarketingHeader, SiteFooter, SystemVisual } from "../marketing-layout";
+import { breadcrumbJsonLd, buildMetadata, organizationId, serializeJsonLd } from "../lib/seo";
 import { getWhatsAppUrl, services, siteConfig } from "../lib/site";
 
 const metaTitle = "Software e IA para empresas en Venezuela";
 const metaDescription =
   "Desarrollo de software, e-commerce, automatización con IA y Ads para empresas en Venezuela. Trabajamos en remoto y con operación multi-país Panamá-Venezuela.";
 
-export const metadata: Metadata = {
+const baseMetadata = buildMetadata({
   title: metaTitle,
   description: metaDescription,
+  path: "/venezuela",
+  locale: "es_VE",
+});
+
+export const metadata: Metadata = {
+  ...baseMetadata,
   alternates: {
     canonical: "/venezuela",
-  },
-  openGraph: {
-    type: "website",
-    locale: "es_VE",
-    url: "/venezuela",
-    title: metaTitle,
-    description: metaDescription,
-    siteName: siteConfig.name,
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: metaTitle,
-    description: metaDescription,
+    languages: {
+      "es-PA": "/",
+      "es-VE": "/venezuela",
+      "x-default": "/",
+    },
   },
 };
 
@@ -86,11 +86,7 @@ const jsonLd = [
     name: "Desarrollo de software, automatización e IA para empresas en Venezuela",
     url: `${siteConfig.url}/venezuela`,
     description: metaDescription,
-    provider: {
-      "@type": "ProfessionalService",
-      name: siteConfig.name,
-      url: siteConfig.url,
-    },
+    provider: { "@id": organizationId },
     areaServed: { "@type": "Country", name: "Venezuela" },
   },
   {
@@ -102,11 +98,14 @@ const jsonLd = [
       acceptedAnswer: { "@type": "Answer", text: item.a },
     })),
   },
+  {
+    "@context": "https://schema.org",
+    ...breadcrumbJsonLd([
+      { name: "Inicio", path: "/" },
+      { name: "Empresas en Venezuela", path: "/venezuela" },
+    ]),
+  },
 ];
-
-function serializeJsonLd(data: unknown) {
-  return JSON.stringify(data).replace(/</g, "\\u003c");
-}
 
 export default function VenezuelaPage() {
   return (
@@ -116,65 +115,22 @@ export default function VenezuelaPage() {
         dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}
       />
 
-      <header className="border-b border-gray-900 bg-black/95">
-        <div className="mx-auto flex min-h-16 max-w-7xl flex-wrap items-center justify-between gap-4 px-6 py-4 md:px-8">
-          <Link href="/" className="flex items-center gap-2" aria-label="DukeCrea inicio">
-            <div className="h-8 w-8 rounded-lg bg-lime-400 shadow-lg shadow-lime-400/50" />
-            <span className="text-lg font-bold text-white">DukeCrea</span>
-          </Link>
-          <nav className="flex flex-wrap items-center gap-4 text-sm" aria-label="Navegación">
-            <Link href="/#servicios" className="font-medium text-gray-300 transition hover:text-lime-400">
-              Soluciones
-            </Link>
-            <Link href="/#casos" className="font-medium text-gray-300 transition hover:text-lime-400">
-              Casos
-            </Link>
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-lg bg-lime-400 px-4 py-2 font-bold text-gray-950 transition hover:bg-lime-300"
-            >
-              <WhatsAppIcon className="h-4 w-4" />
-              Hablemos
-            </a>
-          </nav>
-        </div>
-      </header>
+      <MarketingHeader whatsappMessage="Hola DukeCrea, tengo una empresa en Venezuela y quiero digitalizarla. ¿Podemos hablar?" />
 
       <main>
         <section className="border-b border-gray-900 bg-gray-950 px-6 py-20 md:px-8">
-          <div className="mx-auto max-w-4xl">
-            <div className="mb-5 inline-flex rounded-full border border-lime-400/30 bg-lime-400/10 px-4 py-1.5 text-sm font-semibold text-lime-300">
-              Venezuela · Trabajo 100% remoto
+          <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+            <div>
+              <Breadcrumbs items={[{ label: "Inicio", href: "/" }, { label: "Empresas en Venezuela", href: "/venezuela" }]} />
+              <div className="mb-5 inline-flex rounded-full border border-lime-400/30 bg-lime-400/10 px-4 py-1.5 text-sm font-semibold text-lime-300">Venezuela · Trabajo 100% remoto</div>
+              <h1 className="text-4xl font-bold leading-tight text-white md:text-6xl">Software, automatización e IA para empresas en <span className="text-lime-400">Venezuela</span></h1>
+              <p className="mt-6 text-lg leading-8 text-gray-300">Desarrollamos webs, tiendas online, software a medida y automatizaciones con inteligencia artificial para empresas venezolanas. Tenemos sistemas en producción que operan con Venezuela y Panamá al mismo tiempo.</p>
+              <div className="mt-8 flex flex-wrap gap-4">
+                <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-lg bg-lime-400 px-8 py-3 font-bold text-gray-950 shadow-lg shadow-lime-400/20 transition hover:-translate-y-0.5 hover:bg-lime-300"><WhatsAppIcon className="h-5 w-5" />Solicitar diagnóstico gratis</a>
+                <Link href="/servicios" className="rounded-lg border-2 border-gray-700 px-8 py-3 font-bold text-white transition hover:border-lime-400 hover:text-lime-400">Ver todas las soluciones</Link>
+              </div>
             </div>
-            <h1 className="text-4xl font-bold leading-tight text-white md:text-6xl">
-              Software, automatización e IA para empresas en{" "}
-              <span className="text-lime-400">Venezuela</span>
-            </h1>
-            <p className="mt-6 text-lg leading-8 text-gray-300">
-              Desarrollamos webs, tiendas online, software a medida y automatizaciones con
-              inteligencia artificial para empresas venezolanas. Tenemos sistemas en producción que
-              operan con Venezuela y Panamá al mismo tiempo, así que la parte difícil de trabajar en
-              dos países ya la resolvimos antes.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-4">
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-lg bg-lime-400 px-8 py-3 font-bold text-gray-950 shadow-lg shadow-lime-400/20 transition hover:-translate-y-0.5 hover:bg-lime-300"
-              >
-                <WhatsAppIcon className="h-5 w-5" />
-                Solicitar diagnóstico gratis
-              </a>
-              <Link
-                href="/#servicios"
-                className="rounded-lg border-2 border-gray-700 px-8 py-3 font-bold text-white transition hover:border-lime-400 hover:text-lime-400"
-              >
-                Ver todas las soluciones
-              </Link>
-            </div>
+            <SystemVisual labels={["Operación remota", "Multi-país", "Automatización", "Soporte"]} />
           </div>
         </section>
 
@@ -289,6 +245,7 @@ export default function VenezuelaPage() {
           </div>
         </section>
       </main>
+      <SiteFooter />
     </div>
   );
 }

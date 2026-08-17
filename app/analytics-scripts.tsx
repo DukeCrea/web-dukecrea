@@ -2,13 +2,23 @@
 
 import Script from "next/script";
 import { usePathname, useSearchParams } from "next/navigation";
-import { Suspense, useEffect } from "react";
+import Link from "next/link";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Suspense, useEffect, useState } from "react";
 import { AnalyticsEvent, track } from "./lib/analytics";
 
 const gaId = process.env.NEXT_PUBLIC_GA_ID;
 const clarityId = process.env.NEXT_PUBLIC_CLARITY_ID;
 
-type GtagWindow = Window & { gtag?: (...args: unknown[]) => void };
+const consentStorageKey = "dukecrea_analytics_consent_v1";
+
+type ConsentStatus = "accepted" | "rejected";
+
+type GtagWindow = Window & {
+  dataLayer?: unknown[];
+  gtag?: (...args: unknown[]) => void;
+};
 
 /**
  * Dispara un `page_view` en cada cambio de ruta.
@@ -87,32 +97,65 @@ function ClickTracker() {
 }
 
 export function AnalyticsScripts() {
+  const [consent, setConsent] = useState<ConsentStatus | null>(null);
+  const [ready, setReady] = useState(false);
+  const [gaReady, setGaReady] = useState(false);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      const saved = window.localStorage.getItem(consentStorageKey);
+      setConsent(saved === "accepted" || saved === "rejected" ? saved : null);
+      setReady(true);
+    }, 0);
+
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  const chooseConsent = (value: ConsentStatus) => {
+    window.localStorage.setItem(consentStorageKey, value);
+    setConsent(value);
+  };
+
+  const initializeGoogleAnalytics = () => {
+    if (!gaId) return;
+
+    const win = window as GtagWindow;
+    win.dataLayer = win.dataLayer || [];
+    win.gtag = (...args: unknown[]) => win.dataLayer?.push(args);
+    win.gtag("js", new Date());
+    win.gtag("consent", "update", {
+      analytics_storage: "granted",
+      ad_storage: "granted",
+      ad_user_data: "granted",
+      ad_personalization: "granted",
+    });
+    win.gtag("config", gaId, {
+      send_page_view: false,
+      anonymize_ip: true,
+    });
+    setGaReady(true);
+  };
+
   return (
     <>
-      <ClickTracker />
-      {gaId ? (
+      {consent === "accepted" ? <ClickTracker /> : null}
+      {consent === "accepted" && gaId ? (
         <>
           <Script
             src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
-            strategy="afterInteractive"
+            strategy="lazyOnload"
+            onLoad={initializeGoogleAnalytics}
           />
-          <Script id="ga4-init" strategy="afterInteractive">
-            {`
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              window.gtag = gtag;
-              gtag('js', new Date());
-              gtag('config', '${gaId}', { send_page_view: false });
-            `}
-          </Script>
-          <Suspense fallback={null}>
-            <PageViewTracker />
-          </Suspense>
+          {gaReady ? (
+            <Suspense fallback={null}>
+              <PageViewTracker />
+            </Suspense>
+          ) : null}
         </>
       ) : null}
 
-      {clarityId ? (
-        <Script id="clarity-init" strategy="afterInteractive">
+      {consent === "accepted" && clarityId ? (
+        <Script id="clarity-init" strategy="lazyOnload">
           {`
             (function(c,l,a,r,i,t,y){
               c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -122,6 +165,64 @@ export function AnalyticsScripts() {
           `}
         </Script>
       ) : null}
+
+      {consent === "accepted" ? (
+        <>
+          <Analytics />
+          <SpeedInsights />
+        </>
+      ) : null}
+
+      {ready && consent === null ? (
+        <div
+          role="dialog"
+          aria-label="Preferencias de analítica"
+          className="fixed inset-x-4 bottom-4 z-[100] mx-auto max-w-3xl rounded-lg border border-gray-700 bg-gray-950 p-5 text-white shadow-2xl shadow-black/60 sm:flex sm:items-center sm:justify-between sm:gap-6"
+        >
+          <div>
+            <p className="font-bold">Tu privacidad importa</p>
+            <p className="mt-1 text-sm leading-6 text-gray-300">
+              Usamos analítica opcional para entender qué contenido ayuda y mejorar la web. No
+              cargamos Google Analytics ni Clarity hasta que aceptes. Consulta la{" "}
+              <Link href="/cookies" className="underline underline-offset-4 hover:text-lime-300">
+                política de cookies
+              </Link>
+              .
+            </p>
+          </div>
+          <div className="mt-4 flex shrink-0 gap-3 sm:mt-0">
+            <button
+              type="button"
+              onClick={() => chooseConsent("rejected")}
+              className="rounded-lg border border-gray-600 px-4 py-2 text-sm font-bold text-white transition hover:border-gray-400"
+            >
+              Rechazar
+            </button>
+            <button
+              type="button"
+              onClick={() => chooseConsent("accepted")}
+              className="rounded-lg bg-lime-400 px-4 py-2 text-sm font-bold text-gray-950 transition hover:bg-lime-300"
+            >
+              Aceptar
+            </button>
+          </div>
+        </div>
+      ) : null}
     </>
+  );
+}
+
+export function CookiePreferencesButton() {
+  return (
+    <button
+      type="button"
+      onClick={() => {
+        window.localStorage.removeItem(consentStorageKey);
+        window.location.reload();
+      }}
+      className="rounded-lg border border-lime-400 px-5 py-2.5 font-bold text-lime-300 transition hover:bg-lime-400 hover:text-gray-950"
+    >
+      Cambiar preferencias de analítica
+    </button>
   );
 }
