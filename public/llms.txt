@@ -1,0 +1,79 @@
+# DukeCrea
+
+> Agencia de software, automatización e inteligencia artificial para negocios en Panamá y Venezuela. Digital agency building websites, e-commerce, custom software, AI automation and performance marketing for businesses in Panama and Venezuela.
+
+DukeCrea es una firma tecnológica de infraestructura digital fundada por Antonio Duque y Noe Rivas. Construye la capa completa que un negocio necesita para vender en internet: páginas web y tiendas online, software a medida, automatización con IA (chatbots, gestión de leads, paneles administrativos) y adquisición de clientes con Google Ads, Meta Ads y SEO. Trabaja de forma remota para toda Hispanoamérica, con foco en Panamá y Venezuela y experiencia en operaciones multi-país.
+
+- Mercados: Panamá y Venezuela (servicio remoto para toda Hispanoamérica)
+- Fundadores: Antonio Duque y Noe Rivas
+- Contacto: duque629@gmail.com · WhatsApp +507 6300-6579
+- Idioma del sitio: español
+
+## Soluciones
+
+Tres áreas que se integran entre sí:
+
+- [Desarrollo web y software](https://dukecrea.com/soluciones/dev): páginas corporativas, e-commerce, WordPress, Shopify y software a medida.
+- [Automatización e IA](https://dukecrea.com/soluciones/automation): chatbots, control de leads, paneles administrativos y respuestas automatizadas.
+- [Marketing y adquisición](https://dukecrea.com/soluciones/marketing): Ads, SEO/GEO, contenido, video y medición de ROI.
+
+## Servicios
+
+- [Páginas web corporativas](https://dukecrea.com/servicios/paginas-web-corporativas): sitios que presentan y venden, no solo presencia.
+- [E-commerce](https://dukecrea.com/servicios/e-commerce): tiendas online completas, incluyendo operaciones multi-país.
+- [Desarrollo y optimización WordPress](https://dukecrea.com/servicios/desarrollo-wordpress): temas a medida, WooCommerce y rescate de sitios existentes.
+- [Desarrollo y optimización Shopify](https://dukecrea.com/servicios/desarrollo-shopify): montaje, personalización y optimización de tiendas Shopify.
+- [Landing pages](https://dukecrea.com/servicios/landing-pages): páginas de aterrizaje orientadas a conversión para campañas.
+- [Desarrollo de software](https://dukecrea.com/servicios/desarrollo-de-software): aplicaciones y sistemas a medida cuando la herramienta genérica no alcanza.
+- [SEO y GEO](https://dukecrea.com/servicios/seo-y-geo): posicionamiento en buscadores y en motores generativos (ChatGPT, Gemini, Claude).
+- [Gestión y control de Ads](https://dukecrea.com/servicios/gestion-control-ads): campañas en Google y Meta con control real del gasto.
+- [Panel — monitor administrativo inteligente](https://dukecrea.com/servicios/panel-monitor-administrativo-inteligente): tableros que unen ventas, leads y operación en un solo lugar.
+- [Chatbot para WhatsApp o redes sociales con IA](https://dukecrea.com/servicios/chatbot-whatsapp-redes-sociales-ia): atención automática que califica y responde 24/7.
+- [Control, gestión y atención de leads](https://dukecrea.com/servicios/control-gestion-atencion-leads): que ningún prospecto se pierda entre el clic y la venta.
+- [Respuestas automatizadas en redes sociales](https://dukecrea.com/servicios/respuestas-automatizadas-comentarios-redes-sociales): comentarios y mensajes atendidos al instante.
+- [Auditoría de contenido para tu empresa](https://dukecrea.com/servicios/evaluacion-contenido-empresa): qué publicar y por qué, con base en datos.
+- [Creación y edición de videos](https://dukecrea.com/servicios/creacion-edicion-videos): producción audiovisual orientada a conversión.
+- [Auditoría de redes sociales y estrategia digital](https://dukecrea.com/servicios/evaluacion-redes-sociales-estrategia-digital-publicidad): diagnóstico completo del ecosistema digital.
+- [Auditoría de inversión en Ads](https://dukecrea.com/servicios/evaluacion-inversion-ads): revisión de campañas activas y fugas de presupuesto.
+- [Cálculo de ROI publicitario](https://dukecrea.com/servicios/calculo-roi-publicitario): cuánto devuelve realmente cada dólar invertido.
+- [Software automatizado para publicaciones en redes](https://dukecrea.com/servicios/software-automatizado-publicaciones-redes-sociales): programación y publicación automática de contenido.
+
+## Industrias
+
+- [Concesionarios de autos](https://dukecrea.com/industrias/concesionarios-de-autos): automatización de leads y operación para venta de vehículos (caso Champion Motors).
+- [Tiendas multi-país](https://dukecrea.com/industrias/tiendas-multi-pais): e-commerce operando en Panamá y Venezuela a la vez (caso Camsmark).
+
+## Casos de éxito
+
+- [Champion Motors — automatización de concesionario](https://dukecrea.com/casos/champion-motors-automatizacion-concesionario)
+- [BARETEC — WordPress corporativo](https://dukecrea.com/casos/baretec-wordpress-corporativo)
+- [Camsmark — e-commerce multi-país](https://dukecrea.com/casos/camsmark-ecommerce-multipais)
+- [Mili & Molo — e-commerce educativo](https://dukecrea.com/casos/mili-molo-ecommerce-educativo)
+
+## Recursos
+
+- [¿WordPress, Shopify o desarrollo a medida?](https://dukecrea.com/recursos/wordpress-shopify-o-desarrollo-a-medida)
+- [Cómo medir el ROI publicitario](https://dukecrea.com/recursos/como-medir-roi-publicitario)
+- [Automatizar leads de WhatsApp a un CRM](https://dukecrea.com/recursos/automatizar-leads-whatsapp-crm)
+
+## Preguntas frecuentes
+
+- **¿Dónde trabaja DukeCrea?** En Panamá y Venezuela, y de forma remota para cualquier país de habla hispana.
+- **¿Qué diferencia a DukeCrea de una agencia de marketing?** Construye la infraestructura completa (web, software, automatización) además de las campañas, así la inversión en Ads cae sobre un sistema que convierte.
+- **¿Hacen proyectos multi-país?** Sí; han montado e-commerce y operaciones que funcionan en Panamá y Venezuela simultáneamente.
+- **¿Cómo se empieza?** Con un diagnóstico gratuito desde el formulario de [contacto](https://dukecrea.com/contacto) o por WhatsApp (+507 6300-6579).
+
+## Temas
+
+- Desarrollo web y e-commerce en Panamá y Venezuela
+- Software a medida para pymes
+- Automatización con inteligencia artificial (chatbots, leads, paneles)
+- SEO, GEO y posicionamiento en motores generativos
+- Google Ads, Meta Ads y medición de ROI
+
+## Más
+
+- [Página principal](https://dukecrea.com/)
+- [Venezuela](https://dukecrea.com/venezuela): soluciones para negocios venezolanos y multi-país.
+- [Nosotros](https://dukecrea.com/nosotros)
+- [Sitemap XML](https://dukecrea.com/sitemap.xml)

@@ -79,13 +79,20 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "ProfessionalService",
+      "@type": ["ProfessionalService", "LocalBusiness", "Organization"],
       "@id": organizationId,
       name: siteConfig.name,
       url: siteConfig.url,
       logo: `${siteConfig.url}/icon.svg`,
       image: `${siteConfig.url}/og.jpg`,
       email: siteConfig.email,
+      telephone: `+${siteConfig.whatsappNumber}`,
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Ciudad de Panamá",
+        addressCountry: "PA",
+      },
+      priceRange: "$$",
       description:
         "Firma tecnológica de infraestructura digital: desarrollo web, WordPress, Shopify, software a medida, automatización, Ads, SEO/GEO, paneles e IA.",
       founders: [
